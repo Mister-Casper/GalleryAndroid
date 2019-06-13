@@ -3,7 +3,7 @@ package com.journaldev.mvpdagger2.ViewImages.presenter;
 import android.support.annotation.NonNull;
 
 import com.journaldev.mvpdagger2.MainContract;
-import com.journaldev.mvpdagger2.ViewImages.presenter.model.ViewImagesModel;
+import com.journaldev.mvpdagger2.ViewImages.model.ViewImagesModel;
 
 import javax.inject.Singleton;
 

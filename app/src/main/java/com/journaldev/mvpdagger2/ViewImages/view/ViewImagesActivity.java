@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.ViewSwitcher;
 
 import com.journaldev.mvpdagger2.MainContract;
+import com.journaldev.mvpdagger2.ViewImages.model.ViewImagesModel;
 import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.ViewImages.presenter.model.ViewImagesModel;
 import com.journaldev.mvpdagger2.ViewImages.presenter.ViewImagesPresenter;
 
 
