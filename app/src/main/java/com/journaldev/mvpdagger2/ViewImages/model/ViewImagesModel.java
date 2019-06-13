@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.ViewImages.presenter.model;
+package com.journaldev.mvpdagger2.ViewImages.model;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -41,6 +41,9 @@ public class ViewImagesModel implements MainContract.ModelCallBack {
         maxImageId = mUrls.length;
     }
 
+    private void sortResultByDate() {
+
+    }
 
     @Override
     public Uri getImage(int idImage) {
