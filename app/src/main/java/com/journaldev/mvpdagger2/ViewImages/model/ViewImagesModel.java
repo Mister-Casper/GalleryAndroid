@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class ViewImagesModel implements MainContract.ModelCallBack {
     private static Uri[] mUrls;
+    private static long[] mDate;
     private int maxImageId = 0;
     public static int currentImageId = 0;
 
@@ -30,19 +31,39 @@ public class ViewImagesModel implements MainContract.ModelCallBack {
         if (cc != null) {
             cc.moveToFirst();
             mUrls = new Uri[cc.getCount()];
+            mDate = new long[cc.getCount()];
             for (int i = 0; i < cc.getCount(); i++) {
                 cc.moveToPosition(i);
                 mUrls[i] = Uri.parse(cc.getString(1));
                 File file = new File(String.valueOf(mUrls[i]));
                 long data = file.lastModified();
-                Date date = new Date(data);
+                mDate[i] = data;
             }
         }
         maxImageId = mUrls.length;
+        sortResultByDate();
     }
 
     private void sortResultByDate() {
+        Uri tempNum;
+        long tempName;
+        for (int i = 0; i < mDate.length; i++)
+        {
+            for (int j = i + 1; j < mDate.length; j++)
+            {
+                if (mDate[i] < mDate[j])
+                {
+                    tempNum = mUrls[i];
+                    tempName = mDate[i];
 
+                    mUrls[i] = mUrls[j];
+                    mDate[i] = mDate[j];
+
+                    mUrls[j] = tempNum;
+                    mDate[j] = tempName;
+                }
+            }
+        }
     }
 
     @Override
