@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view;
+package com.journaldev.mvpdagger2.ViewImages.view;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewSwitcher;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity implements MainContract.ViewCallBack, ViewSwitcher.ViewFactory {
+public class ViewImagesActivity extends AppCompatActivity implements MainContract.ViewCallBack {
 
 
     @BindView(R.id.backImageButton)
@@ -32,7 +33,7 @@ public class ViewImagesActivity extends AppCompatActivity implements MainContrac
     @BindView(R.id.nextImageButton)
     Button nextImageButton;
     @BindView(R.id.image)
-    ImageSwitcher image;
+    ImageView image;
 
     MainContract.PresenterCallBack presenter;
 
@@ -41,7 +42,6 @@ public class ViewImagesActivity extends AppCompatActivity implements MainContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        imageSwitcherInit();
 
         ActivityCompat.requestPermissions(ViewImagesActivity.this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -55,11 +55,6 @@ public class ViewImagesActivity extends AppCompatActivity implements MainContrac
         ViewImagesModel model = new ViewImagesModel();
         model.init(this);
         presenter = new ViewImagesPresenter(this, model);
-    }
-
-
-    private void imageSwitcherInit() {
-        image.setFactory(this);
     }
 
     @Override
@@ -80,15 +75,5 @@ public class ViewImagesActivity extends AppCompatActivity implements MainContrac
     @Override
     public Context getContext() {
         return getApplicationContext();
-    }
-
-    @Override
-    public View makeView() {
-        android.widget.ImageView imageView = new android.widget.ImageView(this);
-        imageView.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
-        imageView.setLayoutParams(new
-                ImageSwitcher.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        return imageView;
     }
 }
