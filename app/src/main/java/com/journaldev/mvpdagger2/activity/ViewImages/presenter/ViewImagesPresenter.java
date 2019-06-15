@@ -2,18 +2,18 @@ package com.journaldev.mvpdagger2.ViewImages.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.journaldev.mvpdagger2.MainContract;
+import com.journaldev.mvpdagger2.ViewImagesContract;
 import com.journaldev.mvpdagger2.ViewImages.model.ViewImagesModel;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class ViewImagesPresenter implements MainContract.PresenterCallBack{
+public class ViewImagesPresenter implements ViewImagesContract.PresenterCallBack{
 
-    private MainContract.ViewCallBack mainView;
+    private ViewImagesContract.ViewCallBack mainView;
     private ViewImagesModel model;
 
-    public ViewImagesPresenter(@NonNull MainContract.ViewCallBack imageView, @NonNull ViewImagesModel imageModelContract) {
+    public ViewImagesPresenter(@NonNull ViewImagesContract.ViewCallBack imageView, @NonNull ViewImagesModel imageModelContract) {
         this.model = imageModelContract;
         this.mainView = imageView;
     }

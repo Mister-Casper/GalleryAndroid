@@ -6,14 +6,10 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ViewSwitcher;
 
-import com.journaldev.mvpdagger2.MainContract;
+import com.journaldev.mvpdagger2.ViewImagesContract;
 import com.journaldev.mvpdagger2.ViewImages.model.ViewImagesModel;
 import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.R;
@@ -25,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity implements MainContract.ViewCallBack {
+public class ViewImagesActivity extends AppCompatActivity implements ViewImagesContract.ViewCallBack {
 
 
     @BindView(R.id.backImageButton)
@@ -35,12 +31,12 @@ public class ViewImagesActivity extends AppCompatActivity implements MainContrac
     @BindView(R.id.image)
     ImageView image;
 
-    MainContract.PresenterCallBack presenter;
+    ViewImagesContract.PresenterCallBack presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
 
         ActivityCompat.requestPermissions(ViewImagesActivity.this,

@@ -5,12 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.journaldev.mvpdagger2.MainContract;
+import com.journaldev.mvpdagger2.ViewImagesContract;
 
 import java.io.File;
-import java.util.Date;
 
-public class ViewImagesModel implements MainContract.ModelCallBack {
+public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
     private static Uri[] mUrls;
     private static long[] mDate;
     private int maxImageId = 0;
@@ -36,6 +35,7 @@ public class ViewImagesModel implements MainContract.ModelCallBack {
                 cc.moveToPosition(i);
                 mUrls[i] = Uri.parse(cc.getString(1));
                 File file = new File(String.valueOf(mUrls[i]));
+
                 long data = file.lastModified();
                 mDate[i] = data;
             }

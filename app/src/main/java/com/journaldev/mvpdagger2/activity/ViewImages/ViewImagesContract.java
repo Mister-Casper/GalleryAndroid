@@ -7,7 +7,7 @@ import android.net.Uri;
  * Created by anupamchugh on 11/08/17.
  */
 
-public interface MainContract {
+public interface ViewImagesContract {
 
     interface ViewCallBack {
         void viewImage(Uri imageUri);
