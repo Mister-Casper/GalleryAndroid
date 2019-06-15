@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 @RunWith(MockitoJUnitRunner.class)
 public class ImagePresenterTest {
     @Mock
-    private MainContract.ViewCallBack imageView;
+    private ViewImagesContract.ViewCallBack imageView;
 
     @Mock
     private ViewImagesModel imageModelContract;
