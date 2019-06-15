@@ -5,14 +5,14 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.journaldev.mvpdagger2.MainContract;
+import com.journaldev.mvpdagger2.ViewImagesContract;
 
 public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private final GestureDetector gestureDetector;
-    private final MainContract.ViewCallBack imageView;
+    private final ViewImagesContract.ViewCallBack imageView;
 
-    public OnSwipeTouchListener (MainContract.ViewCallBack imageView){
+    public OnSwipeTouchListener (ViewImagesContract.ViewCallBack imageView){
         gestureDetector = new GestureDetector((Context)imageView, new GestureListener());
         this.imageView = imageView;
     }
