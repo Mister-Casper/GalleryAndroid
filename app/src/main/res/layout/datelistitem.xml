@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:grid="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -13,13 +14,13 @@
         android:textColor="@color/dark"
         android:textSize="26sp" />
 
-<FrameLayout
+    <GridLayout
+        android:id="@+id/field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="4">
 
-    android:id="@+id/frame"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    </GridLayout>
 
-</FrameLayout>
 
 </LinearLayout>
-

@@ -11,16 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".activity.ViewAllImages.view.ViewAllImages"
-            ></activity>
-        <activity android:name=".ViewImages.view.ViewImagesActivity">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities=".activity.ViewAllImages.view.ViewAllImages"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
+        <activity android:name=".activity.ViewAllImages.view.ViewAllImages">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ViewImages.view.ViewImagesActivity"></activity>
     </application>
 
 </manifest>

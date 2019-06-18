@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewImages.view.ViewImagesActivity"
+    tools:context=".activity.ViewImages.view.ViewImagesActivity"
     android:orientation="vertical">
 
     <ImageView

@@ -5,7 +5,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.journaldev.mvpdagger2.ViewImagesContract;
+import com.journaldev.mvpdagger2.activity.ViewImages.ViewImagesContract;
 
 public class OnSwipeTouchListener implements View.OnTouchListener {
 

@@ -1,13 +1,16 @@
-package com.journaldev.mvpdagger2.activity.ViewImages;
+package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
+
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-/**
- * Created by anupamchugh on 11/08/17.
- */
-
-public interface ViewImagesContract {
+import com.journaldev.mvpdagger2.R;
+public interface ViewAllImagesByDateContract {
 
     interface ViewCallBack {
         void viewImage(Uri imageUri);

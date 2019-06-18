@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.activity.ViewImages.model;
+package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.model;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,8 +9,17 @@ import com.journaldev.mvpdagger2.activity.ViewImages.ViewImagesContract;
 
 import java.io.File;
 
-public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
+public class ViewAllImagesByDateModel implements ViewImagesContract.ModelCallBack {
     private static Uri[] mUrls;
+
+    public static Uri[] getUrls() {
+        return mUrls;
+    }
+
+    public static long[] getDate() {
+        return mDate;
+    }
+
     private static long[] mDate;
     private int maxImageId = 0;
     public static int currentImageId = 0;
@@ -22,7 +31,7 @@ public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
         getImageUrl(context);
     }
 
-    public void getImageUrl(Context context) {
+    private void getImageUrl(Context context) {
         cc = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null,
                 null);
@@ -47,12 +56,9 @@ public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
     private void sortResultByDate() {
         Uri tempNum;
         long tempName;
-        for (int i = 0; i < mDate.length; i++)
-        {
-            for (int j = i + 1; j < mDate.length; j++)
-            {
-                if (mDate[i] < mDate[j])
-                {
+        for (int i = 0; i < mDate.length; i++) {
+            for (int j = i + 1; j < mDate.length; j++) {
+                if (mDate[i] < mDate[j]) {
                     tempNum = mUrls[i];
                     tempName = mDate[i];
 

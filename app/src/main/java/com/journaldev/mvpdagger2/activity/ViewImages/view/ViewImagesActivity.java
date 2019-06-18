@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.ViewImages.view;
+package com.journaldev.mvpdagger2.activity.ViewImages.view;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.journaldev.mvpdagger2.ViewImagesContract;
-import com.journaldev.mvpdagger2.ViewImages.model.ViewImagesModel;
+import com.journaldev.mvpdagger2.activity.ViewImages.ViewImagesContract;
+import com.journaldev.mvpdagger2.activity.ViewImages.model.ViewImagesModel;
+import com.journaldev.mvpdagger2.activity.ViewImages.presenter.ViewImagesPresenter;
 import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.ViewImages.presenter.ViewImagesPresenter;
 
 
 import butterknife.BindView;

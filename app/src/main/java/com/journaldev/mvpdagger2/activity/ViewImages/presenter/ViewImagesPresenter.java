@@ -1,13 +1,11 @@
-package com.journaldev.mvpdagger2.ViewImages.presenter;
+package com.journaldev.mvpdagger2.activity.ViewImages.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.journaldev.mvpdagger2.ViewImagesContract;
-import com.journaldev.mvpdagger2.ViewImages.model.ViewImagesModel;
+import com.journaldev.mvpdagger2.activity.ViewImages.ViewImagesContract;
+import com.journaldev.mvpdagger2.activity.ViewImages.model.ViewImagesModel;
 
-import javax.inject.Singleton;
 
-@Singleton
 public class ViewImagesPresenter implements ViewImagesContract.PresenterCallBack{
 
     private ViewImagesContract.ViewCallBack mainView;
@@ -22,7 +20,7 @@ public class ViewImagesPresenter implements ViewImagesContract.PresenterCallBack
     public void chandgeCurrentImage(int chandgeCurrentImageId) {
         int newCurrentImageId = ViewImagesModel.currentImageId + chandgeCurrentImageId;
         checkBoundaries(newCurrentImageId);
-        mainView.viewImage(model.getImage(ViewImagesModel.currentImageId));
+      //  mainView.viewImage(model.getImage(ViewImagesModel.currentImageId));
     }
 
     private void checkBoundaries(int newCurrentImageId) {
