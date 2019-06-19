@@ -32,6 +32,7 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.ViewAllImages.view.ViewAllImages;
 import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
 import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.model.ItemDate;
+import com.journaldev.mvpdagger2.utils.MyImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -103,7 +104,7 @@ public class DatePhotoAdapter extends BaseAdapter {
 
             grid.removeAllViews();
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < photo.length; i++) {
                 createImageView(grid, photo[i], lInflater);
             }
         }
@@ -112,22 +113,12 @@ public class DatePhotoAdapter extends BaseAdapter {
     }
 
     private void createImageView(GridLayout field, Uri photoUri, LayoutInflater inflate) {
-        ImageView imageView = (ImageView) inflate.inflate(R.layout.imagelistener, null);
-        File file = new File(String.valueOf(photoUri));
-        Uri uri = Uri.fromFile(file);
-
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(ctx.getApplicationContext().getContentResolver(), uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Bitmap decoded = Bitmap.createScaledBitmap(bitmap,200,200,true);
-        imageView.setImageBitmap(decoded);
+        MyImageView imageView = new MyImageView(ctx);
         Display display = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int a = display.getWidth() / 4;
         imageView.setLayoutParams(new GridView.LayoutParams(a, a));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setImageUrl(photoUri);
         field.addView(imageView);
     }
 
