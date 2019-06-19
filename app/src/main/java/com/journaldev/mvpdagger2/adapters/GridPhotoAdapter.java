@@ -122,25 +122,6 @@ public class GridPhotoAdapter extends BaseAdapter {
         field.addView(imageView);
     }
 
- /*   public void compressBitmap(File file, int sampleSize, int quality) {
-        try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = sampleSize;
-            FileInputStream inputStream = new FileInputStream(file);
-            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, options);
-            inputStream.close();
-            FileOutputStream outputStream = new FileOutputStream("location to save");
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.close();
-
-            compressBitmap(file, (sampleSize * 2), (quality / 4));
-
-            selectedBitmap.recycle();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
 
     // товар по позиции
     ItemDate getProduct(int position) {
