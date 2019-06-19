@@ -3,10 +3,8 @@ package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.view;
 
 //grid:layout_columnWeight="1"
 
-import android.content.ClipData;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.ViewImages.model.ViewImagesModel;
-import com.journaldev.mvpdagger2.adapters.DatePhotoAdapter;
+import com.journaldev.mvpdagger2.adapters.GridPhotoAdapter;
 import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.model.ItemDate;
 import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.model.ViewAllImagesByDateModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +61,7 @@ public class ViewAllImagesByDate extends Fragment {
         arrayList.add(photo);
 
         int a = DataList.getWidth();
-        DatePhotoAdapter adapter = new DatePhotoAdapter(getActivity().getApplicationContext(), arrayList);
+        GridPhotoAdapter adapter = new GridPhotoAdapter(getActivity().getApplicationContext(), arrayList);
         DataList.setAdapter(adapter);
 
     }

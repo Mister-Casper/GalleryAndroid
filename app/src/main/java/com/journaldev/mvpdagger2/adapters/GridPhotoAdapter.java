@@ -55,12 +55,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class DatePhotoAdapter extends BaseAdapter {
+public class GridPhotoAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
     ArrayList<ItemDate> objects;
 
-    public DatePhotoAdapter(Context context, ArrayList<ItemDate> products) {
+    public GridPhotoAdapter(Context context, ArrayList<ItemDate> products) {
         ctx = context;
         objects = products;
         lInflater = (LayoutInflater) ctx
