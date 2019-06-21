@@ -2,8 +2,9 @@ package com.journaldev.mvpdagger2;
 
 import android.net.Uri;
 
-import com.journaldev.mvpdagger2.ViewImages.presenter.model.ViewImagesModel;
-import com.journaldev.mvpdagger2.ViewImages.presenter.ViewImagesPresenter;
+import com.journaldev.mvpdagger2.activity.ViewImages.ViewImagesContract;
+import com.journaldev.mvpdagger2.activity.ViewImages.model.ViewImagesModel;
+import com.journaldev.mvpdagger2.activity.ViewImages.presenter.ViewImagesPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ImagePresenterTest {
