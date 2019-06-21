@@ -96,30 +96,38 @@ public class GridPhotoAdapter extends BaseAdapter {
 
             ItemDate item = getProduct(position);
 
-            // заполняем View в пункте списка данными из товаров: наименование, цена
-            // и картинка
-            ((TextView) view.findViewById(R.id.title)).setText(item.getDate());
             final GridLayout grid = view.findViewById(R.id.field);
             final Uri[] photo = item.getPhoto();
 
-            grid.removeAllViews();
+                grid.removeAllViews();
 
             for (int i = 0; i < photo.length; i++) {
                 createImageView(grid, photo[i], lInflater);
             }
         }
-
         return view;
     }
 
+
     private void createImageView(GridLayout field, Uri photoUri, LayoutInflater inflate) {
         MyImageView imageView = new MyImageView(ctx);
-        Display display = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int a = display.getWidth() / 4;
-        imageView.setLayoutParams(new GridView.LayoutParams(a, a));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        int columnwidth = getColumnWidth(field);
+        imageView.setPadding(3,3,3,3);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(columnwidth,columnwidth);
+        imageView.setLayoutParams(layoutParams);
         imageView.setImageUrl(photoUri);
-        field.addView(imageView);
+         field.addView(imageView);
+    }
+
+    private int getScreenWidth()
+    {
+        Display display = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        return display.getWidth();
+    }
+
+    private int getColumnWidth(GridLayout field)
+    {
+        return  getScreenWidth() / field.getColumnCount();
     }
 
 
