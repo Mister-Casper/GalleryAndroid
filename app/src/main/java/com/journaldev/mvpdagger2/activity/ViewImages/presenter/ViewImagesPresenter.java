@@ -20,7 +20,7 @@ public class ViewImagesPresenter implements ViewImagesContract.PresenterCallBack
     public void chandgeCurrentImage(int chandgeCurrentImageId) {
         int newCurrentImageId = ViewImagesModel.currentImageId + chandgeCurrentImageId;
         checkBoundaries(newCurrentImageId);
-      //  mainView.viewImage(model.getImage(ViewImagesModel.currentImageId));
+        mainView.viewImage(model.getImage(ViewImagesModel.currentImageId));
     }
 
     private void checkBoundaries(int newCurrentImageId) {
