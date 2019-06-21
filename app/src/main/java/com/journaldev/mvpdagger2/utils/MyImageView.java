@@ -75,11 +75,8 @@ public class MyImageView extends android.support.v7.widget.AppCompatImageView {
         protected Bitmap doInBackground(String... params) {
             String photoUri = params[0];
             try {
-                long start = System.currentTimeMillis();
-                Bitmap bitmap = getThumbnail(context.getContentResolver(),photoUri);
-                long stop = System.currentTimeMillis() - start;
-                Log.e("Compress", Long.toString(stop));
-                return bitmap;
+                Bitmap miniature = getThumbnail(context.getContentResolver(),photoUri);
+                return miniature;
             } catch (Exception e) {
                 return null;
             }
@@ -93,11 +90,10 @@ public class MyImageView extends android.support.v7.widget.AppCompatImageView {
                 ca.close();
                 return MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MICRO_KIND, null );
             }
-
             ca.close();
             return null;
-
         }
+
         @Override
         protected void onPostExecute(Bitmap result) {
             if (result != null) {
