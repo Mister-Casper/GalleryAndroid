@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.model;
+package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
 
 import android.net.Uri;
 
