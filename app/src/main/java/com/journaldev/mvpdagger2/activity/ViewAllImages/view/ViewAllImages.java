@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.ViewAllImagesByDate;
@@ -27,8 +28,10 @@ public class ViewAllImages extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewallimages);
         ButterKnife.bind(this);
-        ActivityCompat.requestPermissions(ViewAllImages.this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+       //     ActivityCompat.requestPermissions(ViewAllImages.this,
+           //         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
 // Create new fragment and transaction
         ViewAllImagesByDate newFragment = new ViewAllImagesByDate();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
