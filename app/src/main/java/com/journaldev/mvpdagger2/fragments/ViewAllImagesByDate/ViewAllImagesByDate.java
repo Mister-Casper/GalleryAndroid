@@ -4,10 +4,12 @@ package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
 //grid:layout_columnWeight="1"
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,9 +53,7 @@ public class ViewAllImagesByDate extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragmentviewallimagesbydate, container, false);
-
         unbinder = ButterKnife.bind(this, view);
-
         ImageUrls.getImageUrl(getContext());
         Uri[] uri = ImageUrls.getUrls();
         ItemDate photo = new ItemDate(uri);
