@@ -3,6 +3,10 @@ package com.journaldev.mvpdagger2.activity.ViewImages.view;
 import android.Manifest;
 import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -10,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +29,12 @@ import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.R;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,6 +46,9 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
     ImageView image;
 
     ViewImagesContract.PresenterCallBack presenter;
+
+    private float scaleImageFactor = 1.0f;
+    private ScaleGestureDetector scaleGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +66,16 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
         initPresenter();
-        if(savedInstanceState == null)
-        selectStandartImage();
+        if (savedInstanceState == null)
+            selectStandartImage();
         image.setOnTouchListener(new OnSwipeTouchListener(ViewImagesActivity.this));
+        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        scaleGestureDetector.onTouchEvent(motionEvent);
+        return true;
+    }
 
     private void selectStandartImage() {
         int newStartImageId = getIntent().getIntExtra("idImage", 0);
@@ -69,8 +89,9 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
     }
 
     @Override
-    public void viewImage(Uri imageUri) {
+    public void viewImage(Uri imageUri)  {
         image.setImageURI(imageUri);
+        scaleImageFactor = 1f;
     }
 
     public void onBackImageButton() {
@@ -86,4 +107,16 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
     public Context getContext() {
         return getApplicationContext();
     }
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
+            scaleImageFactor *= scaleGestureDetector.getScaleFactor();
+            scaleImageFactor = Math.max(0.1f,
+                    Math.min(scaleImageFactor, 10.0f));
+            image.setScaleX(scaleImageFactor);
+            image.setScaleY(scaleImageFactor);
+            return true;
+        }
+    }
+
 }
