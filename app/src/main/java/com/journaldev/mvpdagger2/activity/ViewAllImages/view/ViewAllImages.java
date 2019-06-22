@@ -17,8 +17,6 @@ import butterknife.ButterKnife;
 
 public class ViewAllImages extends AppCompatActivity {
 
-    @BindView(R.id.title)
-    TextView title;
     @BindView(R.id.frame)
     FrameLayout frame;
 
