@@ -54,12 +54,6 @@ public class ViewAllImagesByDate extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         model.init(getContext());
 
         Uri[] uri = ImageUrls.getUrls();
@@ -70,11 +64,14 @@ public class ViewAllImagesByDate extends Fragment {
 
         GridPhotoAdapter adapter = new GridPhotoAdapter(getActivity().getApplicationContext(), arrayList);
         DataList.setAdapter(adapter);
+
+        return view;
     }
 
-    private void complianceUrlCheck()
-    {
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().finish();
     }
 
     @Override
