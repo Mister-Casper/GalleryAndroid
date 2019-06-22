@@ -1,8 +1,14 @@
 package com.journaldev.mvpdagger2.adapters;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,22 +71,13 @@ public class GridPhotoAdapter extends BaseAdapter {
             grid.removeAllViews();
             idImage = 0;
             for (int i = 0; i < photo.length; i++) {
-                createImageView(grid, photo[i], lInflater);
+                createImageView(grid, photo[i]);
             }
         }
         return view;
     }
 
-    View.OnClickListener toActivity = new View.OnClickListener() {
-        public void onClick(View view) {
-            Intent intent = new Intent(ctx, ViewImagesActivity.class);
-            int viewIdImage = Integer.parseInt(view.getTag().toString());
-            intent.putExtra("idImage", viewIdImage);
-            ctx.startActivity(intent);
-        }
-    };
-
-    private void createImageView(GridLayout field, Uri photoUri, LayoutInflater inflate) {
+    private void createImageView(GridLayout field, Uri photoUri) {
         MyImageView imageView = new MyImageView(ctx);
         imageView.setTag(idImage);
         imageView.setOnClickListener(toActivity);
@@ -92,6 +89,16 @@ public class GridPhotoAdapter extends BaseAdapter {
         field.addView(imageView);
         idImage++;
     }
+
+
+    View.OnClickListener toActivity = new View.OnClickListener() {
+        public void onClick(View view) {
+            Intent intent = new Intent(ctx, ViewImagesActivity.class);
+            int viewIdImage = Integer.parseInt(view.getTag().toString());
+            intent.putExtra("idImage", viewIdImage);
+            ctx.startActivity(intent);
+        }
+    };
 
     private int getScreenWidth() {
         Display display = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
