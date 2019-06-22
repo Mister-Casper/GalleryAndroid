@@ -23,6 +23,13 @@ public class ViewImagesPresenter implements ViewImagesContract.PresenterCallBack
         mainView.viewImage(model.getImage(ViewImagesModel.currentImageId));
     }
 
+    @Override
+    public void setCurrentImage(int currentImageId) {
+        int newCurrentImageId = currentImageId;
+        checkBoundaries(newCurrentImageId);
+        mainView.viewImage(model.getImage(ViewImagesModel.currentImageId));
+    }
+
     private void checkBoundaries(int newCurrentImageId) {
         if (newCurrentImageId >= 0 && newCurrentImageId <= model.getMaxId()) {
             ViewImagesModel.currentImageId = newCurrentImageId;
