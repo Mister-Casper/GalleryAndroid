@@ -2,12 +2,14 @@ package com.journaldev.mvpdagger2.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.GridView;
@@ -59,6 +62,7 @@ public class GridPhotoAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
     ArrayList<ItemDate> objects;
+    int idImage = 0;
 
     public GridPhotoAdapter(Context context, ArrayList<ItemDate> products) {
         ctx = context;
@@ -93,14 +97,12 @@ public class GridPhotoAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.datelistitem, parent, false);
 
-
             ItemDate item = getProduct(position);
 
             final GridLayout grid = view.findViewById(R.id.field);
             final Uri[] photo = item.getPhoto();
-
-                grid.removeAllViews();
-
+            grid.removeAllViews();
+            idImage = 0;
             for (int i = 0; i < photo.length; i++) {
                 createImageView(grid, photo[i], lInflater);
             }
@@ -108,26 +110,35 @@ public class GridPhotoAdapter extends BaseAdapter {
         return view;
     }
 
+    View.OnClickListener toActivity = new View.OnClickListener() {
+        public void onClick(View view) {
+            Intent intent = new Intent(ctx, ViewImagesActivity.class);
+            int viewIdImage = Integer.parseInt(view.getTag().toString());
+            intent.putExtra("idImage", viewIdImage);
+            ctx.startActivity(intent);
+        }
+    };
 
     private void createImageView(GridLayout field, Uri photoUri, LayoutInflater inflate) {
         MyImageView imageView = new MyImageView(ctx);
+        imageView.setTag(idImage);
+        imageView.setOnClickListener(toActivity);
         int columnwidth = getColumnWidth(field);
-        imageView.setPadding(3,3,3,3);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(columnwidth,columnwidth);
+        imageView.setPadding(3, 3, 3, 3);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(columnwidth, columnwidth);
         imageView.setLayoutParams(layoutParams);
         imageView.setImageUrl(photoUri);
-         field.addView(imageView);
+        field.addView(imageView);
+        idImage++;
     }
 
-    private int getScreenWidth()
-    {
+    private int getScreenWidth() {
         Display display = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         return display.getWidth();
     }
 
-    private int getColumnWidth(GridLayout field)
-    {
-        return  getScreenWidth() / field.getColumnCount();
+    private int getColumnWidth(GridLayout field) {
+        return getScreenWidth() / field.getColumnCount();
     }
 
 
