@@ -9,8 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
-import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.view.ViewAllImagesByDate;
+import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.ViewAllImagesByDate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,5 +41,10 @@ public class ViewAllImages extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
 

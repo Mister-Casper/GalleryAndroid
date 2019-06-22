@@ -1,62 +1,23 @@
 package com.journaldev.mvpdagger2.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.FileProvider;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.ViewAllImages.view.ViewAllImages;
 import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
-import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.model.ItemDate;
+import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.ItemDate;
 import com.journaldev.mvpdagger2.utils.MyImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class GridPhotoAdapter extends BaseAdapter {
     Context ctx;

@@ -35,7 +35,6 @@ public class ImageUrls {
                 cc.moveToPosition(i);
                 Uri temp  = Uri.parse(cc.getString(1));
                 File file = new File(String.valueOf(temp));
-               // mUrls[i] = Uri.fromFile(file);
                 mUrls[i] = temp;
                 long date = file.lastModified();
                 mDate[i] = date;
