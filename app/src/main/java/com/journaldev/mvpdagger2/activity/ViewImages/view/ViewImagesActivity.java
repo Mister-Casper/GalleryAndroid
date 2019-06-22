@@ -90,8 +90,9 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
 
     @Override
     public void viewImage(Uri imageUri)  {
-        image.setImageURI(imageUri);
         scaleImageFactor = 1f;
+        image.setImageURI(imageUri);
+        chandgeScale();
     }
 
     public void onBackImageButton() {
@@ -107,6 +108,13 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
     public Context getContext() {
         return getApplicationContext();
     }
+
+    private void chandgeScale()
+    {
+        image.setScaleX(scaleImageFactor);
+        image.setScaleY(scaleImageFactor);
+    }
+
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector scaleGestureDetector){
