@@ -32,5 +32,6 @@ public interface ViewImagesContract {
     interface PresenterCallBack {
         void chandgeCurrentImage(int chandgeCurrentImageId);
 
+        void setCurrentImage(int currentImageId);
     }
 }
