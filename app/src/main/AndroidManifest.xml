@@ -11,15 +11,19 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activity.ViewAllImages.view.ViewAllImages"
+        <activity
+            android:name=".activity.ViewAllImages.view.ViewAllImages"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Launcher">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activity.ViewImages.view.ViewImagesActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".activity.ViewImages.view.ViewImagesActivity"></activity>
     </application>
 
 </manifest>
