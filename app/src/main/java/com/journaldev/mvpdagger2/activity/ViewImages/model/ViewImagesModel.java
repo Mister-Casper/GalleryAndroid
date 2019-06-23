@@ -5,11 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.journaldev.mvpdagger2.activity.ViewImages.ViewImagesContract;
 
 import java.io.File;
 
-public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
+public class ViewImagesModel{
     private static Uri[] mUrls;
     private static long[] mDate;
     private int maxImageId = 0;
@@ -17,7 +16,6 @@ public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
 
     private Cursor cc = null;
 
-    @Override
     public void init(Context context) {
         getImageUrl(context);
     }
@@ -66,7 +64,6 @@ public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
         }
     }
 
-    @Override
     public Uri getImage(int idImage) {
         if (mUrls != null) {
             return mUrls[idImage];
@@ -74,7 +71,6 @@ public class ViewImagesModel implements ViewImagesContract.ModelCallBack {
         return Uri.parse("");
     }
 
-    @Override
     public int getMaxId() {
         return maxImageId;
     }
