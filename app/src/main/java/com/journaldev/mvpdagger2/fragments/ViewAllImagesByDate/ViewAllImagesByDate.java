@@ -54,8 +54,7 @@ public class ViewAllImagesByDate extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragmentviewallimagesbydate, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ImageUrls.getImageUrl(getContext());
-        Uri[] uri = ImageUrls.getUrls();
+        Uri[] uri = ImageUrls.getUrls(getContext());
         ItemDate photo = new ItemDate(uri);
 
         final ArrayList<ItemDate> arrayList = new ArrayList<>();

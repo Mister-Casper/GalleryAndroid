@@ -24,7 +24,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     public ImagesPageAdapter(Context context) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageUri = ImageUrls.getUrls();
+        imageUri = ImageUrls.getUrls(context);
     }
 
     @Override

@@ -20,7 +20,9 @@ import java.io.File;
 public class ImageUrls {
     private static Uri[] mUrls;
 
-    public static Uri[] getUrls() {
+    public static Uri[] getUrls(Context context) {
+        if(mUrls == null)
+            getImageUrl(context);
         return mUrls;
     }
 
@@ -45,7 +47,7 @@ public class ImageUrls {
     }
 
 
-    public static void getImageUrl(Context context) {
+    private static void getImageUrl(Context context) {
         if (!checkReadExternalPermission(context)) {
             getAccess(context);
         }
@@ -56,7 +58,6 @@ public class ImageUrls {
     }
 
     private static void loadUrl(){
-
         if (cc != null) {
             cc.moveToFirst();
             mUrls = new Uri[cc.getCount()];
