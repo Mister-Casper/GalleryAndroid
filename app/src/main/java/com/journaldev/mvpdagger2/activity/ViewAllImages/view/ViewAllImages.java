@@ -1,25 +1,23 @@
 package com.journaldev.mvpdagger2.activity.ViewAllImages.view;
 
-import android.Manifest;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.ViewAllImagesByDate;
+import com.journaldev.mvpdagger2.adapters.FragmentPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ViewAllImages extends AppCompatActivity {
 
-    @BindView(R.id.frame)
-    FrameLayout frame;
+    @BindView(R.id.tabs)
+    TabLayout tabs;
+    @BindView(R.id.viewpager)
+    ViewPager viewpager;
 
 
     @Override
@@ -27,14 +25,31 @@ public class ViewAllImages extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewallimages);
         ButterKnife.bind(this);
+        final FragmentPagerAdapter adapter = new FragmentPagerAdapter
+                (getSupportFragmentManager(), tabs.getTabCount());
+        viewpager.setAdapter(adapter);
+        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
+        setTableSelector();
+    }
 
-        ViewAllImagesByDate newFragment = new ViewAllImagesByDate();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    private void setTableSelector()
+    {
+        tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewpager.setCurrentItem(tab.getPosition());
+            }
 
-        transaction.replace(R.id.frame, newFragment);
-        transaction.addToBackStack(null);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        transaction.commit();
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
 
