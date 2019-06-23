@@ -36,6 +36,7 @@ public class ViewImagesActivity extends AppCompatActivity {
 
         ImagesPageAdapter mCustomPagerAdapter = new ImagesPageAdapter(this);
         pager.setAdapter(mCustomPagerAdapter);
+        pager.setOffscreenPageLimit(3);
         if (savedInstanceState == null)
             selectStandartImage();
     }

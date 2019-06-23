@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.R;
+
+import java.io.File;
 
 public class ImagesPageAdapter extends PagerAdapter {
 
@@ -39,7 +42,9 @@ public class ImagesPageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
         ImageView imageView =  itemView.findViewById(R.id.imageView);
-        imageView.setImageURI(imageUri[position]);
+        File file = new File(String.valueOf(imageUri[position]));
+        Uri uri = Uri.fromFile(file);
+        Glide.with(mContext).load(uri).into(imageView);
         container.addView(itemView);
 
         return itemView;
