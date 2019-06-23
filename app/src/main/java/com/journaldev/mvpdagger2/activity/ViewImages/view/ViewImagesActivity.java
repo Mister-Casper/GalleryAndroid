@@ -9,11 +9,14 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -29,15 +32,9 @@ import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.R;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class ViewImagesActivity extends AppCompatActivity implements ViewImagesContract.ViewCallBack {
@@ -53,12 +50,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
+        allScreen();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
 
@@ -71,6 +64,15 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
         image.setOnTouchListener(new OnSwipeTouchListener(ViewImagesActivity.this));
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
+
+    private void allScreen() {
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
 
     public boolean onTouchEvent(MotionEvent motionEvent) {
         scaleGestureDetector.onTouchEvent(motionEvent);
@@ -89,7 +91,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
     }
 
     @Override
-    public void viewImage(Uri imageUri)  {
+    public void viewImage(Uri imageUri) {
         scaleImageFactor = 1f;
         image.setImageURI(imageUri);
         chandgeScale();
@@ -109,15 +111,14 @@ public class ViewImagesActivity extends AppCompatActivity implements ViewImagesC
         return getApplicationContext();
     }
 
-    private void chandgeScale()
-    {
+    private void chandgeScale() {
         image.setScaleX(scaleImageFactor);
         image.setScaleY(scaleImageFactor);
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
             scaleImageFactor *= scaleGestureDetector.getScaleFactor();
             scaleImageFactor = Math.max(0.1f,
                     Math.min(scaleImageFactor, 10.0f));
