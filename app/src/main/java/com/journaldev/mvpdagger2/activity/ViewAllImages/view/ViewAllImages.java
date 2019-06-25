@@ -1,9 +1,14 @@
 package com.journaldev.mvpdagger2.activity.ViewAllImages.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.journaldev.mvpdagger2.R;
@@ -22,6 +27,7 @@ public class ViewAllImages extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewallimages);
         ButterKnife.bind(this);
