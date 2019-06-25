@@ -1,16 +1,43 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeBar" parent="Base.Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/gray</item>gr
+        <item name="colorPrimaryDark">@color/gray</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- To change the popup menu and app text color  -->
+        <item name="android:textColor">@color/whitegray</item>
+
+        <!-- To change the background of options menu-->
+        <item name="android:itemBackground">@color/gray2</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
+    </style>
+
+
+
     <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <!-- для Android 5+ вы можете поменять цвет colorPrimaryDark, чтобы соответствовать цвету windowBackground -->
         <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>
+
+
+    <style
+        name="OverFlowIcon"
+        parent="Theme.AppCompat">
+        <item name="android:src">@drawable/menu_icon</item>
+    </style>
+
+
+
 </resources>
