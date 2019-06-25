@@ -11,11 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity
+            android:theme="@style/AppTheme.Launcher"
             android:name=".activity.ViewAllImages.view.ViewAllImages"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Launcher">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/AppThemeBar"
             android:name=".activity.ViewImages.view.ViewImagesActivity"
             android:screenOrientation="portrait">
             <intent-filter tools:ignore="AppLinkUrlError">
@@ -30,6 +31,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.FileInfo.FIleInfo">
+
         </activity>
     </application>
 
