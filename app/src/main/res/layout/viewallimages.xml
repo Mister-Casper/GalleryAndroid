@@ -8,32 +8,32 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMaxWidth="0dp"
             app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/whitegray"
             app:tabIndicatorColor="@color/white"
-            app:tabSelectedTextColor="@color/whitegray">
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/whitegray"
+            app:tabTextColor="@color/whitegray">
 
             <android.support.design.widget.TabItem
-                android:layout_gravity="left"
                 android:id="@+id/Tab1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:text="изображения" />
 
             <android.support.design.widget.TabItem
-                android:layout_gravity="right"
                 android:id="@+id/Tab2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="альбомы" />
 
         </android.support.design.widget.TabLayout>
@@ -44,9 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:background="@android:color/white"
-        />
-
+        android:background="@android:color/white" />
 
 
 </LinearLayout>
