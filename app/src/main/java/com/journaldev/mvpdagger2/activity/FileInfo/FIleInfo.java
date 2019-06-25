@@ -56,7 +56,7 @@ public class FIleInfo extends Activity {
         path.setText(file.getPath());
         Calendar date = new GregorianCalendar();
         date.setTime(new Date(FileByUri.lastModified()));
-        chandge.setText(date.get(Calendar.HOUR) + " : " + date.get(Calendar.MINUTE) + " , " + date.get(Calendar.DAY_OF_MONTH)  + "." + (date.get(Calendar.MONTH)+1) + "." + date.get(Calendar.YEAR));
+        chandge.setText(date.get(Calendar.HOUR_OF_DAY) + " : " + date.get(Calendar.MINUTE) + " , " + date.get(Calendar.DAY_OF_MONTH)  + "." + (date.get(Calendar.MONTH)+1) + "." + date.get(Calendar.YEAR));
         resolution.setText(bmp.getWidth() + "×" + bmp.getHeight());
         size.setText(convertFileLenghtToString(FileByUri.length()));
     }
