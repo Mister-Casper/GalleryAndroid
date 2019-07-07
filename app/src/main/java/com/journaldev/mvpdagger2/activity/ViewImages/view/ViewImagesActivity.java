@@ -18,6 +18,7 @@ import com.journaldev.mvpdagger2.activity.FileInfo.FIleInfo;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +28,7 @@ public class ViewImagesActivity extends AppCompatActivity {
 
     @BindView(R.id.pager)
     ViewPager pager;
+    ImagesPageAdapter mCustomPagerAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,24 @@ public class ViewImagesActivity extends AppCompatActivity {
         allScreen();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
-        ImagesPageAdapter mCustomPagerAdapter = new ImagesPageAdapter(this);
-        pager.setAdapter(mCustomPagerAdapter);
         pager.setOffscreenPageLimit(3);
-        if (savedInstanceState == null)
+        //   Uri[] uri = ImageUrls.getUrls(getApplicationContext());
+        pager.setOffscreenPageLimit(3);
+        Uri[] uri;
+        if (savedInstanceState == null) {
             selectStandartImage();
+            ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
+            if (strUri != null) {
+                uri = new Uri[strUri.size()];
+                for (int i = 0; i < uri.length; i++)
+                    uri[i] = Uri.parse(strUri.get(i));
+                mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
+            } else
+                uri = ImageUrls.getUrls(getApplicationContext());
+            mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
+        }
+
+        pager.setAdapter(mCustomPagerAdapter);
         getOtherIntent();
         ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
         abDrawable.setAlpha(0);
@@ -58,7 +73,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.info:
                 Intent intent = new Intent(getApplicationContext(), FIleInfo.class);
-                Uri currentUri = ImageUrls.getImage(pager.getCurrentItem());
+                Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem());
                 intent.putExtra("uri", currentUri.toString());
                 getApplicationContext().startActivity(intent);
                 return true;
