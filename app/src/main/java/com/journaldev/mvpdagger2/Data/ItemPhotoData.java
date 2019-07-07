@@ -1,8 +1,8 @@
-package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
+package com.journaldev.mvpdagger2.Data;
 
 import android.net.Uri;
 
-public class ItemDate {
+public class ItemPhotoData {
 
     public Uri[] getPhoto() {
         return photo;
@@ -10,7 +10,7 @@ public class ItemDate {
 
     private Uri[] photo;
 
-    public ItemDate(Uri[] photo) {
+    public ItemPhotoData(Uri[] photo) {
         this.photo = photo;
     }
 }

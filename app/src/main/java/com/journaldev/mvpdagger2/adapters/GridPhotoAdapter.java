@@ -1,14 +1,8 @@
 package com.journaldev.mvpdagger2.adapters;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
+import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
-import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.ItemDate;
+import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.utils.MyImageView;
 
 import java.util.ArrayList;
@@ -28,10 +23,10 @@ import java.util.ArrayList;
 public class GridPhotoAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
-    ArrayList<ItemDate> objects;
+    ArrayList<ItemPhotoData> objects;
     int idImage = 0;
 
-    public GridPhotoAdapter(Context context, ArrayList<ItemDate> products) {
+    public GridPhotoAdapter(Context context, ArrayList<ItemPhotoData> products) {
         ctx = context;
         objects = products;
         lInflater = (LayoutInflater) ctx
@@ -64,7 +59,7 @@ public class GridPhotoAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.datelistitem, parent, false);
 
-            ItemDate item = getProduct(position);
+            ItemPhotoData item = getProduct(position);
 
             final GridLayout grid = view.findViewById(R.id.field);
             final Uri[] photo = item.getPhoto();
@@ -111,8 +106,8 @@ public class GridPhotoAdapter extends BaseAdapter {
 
 
     // товар по позиции
-    ItemDate getProduct(int position) {
-        return ((ItemDate) getItem(position));
+    ItemPhotoData getProduct(int position) {
+        return ((ItemPhotoData) getItem(position));
     }
 
 }
