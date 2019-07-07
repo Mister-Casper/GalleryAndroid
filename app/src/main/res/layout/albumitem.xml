@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.journaldev.mvpdagger2.utils.MyImageView
+        <com.journaldev.mvpdagger2.myVIew.MyImageView
             android:id="@+id/picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
