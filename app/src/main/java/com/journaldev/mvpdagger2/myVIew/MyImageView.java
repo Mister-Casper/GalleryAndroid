@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.utils;
+package com.journaldev.mvpdagger2.myVIew;
 
 import android.content.ContentResolver;
 import android.content.Context;
