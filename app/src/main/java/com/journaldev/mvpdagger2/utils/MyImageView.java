@@ -43,6 +43,11 @@ public class MyImageView extends android.support.v7.widget.AppCompatImageView {
         super(context, attrs, defStyle);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth()); //Snap to width
+    }
     public MyImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -83,7 +88,6 @@ public class MyImageView extends android.support.v7.widget.AppCompatImageView {
         }
 
         public Bitmap getThumbnail(ContentResolver cr, String path) throws Exception {
-
             Cursor ca = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.MediaColumns._ID }, MediaStore.MediaColumns.DATA + "=?", new String[] {path}, null);
             if (ca != null && ca.moveToFirst()) {
                 int id = ca.getInt(ca.getColumnIndex(MediaStore.MediaColumns._ID));
