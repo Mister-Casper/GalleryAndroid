@@ -12,11 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
-import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
-import com.journaldev.mvpdagger2.utils.MyImageView;
+import com.journaldev.mvpdagger2.myVIew.MyImageView;
 
 import java.util.ArrayList;
 

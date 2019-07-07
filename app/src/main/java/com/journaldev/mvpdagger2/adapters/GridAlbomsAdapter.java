@@ -2,30 +2,18 @@ package com.journaldev.mvpdagger2.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
-import com.journaldev.mvpdagger2.Data.ImageUrls;
-import com.journaldev.mvpdagger2.Data.ItemAlbomsData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
-import com.journaldev.mvpdagger2.utils.MyImageView;
+import com.journaldev.mvpdagger2.myVIew.MyImageView;
 import com.journaldev.mvpdagger2.utils.SquareImageView;
 
 import java.io.File;
