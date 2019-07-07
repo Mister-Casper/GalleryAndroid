@@ -21,15 +21,20 @@ public class ImagesPageAdapter extends PagerAdapter {
     Context mContext;
     LayoutInflater mLayoutInflater;
 
-    public ImagesPageAdapter(Context context) {
+    public ImagesPageAdapter(Context context, Uri[] images) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageUri = ImageUrls.getUrls(context);
+        imageUri = images;
     }
 
     @Override
     public int getCount() {
         return imageUri.length;
+    }
+
+    public Uri getCurrentUri(int position)
+    {
+        return imageUri[position];
     }
 
     @Override
