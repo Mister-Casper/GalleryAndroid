@@ -46,12 +46,12 @@ public class ViewImagesActivity extends AppCompatActivity {
         pager.setOffscreenPageLimit(3);
         if (savedInstanceState == null) {
             selectStandartImage();
-           Uri[] uri = getIntenlAllUri();
+            Uri[] uri = getIntenlAllUri();
             mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
         }
-
         pager.setAdapter(mCustomPagerAdapter);
         getOtherIntent();
+
         ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
         abDrawable.setAlpha(0);
         getSupportActionBar().setBackgroundDrawable(abDrawable);
@@ -123,7 +123,12 @@ public class ViewImagesActivity extends AppCompatActivity {
 
 
     private void selectStandartImage() {
-        int newStartImageId = getIntent().getIntExtra("idImage", 0);
-        pager.setCurrentItem(newStartImageId);
+        final int newStartImageId = getIntent().getIntExtra("idImage", 0);
+        pager.post(new Runnable() {
+            @Override
+            public void run() {
+                pager.setCurrentItem(newStartImageId);
+            }
+        });
     }
 }
