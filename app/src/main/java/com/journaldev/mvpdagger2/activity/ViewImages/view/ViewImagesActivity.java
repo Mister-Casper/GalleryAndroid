@@ -1,5 +1,6 @@
 package com.journaldev.mvpdagger2.activity.ViewImages.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -7,8 +8,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -16,6 +19,8 @@ import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.FileInfo.FIleInfo;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
+import com.journaldev.mvpdagger2.utils.FabricEvents;
+import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,19 +43,10 @@ public class ViewImagesActivity extends AppCompatActivity {
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
         pager.setOffscreenPageLimit(3);
-        //   Uri[] uri = ImageUrls.getUrls(getApplicationContext());
         pager.setOffscreenPageLimit(3);
-        Uri[] uri;
         if (savedInstanceState == null) {
             selectStandartImage();
-            ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
-            if (strUri != null) {
-                uri = new Uri[strUri.size()];
-                for (int i = 0; i < uri.length; i++)
-                    uri[i] = Uri.parse(strUri.get(i));
-                mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
-            } else
-                uri = ImageUrls.getUrls(getApplicationContext());
+           Uri[] uri = getIntenlAllUri();
             mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
         }
 
@@ -59,6 +55,21 @@ public class ViewImagesActivity extends AppCompatActivity {
         ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
         abDrawable.setAlpha(0);
         getSupportActionBar().setBackgroundDrawable(abDrawable);
+
+    }
+
+    private Uri[] getIntenlAllUri()
+    {
+        Uri[] uri;
+        ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
+        if (strUri != null) {
+            uri = new Uri[strUri.size()];
+            for (int i = 0; i < uri.length; i++)
+                uri[i] = Uri.parse(strUri.get(i));
+            mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
+        } else
+            uri = ImageUrls.getUrls(getApplicationContext());
+        return uri;
     }
 
     @Override
