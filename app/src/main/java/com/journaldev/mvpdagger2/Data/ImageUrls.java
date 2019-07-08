@@ -35,22 +35,8 @@ public class ImageUrls {
 
     private static int maxImageId = 0;
 
-    private static void getAccess(Context context) {
-        ActivityCompat.requestPermissions((Activity) context,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-    }
-
-    private static boolean checkReadExternalPermission(Context context) {
-        String permission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
-        int res = context.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
-    }
-
 
     private static void getImageUrl(Context context) {
-        if (!checkReadExternalPermission(context)) {
-            getAccess(context);
-        }
         cc = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null,
                 null);
