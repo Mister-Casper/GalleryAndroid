@@ -3,21 +3,23 @@ package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
 
 //grid:layout_columnWeight="1"
 
+import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ListView;
 
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.adapters.GridPhotoAdapter;
+import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
+import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 import com.journaldev.mvpdagger2.utils.FabricEvents;
 import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
@@ -28,14 +30,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ViewAllImagesByDate extends Fragment {
+public class ViewAllImagesByDate extends Fragment  implements PhotosAdapter.ItemClickListener{
 
 
     @BindView(R.id.DataList)
-    ListView DataList;
+    RecyclerView DataList;
     Unbinder unbinder;
 
     public static ViewAllImagesByDate getInstance() {
@@ -55,12 +54,12 @@ public class ViewAllImagesByDate extends Fragment {
         View view = inflater.inflate(R.layout.fragmentviewallimagesbydate, container, false);
         unbinder = ButterKnife.bind(this, view);
         Uri[] uri = ImageUrls.getUrls(getContext());
-        ItemPhotoData photo = new ItemPhotoData(uri);
-
-        final ArrayList<ItemPhotoData> arrayList = new ArrayList<>();
-        arrayList.add(photo);
-
-        GridPhotoAdapter adapter = new GridPhotoAdapter(getActivity().getApplicationContext(), arrayList);
+        ArrayList<ItemPhotoData> photo = new ArrayList<>();
+        for (int i = 0; i < uri.length; i++)
+            photo.add(new ItemPhotoData(uri[i]));
+        DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        PhotosAdapter adapter = new PhotosAdapter(getActivity().getApplicationContext(), photo);
+        adapter.setClickListener(this);
         DataList.setAdapter(adapter);
 
         container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -80,4 +79,12 @@ public class ViewAllImagesByDate extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(getContext(), ViewImagesActivity.class);
+        intent.putExtra("idImage", position);
+        getContext().startActivity(intent);
+    }
+
 }
