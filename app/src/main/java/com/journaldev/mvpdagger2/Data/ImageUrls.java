@@ -80,11 +80,4 @@ public class ImageUrls {
         }
     }
 
-    public static Uri getImage(int idImage) {
-        if (mUrls != null) {
-            return mUrls[idImage];
-        }
-        return Uri.parse("");
-    }
-
 }
