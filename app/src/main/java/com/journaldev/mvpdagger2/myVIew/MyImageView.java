@@ -22,6 +22,8 @@ import android.widget.ImageView;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.utils.FabricEvents;
+import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +33,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class MyImageView extends android.support.v7.widget.AppCompatImageView {
-
-    private Uri placeholder;
-    private Bitmap image;
 
     public MyImageView(Context context) {
         super(context);
@@ -48,61 +47,10 @@ public class MyImageView extends android.support.v7.widget.AppCompatImageView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth()); //Snap to width
     }
+
     public MyImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setPlaceholderImage(Uri url) {
-        placeholder = url;
-        if (image == null) {
-            setImageUrl(placeholder);
-        }
-    }
 
-
-    public void setImageUrl(Uri url) {
-        DownloadTask task = new DownloadTask();
-        task.execute(String.valueOf(url));
-    }
-
-
-    private class DownloadTask extends AsyncTask<String, Void, Bitmap> {
-
-        Context context;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            context = getContext().getApplicationContext();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            String photoUri = params[0];
-            try {
-                Bitmap miniature = getThumbnail(context.getContentResolver(),photoUri);
-                return miniature;
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        public Bitmap getThumbnail(ContentResolver cr, String path) throws Exception {
-            Cursor ca = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.MediaColumns._ID }, MediaStore.MediaColumns.DATA + "=?", new String[] {path}, null);
-            if (ca != null && ca.moveToFirst()) {
-                int id = ca.getInt(ca.getColumnIndex(MediaStore.MediaColumns._ID));
-                ca.close();
-                return MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MICRO_KIND, null );
-            }
-            ca.close();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            if (result != null) {
-                setImageBitmap(result);
-            }
-        }
-    }
 }
