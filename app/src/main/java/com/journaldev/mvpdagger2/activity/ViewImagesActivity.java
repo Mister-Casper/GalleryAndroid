@@ -131,7 +131,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         pager.post(new Runnable() {
             @Override
             public void run() {
-                pager.setCurrentItem(newStartImageId);
+                pager.setCurrentItem(newStartImageId,false);
             }
         });
     }
