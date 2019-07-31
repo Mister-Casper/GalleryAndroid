@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
+package com.journaldev.mvpdagger2.fragments;
 
 
 //grid:layout_columnWeight="1"
@@ -18,33 +18,51 @@ import android.view.ViewTreeObserver;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
+import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 import com.journaldev.mvpdagger2.utils.FabricEvents;
 import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ViewAllImagesByDate extends Fragment  implements PhotosAdapter.ItemClickListener{
+public class ViewAllImagesByDate extends Fragment implements PhotosAdapter.ItemClickListener {
 
 
     @BindView(R.id.DataList)
     RecyclerView DataList;
     Unbinder unbinder;
-
-    public static ViewAllImagesByDate getInstance() {
-        ViewAllImagesByDate fragment = new ViewAllImagesByDate();
-        return fragment;
-    }
+    LinkedList<Uri> uri = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setAdapter();
+    }
+
+    private void setAdapter() {
+        PhotosAdapter adapter = new PhotosAdapter(getActivity().getApplicationContext(), loadUri());
+        adapter.setClickListener(this);
+        DataList.setAdapter(adapter);
+        DataList.invalidate();
+    }
+
+    private ArrayList<ItemPhotoData> loadUri() {
+        uri = ImageUrls.getUrls(getContext());
+        ArrayList<ItemPhotoData> photo = new ArrayList<>();
+        for (int i = 0; i < uri.size(); i++)
+            photo.add(new ItemPhotoData(uri.get(i)));
+        return photo;
     }
 
     @Override
@@ -53,15 +71,8 @@ public class ViewAllImagesByDate extends Fragment  implements PhotosAdapter.Item
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragmentviewallimagesbydate, container, false);
         unbinder = ButterKnife.bind(this, view);
-        Uri[] uri = ImageUrls.getUrls(getContext());
-        ArrayList<ItemPhotoData> photo = new ArrayList<>();
-        for (int i = 0; i < uri.length; i++)
-            photo.add(new ItemPhotoData(uri[i]));
+        setAdapter();
         DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        PhotosAdapter adapter = new PhotosAdapter(getActivity().getApplicationContext(), photo);
-        adapter.setClickListener(this);
-        DataList.setAdapter(adapter);
-
         container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

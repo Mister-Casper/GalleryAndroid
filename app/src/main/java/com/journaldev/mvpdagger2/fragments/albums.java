@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.fragments.albums;
+package com.journaldev.mvpdagger2.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.ViewImages.view.ViewImagesActivity;
+import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.AlbumsAdapter;
 import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class albums extends Fragment  implements AlbumsAdapter.ItemClickListener{
+public class albums extends Fragment implements AlbumsAdapter.ItemClickListener {
 
     @BindView(R.id.field)
     RecyclerView field;
@@ -31,9 +31,20 @@ public class albums extends Fragment  implements AlbumsAdapter.ItemClickListener
     AlbumsInfo.Album[] albums;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
+        AlbumsInfo.loadImageUrl(getContext());
+        albums = AlbumsInfo.getAllAlbum();
+        setAdapter();
+        AlbumsInfo.loadImageUrl(getContext());
+    }
 
+    private void setAdapter() {
+        field.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        AlbumsAdapter adapter = new AlbumsAdapter(getActivity().getApplicationContext(), albums);
+        adapter.setClickListener(this);
+        field.setAdapter(adapter);
+        field.invalidate();
     }
 
     @Override
@@ -42,12 +53,8 @@ public class albums extends Fragment  implements AlbumsAdapter.ItemClickListener
 
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
-        AlbumsInfo.loadImageUrl(getContext());
         albums = AlbumsInfo.getAllAlbum();
-        field.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        AlbumsAdapter adapter = new AlbumsAdapter(getActivity().getApplicationContext(), albums);
-        adapter.setClickListener(this);
-        field.setAdapter(adapter);
+        setAdapter();
         return view;
     }
 
@@ -61,15 +68,14 @@ public class albums extends Fragment  implements AlbumsAdapter.ItemClickListener
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesActivity.class);
-        intent.putStringArrayListExtra("uri",convertArraysUrlToArraysString(position));
+        intent.putStringArrayListExtra("uri", convertArraysUrlToArraysString(position));
         getContext().startActivity(intent);
     }
 
-    private ArrayList<String> convertArraysUrlToArraysString(int id)
-    {
+    private ArrayList<String> convertArraysUrlToArraysString(int id) {
         ArrayList<Uri> uri = albums[id].getUri();
         ArrayList<String> strUri = new ArrayList<>();
-        for(int i = 0 ; i < uri.size();i++)
+        for (int i = 0; i < uri.size(); i++)
             strUri.add(uri.get(i).toString());
         return strUri;
     }

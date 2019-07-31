@@ -1,29 +1,19 @@
-package com.journaldev.mvpdagger2.activity.ViewAllImages.view;
+package com.journaldev.mvpdagger2.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.FrameLayout;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.FragmentPagerAdapter;
-import com.journaldev.mvpdagger2.utils.FabricEvents;
-import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,9 +30,11 @@ public class ViewAllImages extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("");
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        getWindow().setBackgroundDrawable(null);
     }
 
 
@@ -91,7 +83,6 @@ public class ViewAllImages extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public void onBackPressed() {

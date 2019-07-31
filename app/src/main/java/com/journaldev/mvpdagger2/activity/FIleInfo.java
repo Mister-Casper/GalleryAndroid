@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.activity.FileInfo;
+package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -46,6 +46,7 @@ public class FIleInfo extends Activity {
             Uri uriFile = getUri();
             viewFileInfo(uriFile);
         }
+        getWindow().setBackgroundDrawable(null);
     }
 
     @SuppressLint("SetTextI18n")
@@ -56,7 +57,13 @@ public class FIleInfo extends Activity {
         path.setText(file.getPath());
         Calendar date = new GregorianCalendar();
         date.setTime(new Date(FileByUri.lastModified()));
-        chandge.setText(date.get(Calendar.HOUR_OF_DAY) + " : " + date.get(Calendar.MINUTE) + " , " + date.get(Calendar.DAY_OF_MONTH)  + "." + (date.get(Calendar.MONTH)+1) + "." + date.get(Calendar.YEAR));
+        chandge.setText(date.get(
+                Calendar.HOUR_OF_DAY) + " : "
+                + date.get(Calendar.MINUTE) + " , "
+                + date.get(Calendar.DAY_OF_MONTH)  + "."
+                + (date.get(Calendar.MONTH)+1) + "."
+                + date.get(Calendar.YEAR));
+
         resolution.setText(bmp.getWidth() + "×" + bmp.getHeight());
         size.setText(convertFileLenghtToString(FileByUri.length()));
     }
