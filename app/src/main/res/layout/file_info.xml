@@ -7,26 +7,13 @@
     android:orientation="vertical"
     tools:context=".activity.FileInfo.FIleInfo">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/gray">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:orientation="horizontal">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:background="@color/gray"
                 android:text="Свединия"
                 android:textColor="@color/whitegray"
                 android:textSize="20dp" />
-        </LinearLayout>
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_marginLeft="10dp"
