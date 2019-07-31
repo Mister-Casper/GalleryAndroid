@@ -9,6 +9,7 @@
 
     <!-- Base application theme. -->
     <style name="AppThemeBar" parent="Base.Theme.AppCompat.Light">
+        <item name="android:windowBackground">@null</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/gray</item>gr
         <item name="colorPrimaryDark">@color/gray</item>
@@ -20,6 +21,21 @@
         <!-- To change the background of options menu-->
         <item name="android:itemBackground">@color/gray2</item>
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#22a7e0</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#b80f22</item>
     </style>
 
 
