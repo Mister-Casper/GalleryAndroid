@@ -58,6 +58,9 @@ public class AlbumsInfo {
 
 
     public static void loadImageUrl(Context context) {
+        albumsName = new LinkedHashSet<>();
+        albumsUri = new ArrayList<>();
+        albumId = -1;
         if (!checkReadExternalPermission(context)) {
             getAccess(context);
         }
