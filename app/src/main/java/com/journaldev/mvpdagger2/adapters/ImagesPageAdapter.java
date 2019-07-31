@@ -14,14 +14,15 @@ import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.R;
 
 import java.io.File;
+import java.util.LinkedList;
 
 public class ImagesPageAdapter extends PagerAdapter {
 
-    Uri[] imageUri;
+    LinkedList<Uri> imageUri;
     Context mContext;
     LayoutInflater mLayoutInflater;
 
-    public ImagesPageAdapter(Context context, Uri[] images) {
+    public ImagesPageAdapter(Context context, LinkedList<Uri> images) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
@@ -29,12 +30,12 @@ public class ImagesPageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return imageUri.length;
+        return imageUri.size();
     }
 
     public Uri getCurrentUri(int position)
     {
-        return imageUri[position];
+        return imageUri.get(position);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
         ImageView imageView =  itemView.findViewById(R.id.imageView);
-        File file = new File(String.valueOf(imageUri[position]));
+        File file = new File(String.valueOf(imageUri.get(position)));
         Uri uri = Uri.fromFile(file);
         Glide.with(mContext).load(uri).into(imageView);
         container.addView(itemView);
