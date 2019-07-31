@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate.ViewAllImagesByDate;
-import com.journaldev.mvpdagger2.fragments.albums.albums;
+import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
+import com.journaldev.mvpdagger2.fragments.albums;
 
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
