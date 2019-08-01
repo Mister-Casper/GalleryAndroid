@@ -57,10 +57,10 @@ public class ViewImagesActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             selectImage();
             uri = getIntenlAllUri();
-            mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
         }
-        pager.setAdapter(mCustomPagerAdapter);
         getOtherIntent();
+        mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
+        pager.setAdapter(mCustomPagerAdapter);
     }
 
 
@@ -69,7 +69,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
         if (strUri != null) {
             for (int i = 0; i < strUri.size(); i++)
-                uri.add(i,Uri.parse(strUri.get(i)));
+                uri.add(i, Uri.parse(strUri.get(i)));
             mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
         } else
             uri = ImageUrls.getUrls(getApplicationContext());
@@ -104,17 +104,8 @@ public class ViewImagesActivity extends AppCompatActivity {
         String type = intent.getType();
         if (Intent.ACTION_VIEW.equals(action) && type != null) {
             if (type.startsWith("image/")) {
-                imageUri = intent.getData();
-                LinkedList<Uri> uri = ImageUrls.getUrls(getApplicationContext());
-                for (int i = 0; i < uri.size(); i++) {
-                    File file = new File(String.valueOf(uri.get(i)));
-                    Uri temp = Uri.fromFile(file);
-                    if (imageUri.equals(temp)) ;
-                    {
-                        pager.setCurrentItem(i);
-                        return;
-                    }
-                }
+                uri = new LinkedList<>();
+                uri.add(intent.getData());
             }
         }
     }
@@ -127,11 +118,12 @@ public class ViewImagesActivity extends AppCompatActivity {
 
 
     private void selectImage() {
-        final int newStartImageId = getIntent().getIntExtra("idImage", 0);
+        final int newStartImageId = getIntent().getIntExtra("idImage", -1);
         pager.post(new Runnable() {
             @Override
             public void run() {
-                pager.setCurrentItem(newStartImageId,false);
+                if (newStartImageId != -1)
+                    pager.setCurrentItem(newStartImageId, false);
             }
         });
     }

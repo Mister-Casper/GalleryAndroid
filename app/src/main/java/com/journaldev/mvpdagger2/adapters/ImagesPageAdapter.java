@@ -33,8 +33,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         return imageUri.size();
     }
 
-    public Uri getCurrentUri(int position)
-    {
+    public Uri getCurrentUri(int position) {
         return imageUri.get(position);
     }
 
@@ -47,9 +46,13 @@ public class ImagesPageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
-        ImageView imageView =  itemView.findViewById(R.id.imageView);
+        ImageView imageView = itemView.findViewById(R.id.imageView);
         File file = new File(String.valueOf(imageUri.get(position)));
         Uri uri = Uri.fromFile(file);
+
+        if (uri.toString().contains("content"))
+            uri = imageUri.get(position);
+
         Glide.with(mContext).load(uri).into(imageView);
         container.addView(itemView);
 
