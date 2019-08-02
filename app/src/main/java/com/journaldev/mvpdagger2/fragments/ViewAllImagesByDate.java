@@ -73,14 +73,17 @@ public class ViewAllImagesByDate extends Fragment implements PhotosAdapter.ItemC
         unbinder = ButterKnife.bind(this, view);
         setAdapter();
         DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                MeasurementLaunchTime.loadTime = System.currentTimeMillis();
-                FabricEvents.sendLaunchTime(MeasurementLaunchTime.getLaunchTime());
-            }
-        });
+
+        if(savedInstanceState == null) {
+            container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    MeasurementLaunchTime.loadTime = System.currentTimeMillis();
+                    FabricEvents.sendLaunchTime(MeasurementLaunchTime.getLaunchTime());
+                }
+            });
+        }
 
         return view;
     }
