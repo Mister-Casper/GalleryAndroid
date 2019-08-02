@@ -3,7 +3,6 @@
     android:layout_height="wrap_content">
 
     <com.journaldev.mvpdagger2.myVIew.MyImageView
-android:background="@drawable/standartphoto"
         android:id="@+id/picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

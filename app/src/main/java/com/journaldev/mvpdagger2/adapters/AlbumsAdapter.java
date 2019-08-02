@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +46,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         String AlbumName = mData[position].getName();
         File file = new File(String.valueOf(albumPhoto));
         Uri uri = Uri.fromFile(file);
-        Glide.with(mInflater.getContext()).load(uri).into(holder.image);
+
+        Picasso.with(mInflater.getContext())
+                .load(uri)
+                .fit()
+                .centerCrop()
+                .into(holder.image);
         holder.albumName.setText(AlbumName);
     }
 

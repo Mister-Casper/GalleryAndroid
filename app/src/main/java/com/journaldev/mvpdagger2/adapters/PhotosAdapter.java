@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +41,13 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         Uri photo = mData.get(position).getPhoto();
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
-        Glide.with(mInflater.getContext()).load(uri).into(holder.image);
+
+        Picasso.with(mInflater.getContext())
+                .load(uri)
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.standartphoto)
+                .into(holder.image);
         holder.image.setPadding(3,3,3,3);
     }
 

@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -53,7 +53,9 @@ public class ImagesPageAdapter extends PagerAdapter {
         if (uri.toString().contains("content"))
             uri = imageUri.get(position);
 
-        Glide.with(mContext).load(uri).into(imageView);
+        Picasso.with(mContext)
+                .load(uri)
+                .into(imageView);
         container.addView(itemView);
 
         return itemView;
