@@ -42,10 +42,8 @@ public class FIleInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
-        if (savedInstanceState == null) {
-            Uri uriFile = getUri();
-            viewFileInfo(uriFile);
-        }
+        Uri uriFile = getUri();
+        viewFileInfo(uriFile);
         getWindow().setBackgroundDrawable(null);
     }
 
@@ -60,8 +58,8 @@ public class FIleInfo extends Activity {
         chandge.setText(date.get(
                 Calendar.HOUR_OF_DAY) + " : "
                 + date.get(Calendar.MINUTE) + " , "
-                + date.get(Calendar.DAY_OF_MONTH)  + "."
-                + (date.get(Calendar.MONTH)+1) + "."
+                + date.get(Calendar.DAY_OF_MONTH) + "."
+                + (date.get(Calendar.MONTH) + 1) + "."
                 + date.get(Calendar.YEAR));
 
         resolution.setText(bmp.getWidth() + "×" + bmp.getHeight());
@@ -78,7 +76,7 @@ public class FIleInfo extends Activity {
             lenght /= prefixLenght;
         }
 
-        String resultLenght = ((float)Math.round(lenght * 10) / 10) + " " + prefix[prefixId];
+        String resultLenght = ((float) Math.round(lenght * 10) / 10) + " " + prefix[prefixId];
         return resultLenght;
     }
 
