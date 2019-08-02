@@ -53,11 +53,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
         pager.setOffscreenPageLimit(3);
-
-        if (savedInstanceState == null) {
-            selectImage();
-            uri = getIntenlAllUri();
-        }
+        uri = getIntenlAllUri();
         getOtherIntent();
         mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
         pager.setAdapter(mCustomPagerAdapter);
@@ -98,17 +94,75 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
     private void getOtherIntent() {
-        Uri imageUri = null;
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
         if (Intent.ACTION_VIEW.equals(action) && type != null) {
             if (type.startsWith("image/")) {
-                uri = new LinkedList<>();
-                uri.add(intent.getData());
+                selectCurrentItemFromIntent(intent);
+            }
+        } else
+            selectImage();
+    }
+
+    private void selectCurrentItemFromIntent(Intent intent) {
+        String intentStr = intent.toString();
+
+        final String intentFileName = getFileNameFromPath(intentStr);
+        final String[] allFileName = getAllPath();
+
+        int currentItem = getCurrentItem(intentFileName, allFileName);
+        selectImageFromId(currentItem);
+    }
+
+    private String[] getAllPath() {
+        String[] allFileName = new String[uri.size()];
+
+        for (int i = 0; i < uri.size(); i++) {
+            allFileName[i] = getFileNameFromPath(uri.get(i).toString());
+        }
+
+        return allFileName;
+    }
+
+    private int getCurrentItem(String intentFileName, String[] allFileName) {
+        for (int i = 0; i < allFileName.length; i++) {
+            if (allFileName[i].equals(intentFileName)) {
+                return i;
             }
         }
+        return -1;
     }
+
+    private String getFileNameFromPath(String str) {
+
+        String[] fileStr = getPath(str).split("/");
+        String fileName = fileStr[fileStr.length - 1];
+        return fileName;
+    }
+
+    private String getPath(String str) {
+        String uriStr;
+        try {
+            uriStr = str.substring(getStartPath(str), getEndPath(str));
+        } catch (RuntimeException ex) {
+            uriStr = str;
+        }
+        return uriStr;
+    }
+
+    private int getStartPath(String str) {
+        String startStr = " dat=";
+        int start = str.indexOf(startStr) + startStr.length();
+        return start;
+    }
+
+    private int getEndPath(String str) {
+        String endStr = " typ=";
+        int end = str.indexOf(endStr);
+        return end;
+    }
+
 
     private void allScreen() {
         Window w = getWindow();
@@ -119,11 +173,14 @@ public class ViewImagesActivity extends AppCompatActivity {
 
     private void selectImage() {
         final int newStartImageId = getIntent().getIntExtra("idImage", -1);
+        selectImageFromId(newStartImageId);
+    }
+
+    private void selectImageFromId(final int id) {
         pager.post(new Runnable() {
             @Override
             public void run() {
-                if (newStartImageId != -1)
-                    pager.setCurrentItem(newStartImageId, false);
+                pager.setCurrentItem(id, false);
             }
         });
     }
