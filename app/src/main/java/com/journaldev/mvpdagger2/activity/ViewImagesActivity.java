@@ -36,7 +36,7 @@ import butterknife.OnClick;
 public class ViewImagesActivity extends AppCompatActivity {
 
     @BindView(R.id.pager)
-    ViewPager pager;
+    com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager pager;
     ImagesPageAdapter mCustomPagerAdapter = null;
     @BindView(R.id.deleteImage)
     Button deleteImage;
