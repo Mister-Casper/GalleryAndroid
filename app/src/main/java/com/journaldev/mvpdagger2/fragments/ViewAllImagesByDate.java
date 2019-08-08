@@ -37,7 +37,7 @@ public class ViewAllImagesByDate extends Fragment implements PhotosAdapter.ItemC
     @BindView(R.id.DataList)
     RecyclerView DataList;
     Unbinder unbinder;
-    LinkedList<Uri> uri = null;
+    LinkedList<ItemPhotoData> uri = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class ViewAllImagesByDate extends Fragment implements PhotosAdapter.ItemC
         uri = ImageUrls.getUrls(getContext());
         ArrayList<ItemPhotoData> photo = new ArrayList<>();
         for (int i = 0; i < uri.size(); i++)
-            photo.add(new ItemPhotoData(uri.get(i)));
+            photo.add(new ItemPhotoData(uri.get(i).getPhoto(),uri.get(i).getLike()));
         return photo;
     }
 
