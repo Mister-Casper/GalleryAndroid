@@ -2,31 +2,37 @@ package com.journaldev.mvpdagger2.Data;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 public class ImageUrls {
-    private static LinkedList<Uri> mUrls;
+    private static LinkedList<ItemPhotoData> mUrls;
+    private static LinkedList<Boolean> like = new LinkedList<>();
 
     public static boolean isUpdate = false;
 
-    public static LinkedList<Uri> getUrls(Context context) {
-        if(mUrls == null) {
+    public static LinkedList<ItemPhotoData> getUrls(Context context) {
+        if (mUrls == null) {
             getImageUrl(context);
         }
-        if(isUpdate == true) {
+        if (isUpdate == true) {
             getImageUrl(context);
             isUpdate = false;
         }
         return mUrls;
-    }
-
-    public static long[] getDate() {
-        return mDate;
     }
 
     private static long[] mDate;
@@ -42,41 +48,30 @@ public class ImageUrls {
         loadUrl();
     }
 
-    private static void loadUrl(){
+    private static void loadUrl() {
         if (cc != null) {
             cc.moveToFirst();
-            mUrls = new LinkedList<Uri>();
+            mUrls = new LinkedList<>();
             mDate = new long[cc.getCount()];
-            for (int i = 0; i < cc.getCount(); i++) {
+            like = new LinkedList<>();
+            for (int i =  cc.getCount() - 1; i >= 0; i--) {
                 cc.moveToPosition(i);
                 Uri temp = Uri.parse(cc.getString(1));
-                File file = new File(String.valueOf(temp));
-                mUrls.add(i,temp);
-                long date = file.lastModified();
-                mDate[i] = date;
+                mUrls.add(new ItemPhotoData(temp ,Boolean.parseBoolean(isLikeImage(temp,ExifInterface.TAG_USER_COMMENT))));;
             }
         }
         maxImageId = mUrls.size();
-        sortResultByDate();
     }
 
-    private static void sortResultByDate() {
-        Uri tempNum;
-        long tempName;
-        for (int i = 0; i < mDate.length; i++) {
-            for (int j = i + 1; j < mDate.length; j++) {
-                if (mDate[i] < mDate[j]) {
-                    tempNum = mUrls.get(i);
-                    tempName = mDate[i];
-
-                    mUrls.set(i,mUrls.get(j));
-                    mDate[i] = mDate[j];
-
-                    mUrls.set(j,tempNum);
-                    mDate[j] = tempName;
-                }
-            }
+    private static String isLikeImage(Uri uri ,String tag ) {
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(uri.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        String attribute = exif.getAttribute(tag);
+        return attribute;
     }
 
 }
