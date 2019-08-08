@@ -2,15 +2,14 @@ package com.journaldev.mvpdagger2.adapters;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.journaldev.mvpdagger2.Data.ImageUrls;
+import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.zoomImageView;
 import com.squareup.picasso.Picasso;
@@ -22,11 +21,11 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 public class ImagesPageAdapter extends PagerAdapter {
 
-    LinkedList<Uri> imageUri;
-    Context mContext;
-    LayoutInflater mLayoutInflater;
+    private final LinkedList<ItemPhotoData> imageUri;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
 
-    public ImagesPageAdapter(Context context, LinkedList<Uri> images) {
+    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
@@ -37,7 +36,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         return imageUri.size();
     }
 
-    public Uri getCurrentUri(int position) {
+    public ItemPhotoData getCurrentUri(int position) {
         return imageUri.get(position);
     }
 
@@ -51,12 +50,13 @@ public class ImagesPageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
 
         zoomImageView imageView = itemView.findViewById(R.id.picture);
-        imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN); 
-        File file = new File(String.valueOf(imageUri.get(position)));
+        imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
+
+        File file = new File(String.valueOf(imageUri.get(position).getPhoto()));
         Uri uri = Uri.fromFile(file);
 
         if (uri.toString().contains("content"))
-            uri = imageUri.get(position);
+            uri = imageUri.get(position).getPhoto();
 
         Picasso.with(mContext)
                 .load(uri)
@@ -67,8 +67,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     }
 
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((FrameLayout) object);
     }
 }
