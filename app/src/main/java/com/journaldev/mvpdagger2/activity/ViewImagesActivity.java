@@ -5,27 +5,29 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
+import android.media.ImageReader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.journaldev.mvpdagger2.Data.ImageUrls;
+import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
+import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import butterknife.BindView;
@@ -36,11 +38,13 @@ import butterknife.OnClick;
 public class ViewImagesActivity extends AppCompatActivity {
 
     @BindView(R.id.pager)
-    com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager pager;
+    ImageViewTouchViewPager pager;
     ImagesPageAdapter mCustomPagerAdapter = null;
     @BindView(R.id.deleteImage)
     Button deleteImage;
-    LinkedList<Uri> uri;
+    LinkedList<ItemPhotoData> uri;
+    @BindView(R.id.likeImage)
+    Button likeImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +64,14 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
 
-    private LinkedList<Uri> getIntenlAllUri() {
-        LinkedList<Uri> uri = new LinkedList<>();
+    private LinkedList<ItemPhotoData> getIntenlAllUri() {
+        LinkedList<ItemPhotoData> uri = new LinkedList<>();
         ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
-        if (strUri != null) {
+        /*if (strUri != null) {
             for (int i = 0; i < strUri.size(); i++)
                 uri.add(i, Uri.parse(strUri.get(i)));
             mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
-        } else
+        } else*/
             uri = ImageUrls.getUrls(getApplicationContext());
         return uri;
     }
@@ -84,7 +88,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.info:
                 Intent intent = new Intent(getApplicationContext(), FIleInfo.class);
-                Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem());
+                Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
                 intent.putExtra("uri", currentUri.toString());
                 getApplicationContext().startActivity(intent);
                 return true;
@@ -215,4 +219,21 @@ public class ViewImagesActivity extends AppCompatActivity {
         });
         return ad;
     }
+
+    @OnClick(R.id.likeImage)
+    public void clickLikeImage() {
+        Uri fileUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
+        Boolean like = true;
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(fileUri.toString());
+            exif.setAttribute(ExifInterface.TAG_USER_COMMENT,like.toString());
+            exif.saveAttributes();
+            ImageUrls.isUpdate = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

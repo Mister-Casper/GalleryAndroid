@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
@@ -42,6 +43,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
 
+        if(mData.get(position).getLike())
+            holder.like.setVisibility(View.VISIBLE);
+
         Picasso.with(mInflater.getContext())
                 .load(uri)
                 .fit()
@@ -61,10 +65,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         MyImageView image;
+        ImageView like;
 
         ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.picture);
+            like = itemView.findViewById(R.id.like);
             itemView.setOnClickListener(this);
         }
 

@@ -7,10 +7,17 @@ public class ItemPhotoData {
     public Uri getPhoto() {
         return photo;
     }
+    public Boolean getLike() {
+        return isLike;
+    }
 
     private Uri photo;
+    private Boolean isLike;
 
-    public ItemPhotoData(Uri photo) {
+
+
+    public ItemPhotoData(Uri photo , Boolean isLike) {
         this.photo = photo;
+        this.isLike = isLike;
     }
 }
