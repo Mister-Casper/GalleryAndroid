@@ -59,7 +59,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         pager.setOffscreenPageLimit(3);
         uri = getIntenlAllUri();
         getOtherIntent();
-        mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
+        mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
         pager.setAdapter(mCustomPagerAdapter);
     }
 
@@ -67,11 +67,10 @@ public class ViewImagesActivity extends AppCompatActivity {
     private LinkedList<ItemPhotoData> getIntenlAllUri() {
         LinkedList<ItemPhotoData> uri = new LinkedList<>();
         ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
-        /*if (strUri != null) {
+        if (strUri != null) {
             for (int i = 0; i < strUri.size(); i++)
-                uri.add(i, Uri.parse(strUri.get(i)));
-            mCustomPagerAdapter = new ImagesPageAdapter(this, uri);
-        } else*/
+                uri.add(i, new ItemPhotoData(Uri.parse(strUri.get(i)), false));
+        } else
             uri = ImageUrls.getUrls(getApplicationContext());
         return uri;
     }
@@ -203,11 +202,10 @@ public class ViewImagesActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int arg1) {
                 ContentResolver contentResolver = getContentResolver();
                 contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.get(pager.getCurrentItem()).toString()});
+                        MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.get(pager.getCurrentItem()).getPhoto().toString()});
                 ImageUrls.isUpdate = true;
                 int currentPosition = pager.getCurrentItem();
                 uri.remove(currentPosition);
-                mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
                 pager.setAdapter(mCustomPagerAdapter);
                 pager.invalidate();
                 pager.setCurrentItem(currentPosition);
@@ -227,7 +225,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(fileUri.toString());
-            exif.setAttribute(ExifInterface.TAG_USER_COMMENT,like.toString());
+            exif.setAttribute(ExifInterface.TAG_USER_COMMENT, like.toString());
             exif.saveAttributes();
             ImageUrls.isUpdate = true;
         } catch (IOException e) {
