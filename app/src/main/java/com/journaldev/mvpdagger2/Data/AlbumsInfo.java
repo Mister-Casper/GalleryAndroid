@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.icu.text.SymbolTable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,14 +38,37 @@ public class AlbumsInfo {
         int i = 0;
 
         for (Iterator<String> it = albumsName.iterator(); it.hasNext(); ) {
-            String search = it.next();
-           albums[i] = new Album(search,albumsUri.get(i));
-           i++;
+            albums[i] = getAlbumInfo(it,i);
+            i++;
         }
 
         return albums;
     }
 
+    private static Album getAlbumInfo(Iterator<String> it , int i)
+    {
+        String search = it.next();
+        ArrayList<Uri> uri = albumsUri.get(i);
+        ArrayList<String> like = new ArrayList<>();
+
+        for(int q = 0 ; q < uri.size(); q++)
+        {
+            like.add(isLikeImage(uri.get(q),ExifInterface.TAG_USER_COMMENT));
+        }
+
+        return new Album(search,uri ,like);
+    }
+
+    private static String isLikeImage(Uri uri ,String tag ) {
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(uri.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String attribute = exif.getAttribute(tag);
+        return attribute;
+    }
 
     private static void getAccess(Context context) {
         ActivityCompat.requestPermissions((Activity) context,
@@ -123,12 +148,18 @@ public class AlbumsInfo {
             return uri;
         }
 
+        public ArrayList<String> getLike() {
+            return like;
+        }
+
+        private ArrayList<String> like;
         private ArrayList<Uri> uri;
 
 
-        Album(String name, ArrayList<Uri> uri) {
+        Album(String name, ArrayList<Uri> uri,ArrayList<String> like) {
             this.name = name;
             this.uri = uri;
+            this.like = like;
         }
     }
 
