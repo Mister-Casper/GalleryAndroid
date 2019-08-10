@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
-import android.media.ImageReader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RadioButton;
 
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
@@ -27,10 +25,8 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import butterknife.BindView;
@@ -60,7 +56,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
         pager.setOffscreenPageLimit(3);
-        uri = getIntenlAllUri();
+        uri = getAllDataImage();
         getOtherIntent();
         mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
         pager.setAdapter(mCustomPagerAdapter);
@@ -81,20 +77,35 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
 
-    private LinkedList<ItemPhotoData> getIntenlAllUri() {
-        LinkedList<ItemPhotoData> uri = new LinkedList<>();
+    private LinkedList<ItemPhotoData> getAllDataImage() {
+        LinkedList<ItemPhotoData> uri;
         ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
         ArrayList<String> strLike = getIntent().getStringArrayListExtra("like");
 
         if (strUri != null) {
-            for (int i = 0; i < strUri.size(); i++)
-                uri.add(i, new ItemPhotoData(Uri.parse(strUri.get(i)), Boolean.parseBoolean(strLike.get(i))));
+            uri = getAllImageDataFromIntent(strUri, strLike);
         } else
             uri = ImageUrls.getUrls(getApplicationContext());
         return uri;
     }
 
-    
+    private LinkedList<ItemPhotoData> getAllImageDataFromIntent(ArrayList<String> strUri, ArrayList<String> strLike) {
+        LinkedList<ItemPhotoData> itemPhotoData = new LinkedList<>();
+
+        for (int i = 0; i < strUri.size(); i++) {
+            itemPhotoData.add(getImageDataFromIntent(i, strUri, strLike));
+        }
+
+        return itemPhotoData;
+    }
+
+    private ItemPhotoData getImageDataFromIntent(int id, ArrayList<String> strUri, ArrayList<String> strLike) {
+        Uri uri = Uri.parse(strUri.get(id));
+        Boolean isLike = Boolean.parseBoolean(strLike.get(id));
+        return new ItemPhotoData(uri, isLike);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.file_menu, menu);
@@ -106,14 +117,13 @@ public class ViewImagesActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.info:
-             return viewFileInfoActivity();
+                return viewFileInfoActivity();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private Boolean viewFileInfoActivity()
-    {
+    private Boolean viewFileInfoActivity() {
         Intent intent = new Intent(getApplicationContext(), FIleInfo.class);
         Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         intent.putExtra("uri", currentUri.toString());
