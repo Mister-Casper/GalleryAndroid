@@ -65,14 +65,18 @@ public class ViewImagesActivity extends AppCompatActivity {
         mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
         pager.setAdapter(mCustomPagerAdapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {}
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
             public void onPageSelected(int position) {
                 setLikeState(position);
             }
         });
 
-        if(getImageId() == 0)
+        if (getImageId() == 0)
             setLikeState(0);
     }
 
@@ -192,8 +196,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         selectImageFromId(getImageId());
     }
 
-    private int getImageId()
-    {
+    private int getImageId() {
         return getIntent().getIntExtra("idImage", 0);
     }
 
@@ -228,18 +231,22 @@ public class ViewImagesActivity extends AppCompatActivity {
         return ad;
     }
 
-    private void deleteImage()
-    {
+    private void deleteImage() {
         ContentResolver contentResolver = getContentResolver();
         contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.get(pager.getCurrentItem()).getPhoto().toString()});
         ImageUrls.isUpdate = true;
         int currentPosition = pager.getCurrentItem();
         uri.remove(currentPosition);
+        viewPagerUpdate(currentPosition);
+    }
+
+    private void viewPagerUpdate(int currentPosition) {
         pager.setAdapter(mCustomPagerAdapter);
         pager.invalidate();
         pager.setCurrentItem(currentPosition);
     }
+
 
     @OnClick(R.id.likeImage)
     public void clickLikeImage(View view) {
