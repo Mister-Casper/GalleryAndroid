@@ -218,15 +218,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         ad.setMessage("Вы действительно хотите удалить изображение?");
         ad.setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-                ContentResolver contentResolver = getContentResolver();
-                contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.get(pager.getCurrentItem()).getPhoto().toString()});
-                ImageUrls.isUpdate = true;
-                int currentPosition = pager.getCurrentItem();
-                uri.remove(currentPosition);
-                pager.setAdapter(mCustomPagerAdapter);
-                pager.invalidate();
-                pager.setCurrentItem(currentPosition);
+                deleteImage();
             }
         });
         ad.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
@@ -234,6 +226,19 @@ public class ViewImagesActivity extends AppCompatActivity {
             }
         });
         return ad;
+    }
+
+    private void deleteImage()
+    {
+        ContentResolver contentResolver = getContentResolver();
+        contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.get(pager.getCurrentItem()).getPhoto().toString()});
+        ImageUrls.isUpdate = true;
+        int currentPosition = pager.getCurrentItem();
+        uri.remove(currentPosition);
+        pager.setAdapter(mCustomPagerAdapter);
+        pager.invalidate();
+        pager.setCurrentItem(currentPosition);
     }
 
     @OnClick(R.id.likeImage)
