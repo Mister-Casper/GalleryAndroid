@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
@@ -47,11 +49,16 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         File file = new File(String.valueOf(albumPhoto));
         Uri uri = Uri.fromFile(file);
 
-        Picasso.with(mInflater.getContext())
+        RequestOptions options = new RequestOptions();
+        options.fitCenter();
+        options.centerCrop();
+        options.placeholder(R.drawable.standartphoto);
+
+        Glide.with(mInflater.getContext())
                 .load(uri)
-                .fit()
-                .centerCrop()
+                .apply(options)
                 .into(holder.image);
+
         holder.albumName.setText(AlbumName);
     }
 

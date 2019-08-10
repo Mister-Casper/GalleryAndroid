@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
@@ -46,11 +48,14 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         if(mData.get(position).getLike())
             holder.like.setVisibility(View.VISIBLE);
 
-        Picasso.with(mInflater.getContext())
+        RequestOptions options = new RequestOptions();
+        options.fitCenter();
+        options.centerCrop();
+        options.placeholder(R.drawable.standartphoto);
+
+        Glide.with(mInflater.getContext())
                 .load(uri)
-                .fit()
-                .centerCrop()
-                .placeholder(R.drawable.standartphoto)
+                .apply(options)
                 .into(holder.image);
         holder.image.setPadding(3,3,3,3);
     }

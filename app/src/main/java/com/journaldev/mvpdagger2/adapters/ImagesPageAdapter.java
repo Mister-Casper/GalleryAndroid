@@ -1,6 +1,8 @@
 package com.journaldev.mvpdagger2.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -9,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.bumptech.glide.Glide;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.zoomImageView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.LinkedList;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
@@ -46,7 +52,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
 
         zoomImageView imageView = itemView.findViewById(R.id.picture);
@@ -58,7 +64,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         if (uri.toString().contains("content"))
             uri = imageUri.get(position).getPhoto();
 
-        Picasso.with(mContext)
+        Glide.with(mContext)
                 .load(uri)
                 .into(imageView);
         container.addView(itemView);
