@@ -94,6 +94,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         return uri;
     }
 
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.file_menu, menu);
@@ -105,14 +106,19 @@ public class ViewImagesActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.info:
-                Intent intent = new Intent(getApplicationContext(), FIleInfo.class);
-                Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
-                intent.putExtra("uri", currentUri.toString());
-                getApplicationContext().startActivity(intent);
-                return true;
+             return viewFileInfoActivity();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private Boolean viewFileInfoActivity()
+    {
+        Intent intent = new Intent(getApplicationContext(), FIleInfo.class);
+        Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
+        intent.putExtra("uri", currentUri.toString());
+        getApplicationContext().startActivity(intent);
+        return true;
     }
 
     private void getOtherIntent() {
