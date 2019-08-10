@@ -24,6 +24,8 @@ public class ImageUrls {
 
     public static boolean isUpdate = false;
 
+
+
     public static LinkedList<ItemPhotoData> getUrls(Context context) {
         if (mUrls == null) {
             getImageUrl(context);
@@ -53,7 +55,6 @@ public class ImageUrls {
             cc.moveToFirst();
             mUrls = new LinkedList<>();
             mDate = new long[cc.getCount()];
-            like = new LinkedList<>();
             for (int i =  cc.getCount() - 1; i >= 0; i--) {
                 cc.moveToPosition(i);
                 Uri temp = Uri.parse(cc.getString(1));
