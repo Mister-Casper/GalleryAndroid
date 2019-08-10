@@ -69,6 +69,7 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesActivity.class);
         intent.putStringArrayListExtra("uri", convertArraysUrlToArraysString(position));
+        intent.putStringArrayListExtra("like", convertArraysLikeToArraysString(position));
         getContext().startActivity(intent);
     }
 
@@ -79,4 +80,9 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
             strUri.add(uri.get(i).toString());
         return strUri;
     }
+
+    private ArrayList<String> convertArraysLikeToArraysString(int id) {
+        return albums[id].getLike();
+    }
+
 }
