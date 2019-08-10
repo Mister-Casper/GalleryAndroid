@@ -10,13 +10,16 @@ import android.media.ImageReader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RadioButton;
 
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
@@ -61,15 +64,27 @@ public class ViewImagesActivity extends AppCompatActivity {
         getOtherIntent();
         mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
         pager.setAdapter(mCustomPagerAdapter);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageSelected(int position) {
+                setLikeState(position);
+            }
+        });
+
+        if(getImageId() == 0)
+            setLikeState(0);
     }
 
 
     private LinkedList<ItemPhotoData> getIntenlAllUri() {
         LinkedList<ItemPhotoData> uri = new LinkedList<>();
         ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
+        ArrayList<String> strLike = getIntent().getStringArrayListExtra("like");
+
         if (strUri != null) {
             for (int i = 0; i < strUri.size(); i++)
-                uri.add(i, new ItemPhotoData(Uri.parse(strUri.get(i)), false));
+                uri.add(i, new ItemPhotoData(Uri.parse(strUri.get(i)), Boolean.parseBoolean(strLike.get(i))));
         } else
             uri = ImageUrls.getUrls(getApplicationContext());
         return uri;
@@ -138,7 +153,6 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
     private String getFileNameFromPath(String str) {
-
         String[] fileStr = getPath(str).split("/");
         String fileName = fileStr[fileStr.length - 1];
         return fileName;
@@ -147,20 +161,20 @@ public class ViewImagesActivity extends AppCompatActivity {
     private String getPath(String str) {
         String uriStr;
         try {
-            uriStr = str.substring(getStartPath(str), getEndPath(str));
+            uriStr = str.substring(getIdStartPath(str), getIdEndPath(str));
         } catch (RuntimeException ex) {
             uriStr = str;
         }
         return uriStr;
     }
 
-    private int getStartPath(String str) {
+    private int getIdStartPath(String str) {
         String startStr = " dat=";
         int start = str.indexOf(startStr) + startStr.length();
         return start;
     }
 
-    private int getEndPath(String str) {
+    private int getIdEndPath(String str) {
         String endStr = " typ=";
         int end = str.indexOf(endStr);
         return end;
@@ -175,8 +189,12 @@ public class ViewImagesActivity extends AppCompatActivity {
 
 
     private void selectImage() {
-        final int newStartImageId = getIntent().getIntExtra("idImage", -1);
-        selectImageFromId(newStartImageId);
+        selectImageFromId(getImageId());
+    }
+
+    private int getImageId()
+    {
+        return getIntent().getIntExtra("idImage", 0);
     }
 
     private void selectImageFromId(final int id) {
@@ -219,9 +237,10 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.likeImage)
-    public void clickLikeImage() {
+    public void clickLikeImage(View view) {
+        chandgeLikeState(view);
         Uri fileUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
-        Boolean like = true;
+        Boolean like = view.isSelected();
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(fileUri.toString());
@@ -233,5 +252,12 @@ public class ViewImagesActivity extends AppCompatActivity {
         }
     }
 
+    private void setLikeState(int imageId) {
+        likeImage.setSelected(uri.get(imageId).getLike());
+    }
+
+    private void chandgeLikeState(View v) {
+        v.setSelected(!v.isSelected());
+    }
 
 }
