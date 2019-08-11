@@ -47,6 +47,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         if(mData.get(position).getLike())
             holder.like.setVisibility(View.VISIBLE);
+        else
+            holder.like.setVisibility(View.GONE);
 
         RequestOptions options = new RequestOptions();
         options.fitCenter();
