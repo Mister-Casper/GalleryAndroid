@@ -179,13 +179,13 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
     private String getPath(String str) {
-        String uriStr;
-        try {
-            uriStr = str.substring(getIdStartPath(str), getIdEndPath(str));
-        } catch (RuntimeException ex) {
-            uriStr = str;
-        }
-        return uriStr;
+        int start = getIdStartPath(str);
+        int end = getIdEndPath(str);
+
+        if (start != -1 && end != -1)
+            return str.substring(start, end);
+        else
+            return str;
     }
 
     private int getIdStartPath(String str) {
