@@ -19,7 +19,7 @@
         <activity
             android:name=".activity.ViewAllImages"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Launcher">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,16 +32,18 @@
             android:theme="@style/AppThemeBar">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FIleInfo">
 
-        </activity>
+        <activity android:theme="@style/AppThemeBar" android:name=".activity.FIleInfo"></activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="53212b6aa05ef823638a5f63a1394d263a19d545" />
     </application>
+
 </manifest>
