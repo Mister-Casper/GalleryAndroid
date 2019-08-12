@@ -1,7 +1,9 @@
 package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +22,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
+import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,18 +53,33 @@ public class ViewImagesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("");
-        ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
-        abDrawable.setAlpha(0);
-        getSupportActionBar().setBackgroundDrawable(abDrawable);
+        transparentActionBar();
         super.onCreate(savedInstanceState);
         allScreen();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
-        pager.setOffscreenPageLimit(3);
         uri = getAllDataImage();
         getOtherIntent();
+        initViewPager();
+        processingChangeCurrentItem();
+        if (getImageId() == 0)
+            setLikeState(0);
+    }
+
+    private void initViewPager(){
+        pager.setOffscreenPageLimit(3);
         mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
         pager.setAdapter(mCustomPagerAdapter);
+    }
+
+    private void transparentActionBar(){
+        ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
+        abDrawable.setAlpha(0);
+        getSupportActionBar().setBackgroundDrawable(abDrawable);
+    }
+
+    private void processingChangeCurrentItem()
+    {
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {
             }
@@ -71,9 +91,6 @@ public class ViewImagesActivity extends AppCompatActivity {
                 setLikeState(position);
             }
         });
-
-        if (getImageId() == 0)
-            setLikeState(0);
     }
 
 
@@ -124,10 +141,13 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
     private Boolean viewFileInfoActivity() {
-        Intent intent = new Intent(getApplicationContext(), FIleInfo.class);
+        Intent intent = new Intent(this, FIleInfo.class);
         Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         intent.putExtra("uri", currentUri.toString());
-        getApplicationContext().startActivity(intent);
+        startActivity(intent);
+        if (AppPreference.getIsAnim()) {
+           overridePendingTransition(R.anim.back, R.anim.next);
+        }
         return true;
     }
 
