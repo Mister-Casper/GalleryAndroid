@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
+    android:id="@+id/root"
     android:orientation="vertical"
-    tools:context=".activity.FileInfo.FIleInfo">
+    tools:context=".activity.FIleInfo">
 
             <TextView
                 android:layout_width="wrap_content"
