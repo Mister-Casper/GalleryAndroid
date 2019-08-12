@@ -1,10 +1,6 @@
 package com.journaldev.mvpdagger2.fragments;
 
-
-//grid:layout_columnWeight="1"
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -75,17 +71,21 @@ public class ViewAllImagesByDate extends Fragment implements PhotosAdapter.ItemC
         DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
         if(savedInstanceState == null) {
-            container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    MeasurementLaunchTime.loadTime = System.currentTimeMillis();
-                    FabricEvents.sendLaunchTime(MeasurementLaunchTime.getLaunchTime());
-                }
-            });
+            writeStartTime(container);
         }
 
         return view;
+    }
+
+    private void writeStartTime(final View container){
+        container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                MeasurementLaunchTime.loadTime = System.currentTimeMillis();
+                FabricEvents.sendLaunchTime(MeasurementLaunchTime.getLaunchTime());
+            }
+        });
     }
 
     @Override
