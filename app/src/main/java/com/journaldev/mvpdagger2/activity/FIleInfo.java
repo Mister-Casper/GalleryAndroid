@@ -2,22 +2,24 @@ package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -36,6 +38,8 @@ public class FIleInfo extends Activity {
     TextView resolution;
     @BindView(R.id.size)
     TextView size;
+    @BindView(R.id.root)
+    LinearLayout root;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +48,29 @@ public class FIleInfo extends Activity {
         ButterKnife.bind(this);
         Uri uriFile = getUri();
         viewFileInfo(uriFile);
-        getWindow().setBackgroundDrawable(null);
+        setOnSwipeTouchListener(root);
     }
+
+    private void setOnSwipeTouchListener(View view)
+    {
+        view.setOnTouchListener(new OnSwipeTouchListener(FIleInfo.this) {
+            public void onSwipeTop() {
+                onBackPressed();
+            }
+
+            public void onSwipeRight() {
+            }
+
+            public void onSwipeLeft() {
+            }
+
+            public void onSwipeBottom() {
+
+            }
+
+        });
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void viewFileInfo(Uri file) {
@@ -76,7 +101,8 @@ public class FIleInfo extends Activity {
             lenght /= prefixLenght;
         }
 
-        String resultLenght = ((float) Math.round(lenght * 10) / 10) + " " + prefix[prefixId];
+        double roundValue = new BigDecimal(lenght).setScale(2, RoundingMode.UP).doubleValue();
+        String resultLenght = roundValue + " " + prefix[prefixId];
         return resultLenght;
     }
 
@@ -86,5 +112,10 @@ public class FIleInfo extends Activity {
         return Uri.parse(uri);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (AppPreference.getIsAnim())
+            overridePendingTransition(R.anim.back2, R.anim.next2);
+    }
 }
