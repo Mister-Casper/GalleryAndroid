@@ -1,7 +1,6 @@
 <resources>
 
     <style name="PreferencesTheme">
-        <item name="android:background">@color/gray</item>
         <item name="android:textColor">@color/whitegray</item>
         <item name="android:textColorSecondary">@color/whitegray2</item>
     </style>
