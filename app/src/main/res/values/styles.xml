@@ -1,28 +1,35 @@
 <resources>
 
+    <style name="PreferencesTheme">
+        <item name="android:background">@color/gray</item>
+        <item name="android:textColor">@color/whitegray</item>
+        <item name="android:textColorSecondary">@color/whitegray2</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/gray</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#22a7e0</item>
+        <item name="preferenceTheme">@style/PreferencesTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <!-- Base application theme. -->
     <style name="AppThemeBar" parent="Base.Theme.AppCompat.Light">
         <item name="android:windowBackground">@null</item>
-        <!-- Customize your theme here. -->
+
         <item name="colorPrimary">@color/gray</item>gr
         <item name="colorPrimaryDark">@color/gray</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#22a7e0</item>
 
-        <!-- To change the popup menu and app text color  -->
         <item name="android:textColor">@color/whitegray</item>
 
-        <!-- To change the background of options menu-->
         <item name="android:itemBackground">@color/gray2</item>
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
-
+        <item name="preferenceTheme">@style/PreferencesTheme</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -39,7 +46,6 @@
     </style>
 
 
-
     <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -48,12 +54,18 @@
     </style>
 
 
-    <style
-        name="OverFlowIcon"
-        parent="Theme.AppCompat">
+    <style name="OverFlowIcon" parent="Theme.AppCompat">
         <item name="android:src">@drawable/menu_icon</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
