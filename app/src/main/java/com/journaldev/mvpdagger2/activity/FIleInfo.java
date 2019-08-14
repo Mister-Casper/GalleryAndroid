@@ -2,13 +2,11 @@ package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
+import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -44,7 +43,7 @@ public class FIleInfo extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppPreference.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
+        ThemeUtils.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
         Uri uriFile = getUri();
