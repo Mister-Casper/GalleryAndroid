@@ -1,13 +1,11 @@
 package com.journaldev.mvpdagger2.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
@@ -20,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class ViewAllImages extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.tabs)
     TabLayout tabs;
@@ -31,13 +29,22 @@ public class ViewAllImages extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("");
+        AppPreference.load(this);
+        AppPreference.chandgeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         getWindow().setBackgroundDrawable(null);
-        AppPreference.load(this);
     }
 
+    private void isToSettings() {
+        if (getIntent().getBooleanExtra("isOptionsChandge", false))
+            toSettings();
+    }
+
+    private void toSettings() {
+        viewpager.setCurrentItem(3);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -46,6 +53,7 @@ public class ViewAllImages extends AppCompatActivity {
                 // если пользователь закрыл запрос на разрешение, не дав ответа, массив grantResults будет пустым
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     loadActivity();
+                    isToSettings();
                 } else {
                     throw new SecurityException();
                 }
@@ -56,7 +64,7 @@ public class ViewAllImages extends AppCompatActivity {
 
     private void loadActivity() {
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
-        setContentView(R.layout.viewallimages);
+        setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         final FragmentPagerAdapter adapter = new FragmentPagerAdapter
                 (getSupportFragmentManager(), tabs.getTabCount());
