@@ -13,6 +13,7 @@ import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.FragmentPagerAdapter;
+import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("");
         AppPreference.load(this);
-        AppPreference.chandgeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
+        ThemeUtils.chandgeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);

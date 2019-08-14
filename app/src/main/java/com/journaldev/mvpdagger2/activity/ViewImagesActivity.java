@@ -1,9 +1,7 @@
 package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -14,7 +12,6 @@ import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +25,7 @@ import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
-import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
+import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ public class ViewImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppPreference.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
+        ThemeUtils.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
         setTitle("");
         transparentActionBar();
         super.onCreate(savedInstanceState);
