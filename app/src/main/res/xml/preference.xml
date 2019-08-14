@@ -3,11 +3,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:textColor="@color/whitegray"
         android:id="@+id/anim"
         android:key="isAnim"
         android:title="Анимации"
         android:summary="Вы можете отключить анимации для оптимизации"
         android:defaultValue="true"/>
+
+    <SwitchPreference
+        android:id="@+id/darkTheme"
+        android:key="isDarkTheme"
+        android:title="Темная тема"
+        android:summary="Вы можете включить темную тему"
+        android:defaultValue="false"/>
 
 </PreferenceScreen>
