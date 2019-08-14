@@ -52,6 +52,7 @@ public class ViewImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppPreference.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
         setTitle("");
         transparentActionBar();
         super.onCreate(savedInstanceState);
@@ -77,6 +78,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         abDrawable.setAlpha(0);
         getSupportActionBar().setBackgroundDrawable(abDrawable);
     }
+
 
     private void processingChangeCurrentItem()
     {
@@ -141,6 +143,7 @@ public class ViewImagesActivity extends AppCompatActivity {
     }
 
     private Boolean viewFileInfoActivity() {
+        hideNavigationBar();
         Intent intent = new Intent(this, FIleInfo.class);
         Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         intent.putExtra("uri", currentUri.toString());
@@ -149,6 +152,13 @@ public class ViewImagesActivity extends AppCompatActivity {
            overridePendingTransition(R.anim.back, R.anim.next);
         }
         return true;
+    }
+
+    private void hideNavigationBar()
+    {
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void getOtherIntent() {
