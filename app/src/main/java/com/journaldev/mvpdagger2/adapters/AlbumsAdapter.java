@@ -1,5 +1,6 @@
 package com.journaldev.mvpdagger2.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,9 +15,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
+import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
+import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -42,6 +45,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull AlbumsAdapter.ViewHolder holder, int position) {
         Uri albumPhoto = mData[position].getUri().get(0);
@@ -50,6 +54,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         Uri uri = Uri.fromFile(file);
 
         RequestOptions options = new RequestOptions();
+
+        if (!AppPreference.getIsCache())
+            GlideUtils.optionsCleanCache(options);
+
         options.fitCenter();
         options.centerCrop();
         options.placeholder(R.drawable.standartphoto);

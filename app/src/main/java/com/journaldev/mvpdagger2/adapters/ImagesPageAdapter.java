@@ -1,5 +1,6 @@
 package com.journaldev.mvpdagger2.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.zoomImageView;
+import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -51,6 +55,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         return view == ((FrameLayout) object);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
@@ -64,11 +69,20 @@ public class ImagesPageAdapter extends PagerAdapter {
         if (uri.toString().contains("content"))
             uri = imageUri.get(position).getPhoto();
 
+        RequestOptions options = new RequestOptions();
+
+        if (!AppPreference.getIsCache())
+            GlideUtils.optionsCleanCache(options);
+
         Glide.with(mContext)
                 .load(uri)
+                .apply(options)
                 .into(imageView);
-        container.addView(itemView);
 
+        String name = mContext.getString(R.string.transition_name, position);
+        imageView.setTag(position);
+
+        container.addView(itemView);
         return itemView;
     }
 

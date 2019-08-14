@@ -1,7 +1,9 @@
 package com.journaldev.mvpdagger2.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
+import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -26,7 +31,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-   public PhotosAdapter(Context context, ArrayList<ItemPhotoData> products) {
+    public PhotosAdapter(Context context, ArrayList<ItemPhotoData> products) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = products;
     }
@@ -39,13 +44,14 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Uri photo = mData.get(position).getPhoto();
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
 
-        if(mData.get(position).getLike())
+        if (mData.get(position).getLike())
             holder.like.setVisibility(View.VISIBLE);
         else
             holder.like.setVisibility(View.GONE);
@@ -53,14 +59,20 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         RequestOptions options = new RequestOptions();
         options.fitCenter();
         options.centerCrop();
+
+        if (!AppPreference.getIsCache())
+            GlideUtils.optionsCleanCache(options);
+
         options.placeholder(R.drawable.standartphoto);
 
         Glide.with(mInflater.getContext())
                 .load(uri)
                 .apply(options)
                 .into(holder.image);
-        holder.image.setPadding(3,3,3,3);
+
+        holder.image.setPadding(3, 3, 3, 3);
     }
+
 
     // total number of cells
     @Override
@@ -85,11 +97,6 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
-    }
-
-    // convenience method for getting data at click position
-    ItemPhotoData getItem(int id) {
-        return mData.get(id);
     }
 
     // allows clicks events to be caught
