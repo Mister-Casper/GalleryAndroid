@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ViewImagesActivity"
-    android:background="@color/gray"
     android:orientation="vertical">
 
     <com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager xmlns:android="http://schemas.android.com/apk/res/android"
