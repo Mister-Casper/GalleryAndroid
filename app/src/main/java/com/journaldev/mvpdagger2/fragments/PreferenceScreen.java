@@ -36,14 +36,14 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
                 AppPreference.setIsDarkTheme((Boolean) newValue);
                 savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
                 int currentTheme = AppPreference.chandgeTheme(getActivity(),R.style.DarkTheme2,R.style.LightTheme2);
-                changeToTheme(getActivity(),currentTheme);
+                changeToTheme(getActivity());
                 preferenceDarkTheme.setChecked((Boolean) newValue);
                 return false;
             }
         });
     }
 
-    public static void changeToTheme(Activity activity, int theme) {
+    public static void changeToTheme(Activity activity) {
         activity.finish();
         Intent intent = new Intent(activity, activity.getClass());
         intent.putExtra("isOptionsChandge",true);
