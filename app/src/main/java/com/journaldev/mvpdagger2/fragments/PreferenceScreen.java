@@ -1,21 +1,18 @@
 package com.journaldev.mvpdagger2.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v14.preference.SwitchPreference;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.utils.GlideUtils;
+import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -35,7 +32,7 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 AppPreference.setIsDarkTheme((Boolean) newValue);
                 savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
-                AppPreference.chandgeTheme(getActivity(),R.style.DarkTheme2,R.style.LightTheme2);
+                ThemeUtils.chandgeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
                 changeToTheme(getActivity());
                 preferenceDarkTheme.setChecked((Boolean) newValue);
                 return false;
@@ -46,7 +43,7 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
     public static void changeToTheme(Activity activity) {
         activity.finish();
         Intent intent = new Intent(activity, activity.getClass());
-        intent.putExtra("isOptionsChandge",true);
+        intent.putExtra("isOptionsChandge", true);
         activity.startActivity(intent);
         activity.overridePendingTransition(android.R.anim.fade_in,
                 android.R.anim.fade_out);
@@ -60,11 +57,29 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
     @Override
     public void onStop() {
         super.onStop();
-        SwitchPreference preferenceAnim = (SwitchPreference) findPreference("isAnim");
+        saveIsAnim();
+        saveIsCache();
+    }
 
+    private void saveIsAnim() {
+        SwitchPreference preferenceAnim = (SwitchPreference) findPreference("isAnim");
         AppPreference.setIsAnim(preferenceAnim.isChecked());
         savePreferences(preferenceAnim.getKey(), preferenceAnim.isChecked());
     }
+
+    private void saveIsCache() {
+        SwitchPreference preferenceCache = (SwitchPreference) findPreference("isCache");
+        AppPreference.setIsCache(preferenceCache.isChecked());
+        savePreferences(preferenceCache.getKey(), preferenceCache.isChecked());
+
+        cleanCache(preferenceCache.isChecked());
+    }
+
+    private void cleanCache(Boolean isCache) {
+        if (!isCache)
+            GlideUtils.cleanCache(getActivity().getApplicationContext());
+    }
+
 
     private void savePreferences(String key, boolean value) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(

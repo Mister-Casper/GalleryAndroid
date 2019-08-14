@@ -16,4 +16,11 @@
         android:summary="Вы можете включить темную тему"
         android:defaultValue="false"/>
 
+    <SwitchPreference
+        android:id="@+id/cache"
+        android:key="isCache"
+        android:title="Кэширование"
+        android:summary="Сохранение изображений в памяти. Отключение уменьшит занимаемое приложением место , но увеличит время загрузки."
+        android:defaultValue="true"/>
+
 </PreferenceScreen>
