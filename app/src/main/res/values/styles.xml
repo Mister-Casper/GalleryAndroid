@@ -34,19 +34,6 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="LightTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/gray</item>
-        <item name="colorPrimaryDark">@color/gray</item>
-        <item name="colorAccent">#22a7e0</item>
-
-        <item name="android:textColor">@color/dark</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:itemBackground">@color/white</item>
-        <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
     <style name="DarkTheme2" parent="Theme.Design.NoActionBar">
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/gray</item>
@@ -66,20 +53,44 @@
         <item name="textAllCaps">true</item>
     </style>
 
-    <style name="LightTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <style name="LightTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">#22a7e0</item>
 
         <item name="android:textColor">@color/dark</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:itemBackground">@color/whitegray</item>
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="LightTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/whitegray2</item>
+        <item name="colorAccent">#22a7e0</item>
+
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:itemBackground">@color/white</item>
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="preferenceTheme">@style/LightPreferencesTheme</item>
     </style>
 
+    <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="ActioBarBackground" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/white</item>
+    </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
