@@ -1,10 +1,13 @@
 package com.journaldev.mvpdagger2.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v14.preference.SwitchPreference;
 import android.view.LayoutInflater;
@@ -25,6 +28,28 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
         AppPreference.load(getActivity());
+        final SwitchPreference preferenceDarkTheme = (SwitchPreference) findPreference("isDarkTheme");
+
+        preferenceDarkTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                AppPreference.setIsDarkTheme((Boolean) newValue);
+                savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
+                int currentTheme = AppPreference.chandgeTheme(getActivity(),R.style.DarkTheme2,R.style.LightTheme2);
+                changeToTheme(getActivity(),currentTheme);
+                preferenceDarkTheme.setChecked((Boolean) newValue);
+                return false;
+            }
+        });
+    }
+
+    public static void changeToTheme(Activity activity, int theme) {
+        activity.finish();
+        Intent intent = new Intent(activity, activity.getClass());
+        intent.putExtra("isOptionsChandge",true);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(android.R.anim.fade_in,
+                android.R.anim.fade_out);
     }
 
     @Override
@@ -33,18 +58,12 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  super.onCreateView(inflater, container, savedInstanceState);
-        view.setBackgroundColor(getResources().getColor(R.color.gray));
-        return view;
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
-        SwitchPreference preference = (SwitchPreference) findPreference("isAnim");
-        AppPreference.setIsAnim(preference.isChecked());
-        savePreferences(preference.getKey(), preference.isChecked());
+        SwitchPreference preferenceAnim = (SwitchPreference) findPreference("isAnim");
+
+        AppPreference.setIsAnim(preferenceAnim.isChecked());
+        savePreferences(preferenceAnim.getKey(), preferenceAnim.isChecked());
     }
 
     private void savePreferences(String key, boolean value) {
