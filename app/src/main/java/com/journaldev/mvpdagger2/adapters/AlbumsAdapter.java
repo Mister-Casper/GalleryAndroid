@@ -2,37 +2,32 @@ package com.journaldev.mvpdagger2.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.journaldev.mvpdagger2.Data.AlbumsInfo;
+import com.journaldev.mvpdagger2.Data.Album;
 import com.journaldev.mvpdagger2.Data.AppPreference;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
 
-    private AlbumsInfo.Album[] mData;
+    private Album[] mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public AlbumsAdapter(Context context, AlbumsInfo.Album[] albums) {
+    public AlbumsAdapter(Context context, Album[] albums) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = albums;
     }
@@ -96,7 +91,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
     }
 
     // convenience method for getting data at click position
-    AlbumsInfo.Album getItem(int id) {
+    Album getItem(int id) {
         return mData[id];
     }
 

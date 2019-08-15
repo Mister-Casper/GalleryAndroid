@@ -5,21 +5,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.icu.text.SymbolTable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+
 
 public class AlbumsInfo {
     static LinkedHashSet<String> albumsName = new LinkedHashSet<>();
@@ -137,30 +132,5 @@ public class AlbumsInfo {
     }
 
 
-    public static class Album {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public ArrayList<Uri> getUri() {
-            return uri;
-        }
-
-        public ArrayList<String> getLike() {
-            return like;
-        }
-
-        private ArrayList<String> like;
-        private ArrayList<Uri> uri;
-
-
-        Album(String name, ArrayList<Uri> uri,ArrayList<String> like) {
-            this.name = name;
-            this.uri = uri;
-            this.like = like;
-        }
-    }
-
 }
+
