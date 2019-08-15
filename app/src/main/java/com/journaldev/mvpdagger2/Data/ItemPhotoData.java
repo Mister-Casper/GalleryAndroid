@@ -11,6 +11,10 @@ public class ItemPhotoData {
         return isLike;
     }
 
+    public void setLike(Boolean value) {
+        isLike = value;
+    }
+
     private Uri photo;
     private Boolean isLike;
 
