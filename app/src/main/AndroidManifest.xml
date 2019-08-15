@@ -13,9 +13,7 @@
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_round"
-        android:theme="@style/AppTheme.Launcher"
-        android:supportsRtl="true">
-
+        android:supportsRtl="true"> 
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -36,8 +34,7 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.FIleInfo"></activity>
+        <activity android:name=".activity.FIleInfo" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
