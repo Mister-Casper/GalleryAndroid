@@ -56,7 +56,8 @@
 
     <style name="LightTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/gray</item>
-        <item name="colorPrimaryDark">@color/gray</item>
+        <item name="colorPrimaryDark">@color/whitegray2</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="colorAccent">#22a7e0</item>
 
         <item name="android:textColor">@color/dark</item>
