@@ -25,6 +25,7 @@ import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
+import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.IOException;
@@ -49,9 +50,7 @@ public class ViewImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeUtils.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
-        setTitle("");
-        transparentActionBar();
+        prepareTheLook();
         super.onCreate(savedInstanceState);
         allScreen();
         setContentView(R.layout.viewimages);
@@ -64,21 +63,29 @@ public class ViewImagesActivity extends AppCompatActivity {
             setLikeState(0);
     }
 
-    private void initViewPager(){
+
+    private void prepareTheLook()
+    {
+        ThemeUtils.chandgeTheme(this, R.style.DarkTheme, R.style.LightTheme);
+        setTitle("");
+        transparentActionBar();
+    }
+
+
+    private void initViewPager() {
         pager.setOffscreenPageLimit(3);
         mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
         pager.setAdapter(mCustomPagerAdapter);
     }
 
-    private void transparentActionBar(){
+    private void transparentActionBar() {
         ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
         abDrawable.setAlpha(0);
         getSupportActionBar().setBackgroundDrawable(abDrawable);
     }
 
 
-    private void processingChangeCurrentItem()
-    {
+    private void processingChangeCurrentItem() {
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {
             }
@@ -146,13 +153,12 @@ public class ViewImagesActivity extends AppCompatActivity {
         intent.putExtra("uri", currentUri.toString());
         startActivity(intent);
         if (AppPreference.getIsAnim()) {
-           overridePendingTransition(R.anim.back, R.anim.next);
+            overridePendingTransition(R.anim.back, R.anim.next);
         }
         return true;
     }
 
-    private void hideNavigationBar()
-    {
+    private void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
@@ -302,6 +308,7 @@ public class ViewImagesActivity extends AppCompatActivity {
             exif.setAttribute(ExifInterface.TAG_USER_COMMENT, like.toString());
             exif.saveAttributes();
             ImageUrls.isUpdate = true;
+            uri.get(pager.getCurrentItem()).setLike(like);
         } catch (IOException e) {
             e.printStackTrace();
         }
