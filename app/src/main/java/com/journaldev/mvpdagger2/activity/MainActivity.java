@@ -5,8 +5,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
@@ -74,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         setTableSelector();
     }
 
-
     private void setTableSelector() {
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -96,8 +98,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        FragmentManager fm = getSupportFragmentManager();
+        OnBackPressedListener backPressedListener = null;
+        for (Fragment fragment: fm.getFragments()) {
+            if (fragment instanceof  OnBackPressedListener) {
+                backPressedListener = (OnBackPressedListener) fragment;
+                break;
+            }
+        }
+
+        if (backPressedListener != null) {
+            backPressedListener.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public interface OnBackPressedListener
+    {
+        void onBackPressed();
     }
 }
 
