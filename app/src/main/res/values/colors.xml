@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="dark">#000</color>
@@ -9,4 +10,7 @@
     <color name="whitegray">#adadad</color>
     <color name="whitegray2">#8c8c8c</color>
     <color name="white">#fff</color>
+    <color name="blue">#22a7e0</color>
+    <color name="red">#b80f22</color>
+
 </resources>
