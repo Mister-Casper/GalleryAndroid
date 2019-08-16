@@ -72,17 +72,6 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         textView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (unbinder != null) {
-                viewStandartMod();
-                adapter.setSelectable(false);
-            }
-        }
-    }
-
     private void setAdapter() {
         adapter = new PhotosAdapter(getActivity().getApplicationContext(), loadUri(), this);
         adapter.setClickListener(this);
@@ -150,7 +139,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
             selectablemenu.setVisibility(View.VISIBLE);
             itemSelected.setText(Integer.toString(selectedItems.size()));
             textView.setVisibility(View.GONE);
-        }
+      }
     }
 
 
