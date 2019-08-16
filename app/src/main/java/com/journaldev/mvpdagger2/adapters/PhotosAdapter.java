@@ -101,10 +101,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
                 if (!isSelectable)
                     mClickListener.onItemClick(view, position);
                 else {
-                    holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
-                    holder.setChecked(holder.selectMultiPhoto.isChecked());
-                    onItemSelected(selectableItem);
-                    listener.onItemSelected(selectableItem);
+                    checkedCheckBox(holder,selectableItem);
                 }
             }
         });
@@ -115,14 +112,18 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                setSelectable(!isSelectable);
-                holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
-                holder.setChecked( holder.selectMultiPhoto.isChecked());
-                onItemSelected(selectableItem);
-                listener.onItemSelected(selectableItem);
+                checkedCheckBox(holder,selectableItem);
                 return false;
             }
         });
+    }
+
+    private void checkedCheckBox( SelectableViewHolder holder,SelectableItemPhotoData selectableItem){
+        setSelectable(!isSelectable);
+        holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
+        holder.setChecked( holder.selectMultiPhoto.isChecked());
+        onItemSelected(selectableItem);
+        listener.onItemSelected(selectableItem);
     }
 
     private void viewImage( SelectableViewHolder holder ,Uri uri){
