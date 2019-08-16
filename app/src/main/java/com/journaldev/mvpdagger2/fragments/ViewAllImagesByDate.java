@@ -19,6 +19,7 @@ import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.activity.MainActivity;
 import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
@@ -33,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener {
+public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener , MainActivity.OnBackPressedListener {
 
 
     @BindView(R.id.DataList)
@@ -159,4 +160,14 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if(adapter.isSelectable())
+        {
+            adapter.setSelectable(false);
+            viewStandartMod();
+        }else
+            getActivity().finish();
+    }
 }
