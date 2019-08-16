@@ -24,4 +24,15 @@
         android:background="@drawable/icon_like"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/MyCheckBox"
+        android:visibility="gone"
+        android:id="@+id/checked_text_item"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:checkMark="?android:attr/listChoiceIndicatorSingle"
+        android:paddingBottom="16dp"
+        tools:ignore="MissingConstraints" />
+
 </android.support.constraint.ConstraintLayout>
