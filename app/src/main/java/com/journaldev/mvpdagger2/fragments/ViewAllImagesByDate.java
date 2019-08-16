@@ -151,6 +151,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     @OnClick(R.id.exitButton)
     public void exitButtonClick() {
         adapter.setSelectable(false);
+        viewStandartMod();
     }
 
     @OnClick(R.id.exitButton)
