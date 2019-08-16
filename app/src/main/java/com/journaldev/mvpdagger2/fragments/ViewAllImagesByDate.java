@@ -143,10 +143,16 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     @Override
     public void onItemSelected(SelectableItemPhotoData item) {
         ArrayList<SelectableItemPhotoData> selectedItems = adapter.getSelectedItems();
-        selectablemenu.setVisibility(View.VISIBLE);
-        itemSelected.setText(Integer.toString(selectedItems.size()));
-        textView.setVisibility(View.GONE);
+
+        if(!adapter.isSelectable())
+            viewStandartMod();
+        else{
+            selectablemenu.setVisibility(View.VISIBLE);
+            itemSelected.setText(Integer.toString(selectedItems.size()));
+            textView.setVisibility(View.GONE);
+        }
     }
+
 
 
     @OnClick(R.id.exitButton)
