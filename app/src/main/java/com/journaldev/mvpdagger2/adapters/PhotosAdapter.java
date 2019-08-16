@@ -3,59 +3,124 @@ package com.journaldev.mvpdagger2.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
+import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
+import static com.journaldev.mvpdagger2.adapters.SelectableViewHolder.MULTI_SELECTION;
 
-    private ArrayList<ItemPhotoData> mData;
+public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> implements SelectableViewHolder.OnItemSelectedListener {
+
+    private ArrayList<SelectableItemPhotoData> items;
+    private boolean isMultiSelectionEnabled = true;
+    SelectableViewHolder.OnItemSelectedListener listener;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private SelectableViewHolder.OnItemClickListener mClickListener;
+    private boolean isSelectable = false;
 
     // data is passed into the constructor
-    public PhotosAdapter(Context context, ArrayList<ItemPhotoData> products) {
+    public PhotosAdapter(Context context, ArrayList<ItemPhotoData> items, SelectableViewHolder.OnItemSelectedListener listener) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = products;
+        this.listener = listener;
+        this.items = new ArrayList<>();
+        for (ItemPhotoData item : items) {
+            this.items.add(new SelectableItemPhotoData(item, false));
+        }
     }
 
-    // inflates the cell layout from xml when needed
+
+    // allows clicks events to be caught
+    public void setClickListener(SelectableViewHolder.OnItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
     @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.imageitem, parent, false);
-        return new ViewHolder(view);
+    public SelectableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.imageitem, parent, false);
+
+        return new SelectableViewHolder(itemView, this);
     }
 
     @SuppressLint("CheckResult")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Uri photo = mData.get(position).getPhoto();
+    public void onBindViewHolder(@NonNull final SelectableViewHolder holder, final int position) {
+        Uri photo = items.get(position).getPhoto();
+        final SelectableItemPhotoData selectableItem = items.get(position);
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
+        buttonLikeVisibility(holder, position);
+        viewImage(holder, uri);
+        imageClickListener(holder,position,selectableItem);
+        holder.mItem = selectableItem;
+        holder.setChecked(holder.mItem.isSelected());
+        settingSelectableMod(holder,selectableItem);
+    }
 
-        if (mData.get(position).getLike())
-            holder.like.setVisibility(View.VISIBLE);
-        else
-            holder.like.setVisibility(View.GONE);
+    private void settingSelectableMod(SelectableViewHolder holder,SelectableItemPhotoData selectableItem)
+    {
+        if (isSelectable) {
+            holder.selectMultiPhoto.setChecked(selectableItem.isSelected());
+            holder.selectMultiPhoto.setVisibility(View.VISIBLE);
+        } else
+            holder.selectMultiPhoto.setVisibility(View.GONE);
+    }
 
+    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem)
+    {
+        imageOnClickListener(holder,position,selectableItem);
+        imageLongClickListener(holder,selectableItem);
+    }
+
+    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem)
+    {
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isSelectable)
+                    mClickListener.onItemClick(view, position);
+                else {
+                    holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
+                    holder.setChecked(holder.selectMultiPhoto.isChecked());
+                    onItemSelected(selectableItem);
+                    listener.onItemSelected(selectableItem);
+                }
+            }
+        });
+    }
+
+    private void imageLongClickListener(final SelectableViewHolder holder,final SelectableItemPhotoData selectableItem)
+    {
+        holder.image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                setSelectable(!isSelectable);
+                holder.selectMultiPhoto.setChecked(true);
+                holder.setChecked(true);
+                onItemSelected(selectableItem);
+                listener.onItemSelected(selectableItem);
+                return false;
+            }
+        });
+    }
+
+    private void viewImage( SelectableViewHolder holder ,Uri uri){
         RequestOptions options = new RequestOptions();
         options.fitCenter();
         options.centerCrop();
@@ -73,39 +138,61 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         holder.image.setPadding(3, 3, 3, 3);
     }
 
+    private void buttonLikeVisibility( SelectableViewHolder holder , int position) {
+        if (items.get(position).getLike())
+            holder.like.setVisibility(View.VISIBLE);
+        else
+            holder.like.setVisibility(View.GONE);
+    }
+
+    public void setSelectable(boolean value) {
+        isSelectable = value;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<SelectableItemPhotoData> getSelectedItems() {
+
+        ArrayList<SelectableItemPhotoData> selectedItems = new ArrayList<>();
+        for (SelectableItemPhotoData item : items) {
+            if (item.isSelected()) {
+                selectedItems.add(item);
+            }
+        }
+        return selectedItems;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isMultiSelectionEnabled) {
+            return MULTI_SELECTION;
+        } else {
+            return SelectableViewHolder.SINGLE_SELECTION;
+        }
+    }
+
 
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.size();
+        return items.size();
     }
 
+    @Override
+    public void onItemSelected(SelectableItemPhotoData item) {
+        if (!isMultiSelectionEnabled) {
 
-    // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        MyImageView image;
-        ImageView like;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            image = itemView.findViewById(R.id.picture);
-            like = itemView.findViewById(R.id.like);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            for (SelectableItemPhotoData selectableItem : items) {
+                if (!selectableItem.equals(item)
+                        && selectableItem.isSelected()) {
+                    selectableItem.setSelected(false);
+                } else if (selectableItem.equals(item)
+                        && item.isSelected()) {
+                    selectableItem.setSelected(true);
+                }
+            }
+            notifyDataSetChanged();
         }
     }
 
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
 }
