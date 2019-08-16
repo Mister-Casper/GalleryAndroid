@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.journaldev.mvpdagger2.Data.Album;
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.AlbumsAdapter;
-import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     @BindView(R.id.field)
     RecyclerView field;
     Unbinder unbinder;
-    AlbumsInfo.Album[] albums;
+    Album[] albums;
 
     @Override
     public void onStart() {
