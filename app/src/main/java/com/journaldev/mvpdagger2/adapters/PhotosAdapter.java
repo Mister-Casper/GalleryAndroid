@@ -32,6 +32,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     SelectableViewHolder.OnItemSelectedListener listener;
     private LayoutInflater mInflater;
     private SelectableViewHolder.OnItemClickListener mClickListener;
+
+    public boolean isSelectable() {
+        return isSelectable;
+    }
+
     private boolean isSelectable = false;
 
     // data is passed into the constructor
