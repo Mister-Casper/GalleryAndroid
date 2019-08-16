@@ -61,14 +61,25 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     public void onStart() {
         super.onStart();
         setAdapter();
-        if (unbinder != null)
+        if (unbinder != null) {
             viewStandartMod();
-
+        }
     }
 
     private void viewStandartMod() {
         selectablemenu.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (unbinder != null) {
+                viewStandartMod();
+                adapter.setSelectable(false);
+            }
+        }
     }
 
     private void setAdapter() {
