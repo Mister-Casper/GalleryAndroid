@@ -25,7 +25,6 @@ public class ImageUrls {
     public static boolean isUpdate = false;
 
 
-
     public static LinkedList<ItemPhotoData> getUrls(Context context) {
         if (mUrls == null) {
             getImageUrl(context);
@@ -55,16 +54,18 @@ public class ImageUrls {
             cc.moveToFirst();
             mUrls = new LinkedList<>();
             mDate = new long[cc.getCount()];
-            for (int i =  cc.getCount() - 1; i >= 0; i--) {
+            for (int i = cc.getCount() - 1; i >= 0; i--) {
                 cc.moveToPosition(i);
                 Uri temp = Uri.parse(cc.getString(1));
-                mUrls.add(new ItemPhotoData(temp ,Boolean.parseBoolean(isLikeImage(temp,ExifInterface.TAG_USER_COMMENT))));;
+                File file = new File(temp.toString());
+                if (file.exists())
+                    mUrls.add(new ItemPhotoData(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
             }
         }
         maxImageId = mUrls.size();
     }
 
-    private static String isLikeImage(Uri uri ,String tag ) {
+    private static String isLikeImage(Uri uri, String tag) {
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(uri.toString());

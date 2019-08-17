@@ -58,11 +58,13 @@ public class AlbumsInfo {
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(uri.toString());
+            String attribute = exif.getAttribute(tag);
+            return attribute;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String attribute = exif.getAttribute(tag);
-        return attribute;
+
+        return "false";
     }
 
     private static void getAccess(Context context) {

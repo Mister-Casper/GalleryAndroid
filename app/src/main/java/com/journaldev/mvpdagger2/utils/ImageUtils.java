@@ -12,6 +12,7 @@ import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -22,10 +23,10 @@ public class ImageUtils {
                 MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.toString()});
     }
 
-    public static void deleteImage(ContentResolver contentResolver,ArrayList<SelectableItemPhotoData>  uri) {
+    public static void deleteImage(ContentResolver contentResolver, ArrayList<SelectableItemPhotoData> uri) {
         String[] uriStr = convertToStringArray(uri);
 
-        for(int i = 0 ; i < uriStr.length ; i++) {
+        for (int i = 0; i < uriStr.length; i++) {
             contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uriStr[i]});
         }
@@ -41,7 +42,7 @@ public class ImageUtils {
         return str;
     }
 
-    public static AlertDialog.Builder createAlertDialogDeleteImage(final Context context , String message, final alertDialogListener listener) {
+    public static AlertDialog.Builder createAlertDialogDeleteImage(final Context context, String message, final alertDialogListener listener) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setMessage(message);
         ad.setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
@@ -56,7 +57,7 @@ public class ImageUtils {
         return ad;
     }
 
-    public interface alertDialogListener{
+    public interface alertDialogListener {
         void deleteClick();
     }
 
