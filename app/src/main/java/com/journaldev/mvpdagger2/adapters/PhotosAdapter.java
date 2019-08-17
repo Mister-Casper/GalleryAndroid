@@ -155,7 +155,16 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     public void setSelectable(boolean value) {
         isSelectable = value;
         notifyDataSetChanged();
+        if(value)
+            removeSelectable();
     }
+
+    private void removeSelectable()
+    {
+        for(int i = 0 ; i < items.size() ; i++)
+            items.get(i).setSelected(false);
+    }
+
 
     public ArrayList<SelectableItemPhotoData> getSelectedItems() {
 
