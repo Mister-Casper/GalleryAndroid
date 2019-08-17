@@ -196,19 +196,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
 
     @Override
     public void onItemSelected(SelectableItemPhotoData item) {
-        if (!isMultiSelectionEnabled) {
-
-            for (SelectableItemPhotoData selectableItem : items) {
-                if (!selectableItem.equals(item)
-                        && selectableItem.isSelected()) {
-                    selectableItem.setSelected(false);
-                } else if (selectableItem.equals(item)
-                        && item.isSelected()) {
-                    selectableItem.setSelected(true);
-                }
-            }
-            notifyDataSetChanged();
-        }
+        listener.onItemSelected(item);
     }
 
 
