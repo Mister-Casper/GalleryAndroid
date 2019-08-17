@@ -168,8 +168,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         } else {
             dialog = createAlertDialogNoHaveDeleteImage(
                     getActivity()
-                    , "Выберите изображения , которые хотите удалить"
-                    , this);
+                    , "Выберите изображения , которые хотите удалить");
         }
 
         dialog.show();
@@ -196,7 +195,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         adapter.setSelectable(false);
     }
 
-    public static AlertDialog.Builder createAlertDialogNoHaveDeleteImage(final Context context, String message, final ImageUtils.alertDialogListener listener) {
+    public static AlertDialog.Builder createAlertDialogNoHaveDeleteImage(final Context context, String message) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setMessage(message);
         ad.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
