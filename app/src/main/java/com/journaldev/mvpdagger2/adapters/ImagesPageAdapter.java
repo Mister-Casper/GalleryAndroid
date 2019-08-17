@@ -79,9 +79,6 @@ public class ImagesPageAdapter extends PagerAdapter {
                 .apply(options)
                 .into(imageView);
 
-        String name = mContext.getString(R.string.transition_name, position);
-        imageView.setTag(position);
-
         container.addView(itemView);
         return itemView;
     }
