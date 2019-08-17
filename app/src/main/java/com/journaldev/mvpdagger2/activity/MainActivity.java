@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         viewpager.setAdapter(adapter);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         setTableSelector();
+        viewpager.setOffscreenPageLimit(3);
     }
 
     private void setTableSelector() {
