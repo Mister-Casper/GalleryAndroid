@@ -130,7 +130,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     private void viewImage(SelectableViewHolder holder, Uri uri) {
         RequestOptions options = new RequestOptions();
         options.fitCenter();
-        options.sizeMultiplier(0.5f);
+        options.sizeMultiplier(0.75f);
         options.centerCrop();
 
         if (!AppPreference.getIsCache())
