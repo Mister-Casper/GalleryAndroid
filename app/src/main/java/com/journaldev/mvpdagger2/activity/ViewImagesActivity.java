@@ -25,6 +25,7 @@ import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
+import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity {
+public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.alertDialogListener {
 
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
@@ -262,29 +263,13 @@ public class ViewImagesActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     @OnClick(R.id.deleteImage)
     public void clickDeleteImage() {
-        AlertDialog.Builder dialog = createAlertDialogDeleteImage();
+        AlertDialog.Builder dialog = ImageUtils.createAlertDialogDeleteImage(
+                this,"Вы действительно хотите удалить изображение?",this);
         dialog.show();
     }
 
-    private AlertDialog.Builder createAlertDialogDeleteImage() {
-        AlertDialog.Builder ad = new AlertDialog.Builder(this);
-        ad.setMessage("Вы действительно хотите удалить изображение?");
-        ad.setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                deleteImage();
-            }
-        });
-        ad.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-            }
-        });
-        return ad;
-    }
-
     private void deleteImage() {
-        ContentResolver contentResolver = getContentResolver();
-        contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.get(pager.getCurrentItem()).getPhoto().toString()});
+        ImageUtils.deleteImage(getContentResolver(),uri.get(pager.getCurrentItem()).getPhoto());
         ImageUrls.isUpdate = true;
         int currentPosition = pager.getCurrentItem();
         uri.remove(currentPosition);
@@ -323,4 +308,8 @@ public class ViewImagesActivity extends AppCompatActivity {
         v.setSelected(!v.isSelected());
     }
 
+    @Override
+    public void deleteClick() {
+        deleteImage();
+    }
 }
