@@ -50,6 +50,7 @@ public class ViewImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppPreference.load(getApplicationContext());
         prepareTheLook();
         super.onCreate(savedInstanceState);
         allScreen();
@@ -190,7 +191,7 @@ public class ViewImagesActivity extends AppCompatActivity {
         String[] allFileName = new String[uri.size()];
 
         for (int i = 0; i < uri.size(); i++) {
-            allFileName[i] = getFileNameFromPath(uri.get(i).toString());
+            allFileName[i] = getFileNameFromPath(uri.get(i).getPhoto().toString());
         }
 
         return allFileName;
