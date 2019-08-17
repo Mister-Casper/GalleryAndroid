@@ -43,16 +43,17 @@ public class FIleInfo extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ThemeUtils.chandgeTheme(this,R.style.DarkTheme,R.style.LightTheme);
+        ThemeUtils.chandgeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
         Uri uriFile = getUri();
-        viewFileInfo(uriFile);
+        if(uriFile != null) {
+            viewFileInfo(uriFile);
+        }
         setOnSwipeTouchListener(root);
     }
 
-    private void setOnSwipeTouchListener(View view)
-    {
+    private void setOnSwipeTouchListener(View view) {
         view.setOnTouchListener(new OnSwipeTouchListener(FIleInfo.this) {
             public void onSwipeTop() {
                 onBackPressed();
@@ -109,7 +110,10 @@ public class FIleInfo extends Activity {
     private Uri getUri() {
         Intent intent = getIntent();
         String uri = intent.getStringExtra("uri");
-        return Uri.parse(uri);
+        if (uri != null)
+            return Uri.parse(uri);
+        else
+            return null;
     }
 
     @Override
