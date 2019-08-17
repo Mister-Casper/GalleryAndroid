@@ -37,6 +37,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         return isSelectable;
     }
 
+    public void removeItem(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+    }
+
     private boolean isSelectable = false;
 
     // data is passed into the constructor
@@ -72,14 +77,13 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         Uri uri = Uri.fromFile(file);
         buttonLikeVisibility(holder, position);
         viewImage(holder, uri);
-        imageClickListener(holder,position,selectableItem);
+        imageClickListener(holder, position, selectableItem);
         holder.mItem = selectableItem;
         holder.setChecked(holder.mItem.isSelected());
-        settingSelectableMod(holder,selectableItem);
+        settingSelectableMod(holder, selectableItem);
     }
 
-    private void settingSelectableMod(SelectableViewHolder holder,SelectableItemPhotoData selectableItem)
-    {
+    private void settingSelectableMod(SelectableViewHolder holder, SelectableItemPhotoData selectableItem) {
         if (isSelectable) {
             holder.selectMultiPhoto.setChecked(selectableItem.isSelected());
             holder.selectMultiPhoto.setVisibility(View.VISIBLE);
@@ -87,46 +91,43 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
             holder.selectMultiPhoto.setVisibility(View.GONE);
     }
 
-    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem)
-    {
-        imageOnClickListener(holder,position,selectableItem);
-        imageLongClickListener(holder,selectableItem);
+    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem) {
+        imageOnClickListener(holder, position, selectableItem);
+        imageLongClickListener(holder, selectableItem);
     }
 
-    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem)
-    {
+    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem) {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isSelectable)
                     mClickListener.onItemClick(view, position);
                 else {
-                    checkedCheckBox(holder,selectableItem);
+                    checkedCheckBox(holder, selectableItem);
                 }
             }
         });
     }
 
-    private void imageLongClickListener(final SelectableViewHolder holder,final SelectableItemPhotoData selectableItem)
-    {
+    private void imageLongClickListener(final SelectableViewHolder holder, final SelectableItemPhotoData selectableItem) {
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 setSelectable(!isSelectable);
-                checkedCheckBox(holder,selectableItem);
+                checkedCheckBox(holder, selectableItem);
                 return false;
             }
         });
     }
 
-    private void checkedCheckBox( SelectableViewHolder holder,SelectableItemPhotoData selectableItem){
+    private void checkedCheckBox(SelectableViewHolder holder, SelectableItemPhotoData selectableItem) {
         holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
-        holder.setChecked( holder.selectMultiPhoto.isChecked());
+        holder.setChecked(holder.selectMultiPhoto.isChecked());
         onItemSelected(selectableItem);
         listener.onItemSelected(selectableItem);
     }
 
-    private void viewImage( SelectableViewHolder holder ,Uri uri){
+    private void viewImage(SelectableViewHolder holder, Uri uri) {
         RequestOptions options = new RequestOptions();
         options.fitCenter();
         options.centerCrop();
@@ -144,7 +145,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         holder.image.setPadding(3, 3, 3, 3);
     }
 
-    private void buttonLikeVisibility( SelectableViewHolder holder , int position) {
+    private void buttonLikeVisibility(SelectableViewHolder holder, int position) {
         if (items.get(position).getLike())
             holder.like.setVisibility(View.VISIBLE);
         else
