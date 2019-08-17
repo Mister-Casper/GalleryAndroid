@@ -44,6 +44,15 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlbumsInfo.loadImageUrl(getContext());
+        albums = AlbumsInfo.getAllAlbum();
+        setAdapter();
+        AlbumsInfo.loadImageUrl(getContext());
+    }
+
     private void setAdapter() {
         field.setLayoutManager(new GridLayoutManager(getContext(), 2));
         AlbumsAdapter adapter = new AlbumsAdapter(getActivity().getApplicationContext(), albums);
