@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
 import com.journaldev.mvpdagger2.utils.FabricEvents;
+import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener , MainActivity.OnBackPressedListener {
+public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener {
 
 
     @BindView(R.id.DataList)
@@ -52,6 +54,8 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     @BindView(R.id.selectablemenu)
     ConstraintLayout selectablemenu;
     PhotosAdapter adapter;
+
+    private ArrayList<SelectableItemPhotoData> selectedItems;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,17 +135,16 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     @SuppressLint("SetTextI18n")
     @Override
     public void onItemSelected(SelectableItemPhotoData item) {
-        ArrayList<SelectableItemPhotoData> selectedItems = adapter.getSelectedItems();
+        selectedItems = adapter.getSelectedItems();
 
-        if(!adapter.isSelectable())
+        if (!adapter.isSelectable())
             viewStandartMod();
-        else{
+        else {
             selectablemenu.setVisibility(View.VISIBLE);
             itemSelected.setText(Integer.toString(selectedItems.size()));
             textView.setVisibility(View.GONE);
-      }
+        }
     }
-
 
 
     @OnClick(R.id.exitButton)
@@ -150,19 +153,48 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         viewStandartMod();
     }
 
-    @OnClick(R.id.exitButton)
+    @OnClick(R.id.deleteItemsSelected)
     public void deleteItemsSelectedClick() {
+        AlertDialog.Builder dialog = ImageUtils.createAlertDialogDeleteImage(
+                getActivity()
+                , "Вы действительно хотите удалить изображения?"
+                , this);
+        dialog.show();
+        ImageUrls.isUpdate = true;
 
     }
 
 
     @Override
     public void onBackPressed() {
-        if(adapter.isSelectable())
-        {
+        if (adapter.isSelectable()) {
             adapter.setSelectable(false);
             viewStandartMod();
-        }else
+        } else
             getActivity().finish();
     }
+
+    @Override
+    public void deleteClick() {
+        ArrayList<SelectableItemPhotoData> selectedItems = adapter.getSelectedItems();
+        ImageUtils.deleteImage(getActivity().getContentResolver(), selectedItems);
+        viewStandartMod();
+        removeSelectedItems();
+        adapter.setSelectable(false);
+    }
+
+    private void removeSelectedItems() {
+        for (int i = 0; i < selectedItems.size(); i++) {
+            for (int q = 0; q < uri.size(); q++) {
+                if (selectedItems.get(i).getPhoto().equals(uri.get(q).getPhoto())) {
+                    adapter.removeItem(q);
+                    uri.remove(q);
+                }
+            }
+        }
+
+
+    }
+
+
 }
