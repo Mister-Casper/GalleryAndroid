@@ -1,6 +1,8 @@
 package com.journaldev.mvpdagger2.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -156,10 +158,20 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
 
     @OnClick(R.id.deleteItemsSelected)
     public void deleteItemsSelectedClick() {
-        AlertDialog.Builder dialog = ImageUtils.createAlertDialogDeleteImage(
-                getActivity()
-                , "Вы действительно хотите удалить изображения?"
-                , this);
+        AlertDialog.Builder dialog;
+
+        if (selectedItems.size() != 0) {
+            dialog = ImageUtils.createAlertDialogDeleteImage(
+                    getActivity()
+                    , "Вы действительно хотите удалить изображения?"
+                    , this);
+        } else {
+            dialog = createAlertDialogNoHaveDeleteImage(
+                    getActivity()
+                    , "Выберите изображения , которые хотите удалить"
+                    , this);
+        }
+
         dialog.show();
         ImageUrls.isUpdate = true;
         AlbumsInfo.isUpdate = true;
@@ -177,11 +189,22 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
 
     @Override
     public void deleteClick() {
-        ArrayList<SelectableItemPhotoData> selectedItems = adapter.getSelectedItems();
+        selectedItems = adapter.getSelectedItems();
         ImageUtils.deleteImage(getActivity().getContentResolver(), selectedItems);
         viewStandartMod();
         removeSelectedItems();
         adapter.setSelectable(false);
+    }
+
+    public static AlertDialog.Builder createAlertDialogNoHaveDeleteImage(final Context context, String message, final ImageUtils.alertDialogListener listener) {
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setMessage(message);
+        ad.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        return ad;
     }
 
     private void removeSelectedItems() {
@@ -193,8 +216,6 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
                 }
             }
         }
-
-
     }
 
 
