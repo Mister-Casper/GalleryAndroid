@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.journaldev.mvpdagger2.Data.AlbumsInfo;
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
@@ -311,5 +312,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @Override
     public void deleteClick() {
         deleteImage();
+        AlbumsInfo.isUpdate = true;
     }
 }

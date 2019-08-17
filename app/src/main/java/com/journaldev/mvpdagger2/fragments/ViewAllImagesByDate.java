@@ -16,6 +16,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.journaldev.mvpdagger2.Data.AlbumsInfo;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
@@ -161,7 +162,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
                 , this);
         dialog.show();
         ImageUrls.isUpdate = true;
-
+        AlbumsInfo.isUpdate = true;
     }
 
 

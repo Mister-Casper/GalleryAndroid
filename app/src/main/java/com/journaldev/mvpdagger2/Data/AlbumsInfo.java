@@ -21,6 +21,7 @@ public class AlbumsInfo {
     static ArrayList<ArrayList<Uri>> albumsUri = new ArrayList<>();
 
     static int albumId = -1;
+    public static boolean isUpdate = true;
 
     private static final String[] PROJECTION_BUCKET = {
             MediaStore.Images.Media._ID,
@@ -33,28 +34,26 @@ public class AlbumsInfo {
         int i = 0;
 
         for (Iterator<String> it = albumsName.iterator(); it.hasNext(); ) {
-            albums[i] = getAlbumInfo(it,i);
+            albums[i] = getAlbumInfo(it, i);
             i++;
         }
 
         return albums;
     }
 
-    private static Album getAlbumInfo(Iterator<String> it , int i)
-    {
+    private static Album getAlbumInfo(Iterator<String> it, int i) {
         String search = it.next();
         ArrayList<Uri> uri = albumsUri.get(i);
         ArrayList<String> like = new ArrayList<>();
 
-        for(int q = 0 ; q < uri.size(); q++)
-        {
-            like.add(isLikeImage(uri.get(q),ExifInterface.TAG_USER_COMMENT));
+        for (int q = 0; q < uri.size(); q++) {
+            like.add(isLikeImage(uri.get(q), ExifInterface.TAG_USER_COMMENT));
         }
 
-        return new Album(search,uri ,like);
+        return new Album(search, uri, like);
     }
 
-    private static String isLikeImage(Uri uri ,String tag ) {
+    private static String isLikeImage(Uri uri, String tag) {
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(uri.toString());

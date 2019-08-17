@@ -31,12 +31,17 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     Album[] albums;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        AlbumsInfo.loadImageUrl(getContext());
-        albums = AlbumsInfo.getAllAlbum();
-        setAdapter();
-        AlbumsInfo.loadImageUrl(getContext());
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (AlbumsInfo.isUpdate) {
+                AlbumsInfo.loadImageUrl(getContext());
+                albums = AlbumsInfo.getAllAlbum();
+                setAdapter();
+                AlbumsInfo.loadImageUrl(getContext());
+                AlbumsInfo.isUpdate = false;
+            }
+        }
     }
 
     private void setAdapter() {
