@@ -90,7 +90,15 @@ public class PhotoRecycleAdapterTest {
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
 
         assertEquals(photosAdapter.isSelectable(), !startSelectable);
+    }
 
+    @Test
+    public void textClickItem() {
+        boolean startSelectable = photosAdapter.isSelectable();
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
+
+        assertEquals(photosAdapter.isSelectable(), !startSelectable);
     }
 
     public static ViewAction clickChildViewWithId(final int id) {
