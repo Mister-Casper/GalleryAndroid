@@ -84,7 +84,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testClickItem() {
+    public void testLongClickItem() {
         boolean startSelectable = photosAdapter.isSelectable();
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
@@ -109,7 +109,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testAddSomeSelectableAtClickItem() {
+    public void testAddSomeSelectableItem() {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
@@ -124,7 +124,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testNoHaveSelectableAtClickItem() {
+    public void testNoHaveSelectableItem() {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
@@ -135,7 +135,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testOffSelectableAtClickItem() {
+    public void testOffSelectableMode() {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
