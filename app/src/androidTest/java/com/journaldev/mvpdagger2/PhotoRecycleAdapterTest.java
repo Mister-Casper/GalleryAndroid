@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.test.InstrumentationTestCase;
 import android.test.mock.MockContext;
 import android.view.View;
+import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
@@ -160,6 +161,29 @@ public class PhotoRecycleAdapterTest {
 
         assertFalse(photosAdapter.isSelectable());
     }
+
+    @Test
+    public void testCounterItemSelectedChange()
+    {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.picture)));
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(2, clickChildViewWithId(R.id.picture)));
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
+
+        TextView text = mActivityRule.getActivity().findViewById(R.id.itemSelected);
+        int itemSelected = Integer.parseInt(text.getText().toString());
+
+        photosAdapter.getSelectedItems();
+       assertEquals(itemSelected,2);
+
+    }
+
+
 
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
