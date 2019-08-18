@@ -71,7 +71,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testChandgeSelecable() throws InterruptedException {
+    public void testChandgeSelecable() {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
@@ -84,7 +84,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void textClickItem() throws InterruptedException {
+    public void textClickItem() {
         boolean startSelectable = photosAdapter.isSelectable();
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
