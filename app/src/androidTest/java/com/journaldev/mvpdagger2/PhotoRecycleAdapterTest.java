@@ -87,14 +87,55 @@ public class PhotoRecycleAdapterTest {
     public void testClickItem() {
         boolean startSelectable = photosAdapter.isSelectable();
         onView(withId(R.id.DataList)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
         assertEquals(photosAdapter.isSelectable(), !startSelectable);
     }
 
+    @Test
+    public void testAddSelectableAtClickItem() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
+        assertEquals(photosAdapter.getSelectedItems().size(), 1);
+    }
+
+    @Test
+    public void testAddSomeSelectableAtClickItem() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.picture)));
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(2, clickChildViewWithId(R.id.picture)));
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(3, clickChildViewWithId(R.id.picture)));
+
+        assertEquals(photosAdapter.getSelectedItems().size(), 4);
+    }
 
     public static ViewAction clickChildViewWithId(final int id) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return null;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Click on a child view with specified id.";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                View v = view.findViewById(id);
+                v.performClick();
+            }
+        };
+    }
+
+    public static ViewAction longClickChildViewWithId(final int id) {
         return new ViewAction() {
             @Override
             public Matcher<View> getConstraints() {
@@ -113,6 +154,4 @@ public class PhotoRecycleAdapterTest {
             }
         };
     }
-
-
 }
