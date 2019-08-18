@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.UiThread;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
@@ -41,14 +42,19 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.actionWithAssertions;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class PhotoRecycleAdapterTest extends InstrumentationTestCase {
+public class PhotoRecycleAdapterTest {
+
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
@@ -57,14 +63,18 @@ public class PhotoRecycleAdapterTest extends InstrumentationTestCase {
     RecyclerView recyclerView;
     PhotosAdapter photosAdapter;
 
+    @Before
+    public void start() throws InterruptedException {
+        Thread.sleep(1000);
+        recyclerView = mActivityRule.getActivity().findViewById(R.id.DataList);
+        photosAdapter = (PhotosAdapter) recyclerView.getAdapter();
+    }
 
     @Test
-    public void testChandgeSelecable(){
-        recyclerView = mActivityRule.getActivity().findViewById(R.id.DataList);
+    public void testChandgeSelecable() throws InterruptedException {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                photosAdapter = (PhotosAdapter) recyclerView.getAdapter();
                 photosAdapter.setSelectable(true);
                 assertTrue(photosAdapter.isSelectable());
                 photosAdapter.setSelectable(false);
@@ -74,15 +84,14 @@ public class PhotoRecycleAdapterTest extends InstrumentationTestCase {
     }
 
     @Test
-    public void textClickItem() {
-        recyclerView = mActivityRule.getActivity().findViewById(R.id.DataList);
-        photosAdapter = (PhotosAdapter) recyclerView.getAdapter();
+    public void textClickItem() throws InterruptedException {
         boolean startSelectable = photosAdapter.isSelectable();
-        onView(withId(R.id.DataList)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
-        assertEquals(photosAdapter.isSelectable(), !startSelectable);
-    }
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
 
+        assertEquals(photosAdapter.isSelectable(), !startSelectable);
+
+    }
 
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
