@@ -105,7 +105,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-       assertFalse(photosAdapter.isSelectable());
+       assertTrue(photosAdapter.isSelectable());
     }
 
     @Test
