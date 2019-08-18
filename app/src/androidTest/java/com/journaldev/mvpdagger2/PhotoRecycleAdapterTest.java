@@ -115,6 +115,17 @@ public class PhotoRecycleAdapterTest {
         assertEquals(photosAdapter.getSelectedItems().size(), 4);
     }
 
+    @Test
+    public void testNoHaveSelectableAtClickItem() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
+
+        assertEquals(photosAdapter.getSelectedItems().size(), 0);
+    }
+
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
             @Override
