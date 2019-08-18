@@ -14,6 +14,7 @@ import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.test.espresso.matcher.RootMatchers;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -41,12 +42,16 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.actionWithAssertions;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 
@@ -105,7 +110,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-       assertTrue(photosAdapter.isSelectable());
+        assertTrue(photosAdapter.isSelectable());
     }
 
     @Test
@@ -142,7 +147,18 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-       assertFalse(photosAdapter.isSelectable());
+        assertFalse(photosAdapter.isSelectable());
+    }
+
+    @Test
+    public void testExitFromSelectableMode() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.exitButton)).
+                perform(click());
+
+        assertFalse(photosAdapter.isSelectable());
     }
 
     public static ViewAction clickChildViewWithId(final int id) {
