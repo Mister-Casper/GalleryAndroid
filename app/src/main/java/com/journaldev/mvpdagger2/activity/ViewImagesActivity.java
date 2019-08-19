@@ -67,6 +67,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
         uri = getAllDataImage();
+        getOtherIntent();
         initViewPager();
         processingChangeCurrentItem();
         if (getImageId() == 0)
@@ -189,7 +190,35 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         decorView.setSystemUiVisibility(uiOptions);
     }
 
+    private void getOtherIntent() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_VIEW.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                selectCurrentItemFromIntent(intent);
+            }
+        }
+    }
 
+    private void selectCurrentItemFromIntent(Intent intent) {
+        String intentStr = intent.toString();
+
+        final String intentFileName = getFileNameFromPath(intentStr);
+        final String[] allFileName = getAllPath();
+
+        int currentItem = getCurrentItem(intentFileName, allFileName);
+        selectImageFromId(currentItem);
+    }
+
+    private void selectImageFromId(final int id) {
+        pager.post(new Runnable() {
+            @Override
+            public void run() {
+                pager.setCurrentItem(id, false);
+            }
+        });
+    }
 
     private String[] getAllPath() {
         String[] allFileName = new String[uri.size()];
