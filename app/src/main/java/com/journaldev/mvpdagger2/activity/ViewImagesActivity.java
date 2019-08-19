@@ -1,6 +1,7 @@
 package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,12 +10,14 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,13 +36,15 @@ import com.journaldev.mvpdagger2.utils.ThemeUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.alertDialogListener {
+public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.alertDialogListener , ImagesPageAdapter.PagerClickListener {
 
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
@@ -50,11 +55,14 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @BindView(R.id.likeImage)
     Button likeImage;
 
+    private int current;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppPreference.load(getApplicationContext());
         prepareTheLook();
         super.onCreate(savedInstanceState);
+        postponeEnterTransition();
         allScreen();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
@@ -77,7 +85,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     private void initViewPager() {
         pager.setOffscreenPageLimit(3);
-        mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri);
+        current = getIntent().getIntExtra("idImage", 0);
+        mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri,this,current);
         pager.setAdapter(mCustomPagerAdapter);
     }
 
@@ -314,4 +323,16 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         deleteImage();
         AlbumsInfo.isUpdate = true;
     }
+
+    @TargetApi(21) @Override public void setStartPostTransition(final View view) {
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                startPostponedEnterTransition();
+                return false;
+            }
+        });
+    }
+
+
 }

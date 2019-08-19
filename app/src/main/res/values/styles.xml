@@ -15,6 +15,9 @@
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">#22a7e0</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat">

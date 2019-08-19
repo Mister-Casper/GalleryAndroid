@@ -72,7 +72,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull final SelectableViewHolder holder, final int position) {
         Uri photo = items.get(position).getPhoto();
-        final SelectableItemPhotoData selectableItem = items.get(position);
+        SelectableItemPhotoData selectableItem = items.get(position);
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
         buttonLikeVisibility(holder, position);
@@ -81,6 +81,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         holder.mItem = selectableItem;
         holder.setChecked(holder.mItem.isSelected());
         settingSelectableMod(holder, selectableItem);
+        setTransitionName(holder, position);
     }
 
     private void settingSelectableMod(SelectableViewHolder holder, SelectableItemPhotoData selectableItem) {
@@ -153,16 +154,21 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
             holder.like.setVisibility(View.GONE);
     }
 
+    private void setTransitionName(SelectableViewHolder holder, int position) {
+        String name = holder.image.getContext().getString(R.string.transition_name, position);
+        holder.image.setTransitionName(name);
+    }
+
+
     public void setSelectable(boolean value) {
         isSelectable = value;
         notifyDataSetChanged();
-        if(value)
+        if (value)
             removeSelectable();
     }
 
-    private void removeSelectable()
-    {
-        for(int i = 0 ; i < items.size() ; i++)
+    private void removeSelectable() {
+        for (int i = 0; i < items.size(); i++)
             items.get(i).setSelected(false);
     }
 

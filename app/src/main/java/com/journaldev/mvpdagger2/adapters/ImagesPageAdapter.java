@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
@@ -34,11 +40,19 @@ public class ImagesPageAdapter extends PagerAdapter {
     private final LinkedList<ItemPhotoData> imageUri;
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
+    private PagerClickListener listener;
+    private int current;
 
-    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images) {
+    public interface PagerClickListener {
+        void setStartPostTransition(View view);
+    }
+
+    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images, PagerClickListener listener,int current) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
+        this.current = current;
+        this.listener = listener;
     }
 
     @Override
@@ -60,7 +74,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
 
-        zoomImageView imageView = itemView.findViewById(R.id.picture);
+        final zoomImageView imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
 
         File file = new File(String.valueOf(imageUri.get(position).getPhoto()));
@@ -74,9 +88,27 @@ public class ImagesPageAdapter extends PagerAdapter {
         if (!AppPreference.getIsCache())
             GlideUtils.optionsCleanCache(options);
 
+        String name = mContext.getString(R.string.transition_name, position);
+        imageView.setTransitionName(name);
+
         Glide.with(mContext)
                 .load(uri)
                 .apply(options)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (position == current)
+                            listener.setStartPostTransition(imageView);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        if (position == current)
+                            listener.setStartPostTransition(imageView);
+                        return false;
+                    }
+                })
                 .into(imageView);
 
         container.addView(itemView);

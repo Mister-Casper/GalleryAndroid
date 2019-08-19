@@ -1,22 +1,35 @@
 package com.journaldev.mvpdagger2.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.SharedElementCallback;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.transition.Transition;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.FragmentPagerAdapter;
+import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
+import com.journaldev.mvpdagger2.fragments.PreferenceScreen;
+import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
+import com.journaldev.mvpdagger2.fragments.albums;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
+
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabs;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         viewpager.setCurrentItem(3);
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -70,12 +83,22 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
-        final FragmentPagerAdapter adapter = new FragmentPagerAdapter
-                (getSupportFragmentManager(), tabs.getTabCount());
-        viewpager.setAdapter(adapter);
+        viewpager.setAdapter(loadAdapter());
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         setTableSelector();
         viewpager.setOffscreenPageLimit(3);
+    }
+
+    private FragmentPagerAdapter loadAdapter() {
+        ViewAllImagesByDate fragment1 = new ViewAllImagesByDate();
+
+        albums fragment2 = new albums();
+        PreferenceScreen fragment3 = new PreferenceScreen();
+
+        final FragmentPagerAdapter adapter = new FragmentPagerAdapter
+                (getSupportFragmentManager(), tabs.getTabCount(), new Fragment[]{fragment1, fragment2, fragment3});
+
+        return adapter;
     }
 
     private void setTableSelector() {
@@ -101,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
         OnBackPressedListener backPressedListener = null;
-        for (Fragment fragment: fm.getFragments()) {
-            if (fragment instanceof  OnBackPressedListener) {
+        for (Fragment fragment : fm.getFragments()) {
+            if (fragment instanceof OnBackPressedListener) {
                 backPressedListener = (OnBackPressedListener) fragment;
                 break;
             }
@@ -115,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public interface OnBackPressedListener
-    {
+    public interface OnBackPressedListener {
         void onBackPressed();
     }
 }
