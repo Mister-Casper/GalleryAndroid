@@ -32,6 +32,8 @@ import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
 import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
 
+import junit.framework.Assert;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
@@ -71,7 +73,7 @@ public class PhotoRecycleAdapterTest {
 
     @Before
     public void start() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(350);
         recyclerView = mActivityRule.getActivity().findViewById(R.id.DataList);
         photosAdapter = (PhotosAdapter) recyclerView.getAdapter();
     }
@@ -117,7 +119,7 @@ public class PhotoRecycleAdapterTest {
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
         onView(withId(R.id.DataList)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(2, longClickChildViewWithId(R.id.picture)));
+                perform(RecyclerViewActions.actionOnItemAtPosition(2, clickChildViewWithId(R.id.checked_text_item)));
 
         assertEquals(photosAdapter.getSelectedItems().size(), 2);
     }
@@ -129,11 +131,24 @@ public class PhotoRecycleAdapterTest {
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
         onView(withId(R.id.DataList)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checked_text_item)));
 
         assertEquals(photosAdapter.getSelectedItems().size(), 0);
     }
 
+    @Test
+    public void testViewSelectableMenu() {
+        android.support.constraint.ConstraintLayout menu = mActivityRule.getActivity().findViewById(R.id.selectablemenu);
+        Assert.assertEquals(menu.getVisibility(), View.GONE);
+    }
+
+    @Test
+    public void testViewSelectableMenuAfterLongClick() {
+        android.support.constraint.ConstraintLayout menu = mActivityRule.getActivity().findViewById(R.id.selectablemenu);
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+        Assert.assertEquals(menu.getVisibility(), View.VISIBLE);
+    }
 
     @Test
     public void testLongClickItem() {
@@ -209,8 +224,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testCounterItemSelectedChange()
-    {
+    public void testCounterItemSelectedChange() {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
@@ -225,10 +239,9 @@ public class PhotoRecycleAdapterTest {
         int itemSelected = Integer.parseInt(text.getText().toString());
 
         photosAdapter.getSelectedItems();
-       assertEquals(itemSelected,2);
+        assertEquals(itemSelected, 2);
 
     }
-
 
 
     public static ViewAction clickChildViewWithId(final int id) {
