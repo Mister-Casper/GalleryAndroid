@@ -48,6 +48,7 @@
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
@@ -82,6 +83,7 @@
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="preferenceTheme">@style/LightPreferencesTheme</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
