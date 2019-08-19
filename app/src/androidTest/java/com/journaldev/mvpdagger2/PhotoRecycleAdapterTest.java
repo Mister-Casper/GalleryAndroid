@@ -111,6 +111,29 @@ public class PhotoRecycleAdapterTest {
         assertTrue(checkBox.isChecked());
     }
 
+    @Test
+    public void testAddSelectableByCheckBoxClick() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(2, longClickChildViewWithId(R.id.picture)));
+
+        assertEquals(photosAdapter.getSelectedItems().size(), 2);
+    }
+
+
+    @Test
+    public void testNoSelectableByCheckBoxClick() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        assertEquals(photosAdapter.getSelectedItems().size(), 0);
+    }
+
 
     @Test
     public void testLongClickItem() {
