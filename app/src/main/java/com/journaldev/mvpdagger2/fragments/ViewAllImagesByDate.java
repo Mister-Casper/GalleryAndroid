@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.Data.AlbumsInfo;
+import com.journaldev.mvpdagger2.Data.AppPreference;
 import com.journaldev.mvpdagger2.Data.ImageUrls;
 import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
@@ -146,11 +147,14 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesActivity.class);
         intent.putExtra("idImage", position);
-        String name = view.getTransitionName();
-        ActivityOptions options =
-                ActivityOptions.makeSceneTransitionAnimation(getActivity(), view,
-                     name);
-        startActivity(intent, options.toBundle());
+        if(AppPreference.getIsAnim()) {
+            String name = view.getTransitionName();
+            ActivityOptions options =
+                    ActivityOptions.makeSceneTransitionAnimation(getActivity(), view,
+                            name);
+            startActivity(intent, options.toBundle());
+        }else
+            startActivity(intent);
     }
 
 
