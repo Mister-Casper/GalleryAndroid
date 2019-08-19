@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import com.journaldev.mvpdagger2.utils.FabricEvents;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -38,6 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.provider.Settings.AUTHORITY;
 
 public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener {
 
@@ -54,6 +59,8 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     TextView itemSelected;
     @BindView(R.id.deleteItemsSelected)
     Button deleteItemsSelected;
+    @BindView(R.id.shareButton)
+    Button shareButton;
     @BindView(R.id.selectablemenu)
     ConstraintLayout selectablemenu;
     PhotosAdapter adapter;
@@ -176,6 +183,29 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         AlbumsInfo.isUpdate = true;
     }
 
+    @OnClick(R.id.shareButton)
+    public void shareButtonClick() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        sendIntent.setType("image/*");
+        sendIntent.putExtra(Intent.EXTRA_STREAM,getAllFilePath(selectedItems));
+        startActivity(sendIntent);
+    }
+
+    private  ArrayList<Uri> getAllFilePath(ArrayList<SelectableItemPhotoData> selectedItems){
+        ArrayList<Uri> files = new ArrayList<>();
+
+        for(int i = 0 ; i < selectedItems.size() ; i++) {
+            File file = new File(selectedItems.get(i).getPhoto().toString());
+            Uri imageUri = FileProvider.getUriForFile(
+                    getContext(),
+                    "com.journaldev.mvpdagger2.provider", //(use your app signature + ".provider" )
+                    file);
+            files.add(imageUri);
+        }
+
+        return files;
+    }
 
     @Override
     public void onBackPressed() {
