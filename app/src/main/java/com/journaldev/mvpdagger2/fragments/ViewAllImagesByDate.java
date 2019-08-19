@@ -146,9 +146,10 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesActivity.class);
         intent.putExtra("idImage", position);
+        String name = view.getTransitionName();
         ActivityOptions options =
                 ActivityOptions.makeSceneTransitionAnimation(getActivity(), view,
-                        view.getTransitionName());
+                     name);
         startActivity(intent, options.toBundle());
     }
 
@@ -257,7 +258,6 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
             }
         }
     }
-
 
 
 }
