@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle("");
+        setTitle(""); 
         AppPreference.load(this);
         ThemeUtils.chandgeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
