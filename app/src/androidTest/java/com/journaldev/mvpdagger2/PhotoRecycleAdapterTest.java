@@ -23,9 +23,9 @@ import android.support.v7.widget.RecyclerView;
 import android.test.InstrumentationTestCase;
 import android.test.mock.MockContext;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.activity.MainActivity;
 import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
@@ -90,6 +90,29 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
+    public void testGoneVisibilityCheckBoxByDoubleLongClick() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        CheckBox checkBox = mActivityRule.getActivity().findViewById(R.id.checked_text_item);
+
+        assertFalse(checkBox.isChecked());
+    }
+
+    @Test
+    public void testVisibilityCheckBoxByLongClick() {
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        CheckBox checkBox = mActivityRule.getActivity().findViewById(R.id.checked_text_item);
+
+        assertTrue(checkBox.isChecked());
+    }
+
+
+    @Test
     public void testLongClickItem() {
         boolean startSelectable = photosAdapter.isSelectable();
         onView(withId(R.id.DataList)).
@@ -99,7 +122,7 @@ public class PhotoRecycleAdapterTest {
     }
 
     @Test
-    public void testAddSelectableAtClickItem() {
+    public void testAddSelectableByLongClickItem() {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
