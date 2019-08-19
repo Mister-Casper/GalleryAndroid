@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.alertDialogListener , ImagesPageAdapter.PagerClickListener {
+public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.alertDialogListener, ImagesPageAdapter.PagerClickListener {
 
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
@@ -62,12 +62,11 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         AppPreference.load(getApplicationContext());
         prepareTheLook();
         super.onCreate(savedInstanceState);
-        postponeEnterTransition();
         allScreen();
+        postponeEnterTransition();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
         uri = getAllDataImage();
-        getOtherIntent();
         initViewPager();
         processingChangeCurrentItem();
         if (getImageId() == 0)
@@ -75,8 +74,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
 
-    private void prepareTheLook()
-    {
+    private void prepareTheLook() {
         ThemeUtils.chandgeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setTitle("");
         transparentActionBar();
@@ -85,9 +83,10 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     private void initViewPager() {
         pager.setOffscreenPageLimit(3);
-        current = getIntent().getIntExtra("idImage", 0);
-        mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri,this,current);
+        current = getImageId();
+        mCustomPagerAdapter = new ImagesPageAdapter(getApplicationContext(), uri, this, current);
         pager.setAdapter(mCustomPagerAdapter);
+        pager.setCurrentItem(current, AppPreference.getIsAnim());
     }
 
     private void transparentActionBar() {
@@ -149,7 +148,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.info:
                 return viewFileInfoActivity();
@@ -170,33 +168,28 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public void finish() {
+        if (AppPreference.getIsAnim()) {
+            hideNavigationBar();
+            super.finish();
+            overridePendingTransition(R.anim.back, R.anim.next);
+        }
+        super.finish();
+    }
+
     private void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-    private void getOtherIntent() {
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        if (Intent.ACTION_VIEW.equals(action) && type != null) {
-            if (type.startsWith("image/")) {
-                selectCurrentItemFromIntent(intent);
-            }
-        } else
-            selectImage();
-    }
 
-    private void selectCurrentItemFromIntent(Intent intent) {
-        String intentStr = intent.toString();
-
-        final String intentFileName = getFileNameFromPath(intentStr);
-        final String[] allFileName = getAllPath();
-
-        int currentItem = getCurrentItem(intentFileName, allFileName);
-        selectImageFromId(currentItem);
-    }
 
     private String[] getAllPath() {
         String[] allFileName = new String[uri.size()];
@@ -253,33 +246,21 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
 
-    private void selectImage() {
-        selectImageFromId(getImageId());
-    }
-
     private int getImageId() {
         return getIntent().getIntExtra("idImage", 0);
     }
 
-    private void selectImageFromId(final int id) {
-        pager.post(new Runnable() {
-            @Override
-            public void run() {
-                pager.setCurrentItem(id, false);
-            }
-        });
-    }
 
     @SuppressLint("ResourceAsColor")
     @OnClick(R.id.deleteImage)
     public void clickDeleteImage() {
         AlertDialog.Builder dialog = ImageUtils.createAlertDialogDeleteImage(
-                this,"Вы действительно хотите удалить изображение?",this);
+                this, "Вы действительно хотите удалить изображение?", this);
         dialog.show();
     }
 
     private void deleteImage() {
-        ImageUtils.deleteImage(getContentResolver(),uri.get(pager.getCurrentItem()).getPhoto());
+        ImageUtils.deleteImage(getContentResolver(), uri.get(pager.getCurrentItem()).getPhoto());
         ImageUrls.isUpdate = true;
         int currentPosition = pager.getCurrentItem();
         uri.remove(currentPosition);
@@ -324,9 +305,12 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         AlbumsInfo.isUpdate = true;
     }
 
-    @TargetApi(21) @Override public void setStartPostTransition(final View view) {
+    @TargetApi(21)
+    @Override
+    public void setStartPostTransition(final View view) {
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override public boolean onPreDraw() {
+            @Override
+            public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 startPostponedEnterTransition();
                 return false;
