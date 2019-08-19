@@ -73,7 +73,7 @@ public class PhotoRecycleAdapterTest {
 
     @Before
     public void start() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(650);
         recyclerView = mActivityRule.getActivity().findViewById(R.id.DataList);
         photosAdapter = (PhotosAdapter) recyclerView.getAdapter();
     }
