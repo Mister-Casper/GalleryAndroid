@@ -25,7 +25,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
     public static final int MULTI_SELECTION = 2;
     public static final int SINGLE_SELECTION = 1;
     CheckBox selectMultiPhoto;
-    MyImageView image;
+    public MyImageView image;
     ImageView like;
     SelectableItemPhotoData mItem;
     OnItemSelectedListener itemSelectedListener;
