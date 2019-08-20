@@ -3,13 +3,11 @@ package com.journaldev.mvpdagger2.utils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 
-import com.journaldev.mvpdagger2.Data.ImageUrls;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
 
 import java.io.File;
@@ -55,6 +53,14 @@ public class ImageUtils {
             }
         });
         return ad;
+    }
+
+    public static void shareImages(Context context , ArrayList<Uri> urls){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        sendIntent.setType("image/*");
+        sendIntent.putExtra(Intent.EXTRA_STREAM, urls);
+        context.startActivity(sendIntent);
     }
 
     public interface alertDialogListener {

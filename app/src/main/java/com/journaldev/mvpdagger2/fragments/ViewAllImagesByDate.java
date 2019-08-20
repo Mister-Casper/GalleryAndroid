@@ -201,11 +201,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
 
     @OnClick(R.id.shareButton)
     public void shareButtonClick() {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
-        sendIntent.setType("image/*");
-        sendIntent.putExtra(Intent.EXTRA_STREAM, getAllFilePath(selectedItems));
-        startActivity(sendIntent);
+     ImageUtils.shareImages(getContext(),getAllFilePath(selectedItems));
     }
 
     private ArrayList<Uri> getAllFilePath(ArrayList<SelectableItemPhotoData> selectedItems) {
