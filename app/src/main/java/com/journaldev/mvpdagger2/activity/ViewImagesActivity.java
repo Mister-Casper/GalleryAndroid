@@ -3,10 +3,13 @@ package com.journaldev.mvpdagger2.activity;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,9 +31,13 @@ import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -147,10 +154,13 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         switch (item.getItemId()) {
             case R.id.info:
                 return viewFileInfoActivity();
+            case R.id.wallpaper:
+                Uri imageUri = uri.get(pager.getCurrentItem()).getPhoto();
+                ImageUtils.Wallpaper(getApplicationContext(),ImageUtils.convertUriToBitmap(imageUri,this.getContentResolver()));
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }   
 
     private Boolean viewFileInfoActivity() {
         hideNavigationBar();

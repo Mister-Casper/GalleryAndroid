@@ -5,4 +5,7 @@
     <item
         android:id="@+id/info"
         android:title="Справка" />
+    <item
+        android:id="@+id/wallpaper"
+        android:title="Использовать как обои" />
 </menu>
