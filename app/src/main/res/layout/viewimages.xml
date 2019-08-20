@@ -29,13 +29,13 @@
         tools:layout_editor_absoluteX="0dp">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/shareButtonImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/icon_like"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/share"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/likeImage"
