@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 
 import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
@@ -61,6 +62,15 @@ public class ImageUtils {
         sendIntent.setType("image/*");
         sendIntent.putExtra(Intent.EXTRA_STREAM, urls);
         context.startActivity(sendIntent);
+    }
+
+    public static Uri getGlobalPath(Context context,String path){
+        File file = new File(path);
+        Uri imageUri = FileProvider.getUriForFile(
+                context,
+                "com.journaldev.mvpdagger2.provider",
+                file);
+        return imageUri;
     }
 
     public interface alertDialogListener {

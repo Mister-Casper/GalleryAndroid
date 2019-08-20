@@ -208,12 +208,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         ArrayList<Uri> files = new ArrayList<>();
 
         for (int i = 0; i < selectedItems.size(); i++) {
-            File file = new File(selectedItems.get(i).getPhoto().toString());
-            Uri imageUri = FileProvider.getUriForFile(
-                    getContext(),
-                    "com.journaldev.mvpdagger2.provider",
-                    file);
-            files.add(imageUri);
+            files.add(ImageUtils.getGlobalPath(getContext(),selectedItems.get(i).getPhoto().toString()));
         }
 
         return files;
