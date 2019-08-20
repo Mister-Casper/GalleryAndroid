@@ -10,14 +10,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Transition;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -38,21 +39,18 @@ import com.journaldev.mvpdagger2.utils.FabricEvents;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
+import android.support.v7.widget.Toolbar;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static android.app.Activity.RESULT_OK;
-import static android.provider.Settings.AUTHORITY;
-
-public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener {
+public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
 
 
     @BindView(R.id.DataList)
@@ -72,6 +70,8 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     @BindView(R.id.selectablemenu)
     ConstraintLayout selectablemenu;
     PhotosAdapter adapter;
+    @BindView(R.id.showMenuButton)
+    Button showMenuButton;
     private int exitPosition;
     private ArrayList<SelectableItemPhotoData> selectedItems;
 
@@ -147,13 +147,13 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesActivity.class);
         intent.putExtra("idImage", position);
-        if(AppPreference.getIsAnim()) {
+        if (AppPreference.getIsAnim()) {
             String name = view.getTransitionName();
             ActivityOptions options =
                     ActivityOptions.makeSceneTransitionAnimation(getActivity(), view,
                             name);
             startActivity(intent, options.toBundle());
-        }else
+        } else
             startActivity(intent);
     }
 
@@ -264,4 +264,25 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     }
 
 
+    @OnClick(R.id.showMenuButton)
+    public void showMenuButtonClick(View view) {
+        PopupMenu popup = new PopupMenu(getContext(), view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.selectable_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(this);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.selectAll:
+                adapter.setItemsSelectable(true);
+                return true;
+            case R.id.offSelectAll:
+                adapter.setItemsSelectable(false);
+                return true;
+        }
+        return false;
+    }
 }
