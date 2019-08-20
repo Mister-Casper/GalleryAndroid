@@ -2,15 +2,11 @@ package com.journaldev.mvpdagger2.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.SharedElementCallback;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,14 +26,11 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
-import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +47,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     LinkedList<ItemPhotoData> uri;
     @BindView(R.id.likeImage)
     Button likeImage;
+    @BindView(R.id.shareButtonImage)
+    Button shareButtonImage;
 
     private int current;
 
@@ -348,4 +343,11 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
 
+    @OnClick(R.id.shareButtonImage)
+    public void shareButtonImageClick() {
+        ArrayList<Uri> urls = new ArrayList<>();
+        Uri localUri = uri.get(pager.getCurrentItem()).getPhoto();
+        urls.add(ImageUtils.getGlobalPath(this, localUri.toString()));
+        ImageUtils.shareImages(this, urls);
+    }
 }
