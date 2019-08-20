@@ -49,6 +49,7 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.actionWithAssertions;
+import static android.support.test.espresso.action.ViewActions.addGlobalAssertion;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -85,8 +86,6 @@ public class PhotoRecycleAdapterTest {
             public void run() {
                 photosAdapter.setSelectable(true);
                 assertTrue(photosAdapter.isSelectable());
-                photosAdapter.setSelectable(false);
-                assertFalse(photosAdapter.isSelectable());
             }
         });
     }
@@ -241,6 +240,33 @@ public class PhotoRecycleAdapterTest {
         photosAdapter.getSelectedItems();
         assertEquals(itemSelected, 2);
 
+    }
+
+    @Test
+    public void testAllSelect(){
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                photosAdapter.setItemsSelectable(true);
+                Assert.assertEquals(photosAdapter.getSelectedItems().size(), photosAdapter.getItemCount());
+            }
+        });
+    }
+
+    @Test
+    public void testOffAllSelect(){
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
+
+        onView(withId(R.id.DataList)).
+                perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.picture)));
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                photosAdapter.setItemsSelectable(false);
+                Assert.assertEquals(photosAdapter.getSelectedItems().size(),0);
+            }
+        });
     }
 
 
