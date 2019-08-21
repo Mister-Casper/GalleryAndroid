@@ -75,20 +75,17 @@ public class ImagesPageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
         final zoomImageView imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
-
         Uri uri =getCurrectUri(imageUri.get(position).getPhoto());
+        setTransitionName(position,imageView);
+        viewImage(uri,position,imageView);
+        container.addView(itemView);
+        return itemView;
+    }
 
-        RequestOptions options = new RequestOptions();
-
-        if (!AppPreference.getIsCache())
-            GlideUtils.optionsCleanCache(options);
-
-        String name = mContext.getString(R.string.transition_name, position);
-        imageView.setTransitionName(name);
-
+    private void viewImage(Uri uri , final int position , final zoomImageView imageView ){
         Glide.with(mContext)
                 .load(uri)
-                .apply(options)
+                .apply(setIsCache())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -105,9 +102,23 @@ public class ImagesPageAdapter extends PagerAdapter {
                     }
                 })
                 .into(imageView);
+    }
 
-        container.addView(itemView);
-        return itemView;
+
+    private RequestOptions setIsCache()
+    {
+        RequestOptions options = new RequestOptions();
+
+        if (!AppPreference.getIsCache())
+            GlideUtils.optionsCleanCache(options);
+
+        return options;
+    }
+
+    private void setTransitionName(int position ,zoomImageView imageView )
+    {
+        String name = mContext.getString(R.string.transition_name, position);
+        imageView.setTransitionName(name);
     }
 
     private Uri getCurrectUri(Uri uri){
