@@ -47,7 +47,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         void setStartPostTransition(View view);
     }
 
-    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images, PagerClickListener listener,int current) {
+    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images, PagerClickListener listener, int current) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
@@ -97,14 +97,14 @@ public class ImagesPageAdapter extends PagerAdapter {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        if (position == current)
+                        if (position == current && AppPreference.getIsAnim())
                             listener.setStartPostTransition(imageView);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        if (position == current)
+                        if (position == current && AppPreference.getIsAnim())
                             listener.setStartPostTransition(imageView);
                         return false;
                     }
