@@ -41,20 +41,18 @@ public class ImagesPageAdapter extends PagerAdapter {
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private PagerClickListener listener;
-    private View.OnLongClickListener longClickListener;
     private int current;
 
     public interface PagerClickListener {
         void setStartPostTransition(View view);
     }
 
-    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images, PagerClickListener listener, int current , View.OnLongClickListener longClickListener) {
+    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images, PagerClickListener listener, int current ) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
         this.current = current;
         this.listener = listener;
-        this.longClickListener = longClickListener;
     }
 
     @Override
@@ -77,7 +75,6 @@ public class ImagesPageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
         final zoomImageView imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
-        setLongClickListener(imageView);
         Uri uri =getCurrectUri(imageUri.get(position).getPhoto());
         setTransitionName(position,imageView);
         viewImage(uri,position,imageView);
@@ -136,10 +133,6 @@ public class ImagesPageAdapter extends PagerAdapter {
         return currectUri;
     }
 
-    private void setLongClickListener(zoomImageView imageView)
-    {
-        imageView.setOnLongClickListener(longClickListener);
-    }
 
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((FrameLayout) object);
