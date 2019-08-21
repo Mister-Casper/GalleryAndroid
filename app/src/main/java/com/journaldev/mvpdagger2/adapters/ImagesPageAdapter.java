@@ -73,15 +73,10 @@ public class ImagesPageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
-
         final zoomImageView imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
 
-        File file = new File(String.valueOf(imageUri.get(position).getPhoto()));
-        Uri uri = Uri.fromFile(file);
-
-        if (uri.toString().contains("content"))
-            uri = imageUri.get(position).getPhoto();
+        Uri uri =getCurrectUri(imageUri.get(position).getPhoto());
 
         RequestOptions options = new RequestOptions();
 
@@ -115,6 +110,17 @@ public class ImagesPageAdapter extends PagerAdapter {
         return itemView;
     }
 
+    private Uri getCurrectUri(Uri uri){
+        Uri currectUri;
+        File file = new File(uri.toString());
+
+        if (uri.toString().contains("content"))
+            currectUri = uri;
+        else
+            currectUri = Uri.fromFile(file);
+
+        return currectUri;
+    }
 
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((FrameLayout) object);
