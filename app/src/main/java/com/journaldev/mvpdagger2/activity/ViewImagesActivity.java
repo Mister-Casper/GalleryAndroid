@@ -176,16 +176,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         finish();
     }
 
-    @Override
-    public void finish() {
-        if (AppPreference.getIsAnim()) {
-            hideNavigationBar();
-            super.finish();
-            overridePendingTransition(R.anim.back, R.anim.next);
-        }
-        super.finish();
-    }
-
     private void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
