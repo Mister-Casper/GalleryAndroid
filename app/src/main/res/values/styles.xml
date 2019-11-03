@@ -15,9 +15,6 @@
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">#22a7e0</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
-        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat">
@@ -48,6 +45,9 @@
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
     </style>
 
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
@@ -82,6 +82,9 @@
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="preferenceTheme">@style/LightPreferencesTheme</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
