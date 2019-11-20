@@ -21,12 +21,12 @@ import com.bumptech.glide.request.target.Target;
 import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.myVIew.zoomImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;
 import java.util.LinkedList;
 
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 public class ImagesPageAdapter extends PagerAdapter {
@@ -67,7 +67,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
-        final zoomImageView imageView = itemView.findViewById(R.id.picture);
+        final ImageViewTouch imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
         Uri uri =getCurrectUri(imageUri.get(position).getPhoto());
         setTransitionName(position,imageView);
@@ -76,7 +76,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         return itemView;
     }
 
-    private void viewImage(Uri uri , final int position , final zoomImageView imageView ){
+    private void viewImage(Uri uri , final int position , final ImageViewTouch imageView ){
         Glide.with(mContext)
                 .load(uri)
                 .apply(setIsCache())
@@ -109,7 +109,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         return options;
     }
 
-    private void setTransitionName(int position ,zoomImageView imageView )
+    private void setTransitionName(int position ,ImageViewTouch imageView )
     {
         String name = mContext.getString(R.string.transition_name, position);
         imageView.setTransitionName(name);
