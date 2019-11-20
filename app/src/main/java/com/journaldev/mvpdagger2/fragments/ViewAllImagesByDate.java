@@ -189,8 +189,6 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         }
 
         dialog.show();
-        ImageUrls.isUpdate = true;
-        AlbumsInfo.isUpdate = true;
     }
 
     @OnClick(R.id.shareButton)

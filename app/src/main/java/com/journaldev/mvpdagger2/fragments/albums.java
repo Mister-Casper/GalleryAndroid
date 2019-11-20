@@ -34,13 +34,10 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (AlbumsInfo.isUpdate) {
                 AlbumsInfo.loadImageUrl(getContext());
                 albums = AlbumsInfo.getAllAlbum();
                 setAdapter();
                 AlbumsInfo.loadImageUrl(getContext());
-                AlbumsInfo.isUpdate = false;
-            }
         }
     }
 

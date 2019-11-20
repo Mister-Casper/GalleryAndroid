@@ -21,7 +21,6 @@ public class AlbumsInfo {
     static ArrayList<ArrayList<Uri>> albumsUri = new ArrayList<>();
 
     static int albumId = -1;
-    public static boolean isUpdate = true;
 
     private static final String[] PROJECTION_BUCKET = {
             MediaStore.Images.Media._ID,

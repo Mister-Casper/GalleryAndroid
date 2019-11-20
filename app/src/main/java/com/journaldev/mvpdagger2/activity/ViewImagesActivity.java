@@ -282,7 +282,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     private void deleteImage() {
         ImageUtils.deleteImage(getContentResolver(), uri.get(pager.getCurrentItem()).getPhoto());
-        ImageUrls.isUpdate = true;
         int currentPosition = pager.getCurrentItem();
         uri.remove(currentPosition);
         viewPagerUpdate(currentPosition);
@@ -305,7 +304,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
             exif = new ExifInterface(fileUri.toString());
             exif.setAttribute(ExifInterface.TAG_USER_COMMENT, like.toString());
             exif.saveAttributes();
-            ImageUrls.isUpdate = true;
             uri.get(pager.getCurrentItem()).setLike(like);
         } catch (IOException e) {
             e.printStackTrace();
@@ -323,7 +321,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @Override
     public void deleteClick() {
         deleteImage();
-        AlbumsInfo.isUpdate = true;
     }
 
     @TargetApi(21)
