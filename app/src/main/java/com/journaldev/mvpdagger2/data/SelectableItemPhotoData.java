@@ -1,7 +1,4 @@
-package com.journaldev.mvpdagger2.Data;
-
-import android.content.ClipData;
-import android.net.Uri;
+package com.journaldev.mvpdagger2.data;
 
 public class SelectableItemPhotoData extends ItemPhotoData {
 

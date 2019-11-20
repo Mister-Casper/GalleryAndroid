@@ -1,35 +1,24 @@
 package com.journaldev.mvpdagger2.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.SharedElementCallback;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.transition.Transition;
-import android.view.View;
-import android.view.ViewTreeObserver;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
-import com.journaldev.mvpdagger2.Data.AppPreference;
+import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.FragmentPagerAdapter;
-import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
 import com.journaldev.mvpdagger2.fragments.PreferenceScreen;
 import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
 import com.journaldev.mvpdagger2.fragments.albums;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
-
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

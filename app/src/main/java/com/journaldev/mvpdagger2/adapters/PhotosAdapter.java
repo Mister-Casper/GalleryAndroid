@@ -5,19 +5,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.journaldev.mvpdagger2.Data.AppPreference;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
-import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.data.ItemPhotoData;
+import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.myVIew.MyImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;

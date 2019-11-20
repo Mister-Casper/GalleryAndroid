@@ -1,10 +1,9 @@
-package com.journaldev.mvpdagger2.Data;
+package com.journaldev.mvpdagger2.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
-import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 public class AppPreference {

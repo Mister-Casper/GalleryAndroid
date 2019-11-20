@@ -12,12 +12,11 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class ImageUtils {

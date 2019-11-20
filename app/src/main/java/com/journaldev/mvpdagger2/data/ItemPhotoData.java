@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.Data;
+package com.journaldev.mvpdagger2.data;
 
 import android.net.Uri;
 

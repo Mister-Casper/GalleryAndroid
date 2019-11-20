@@ -23,11 +23,10 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.journaldev.mvpdagger2.Data.AlbumsInfo;
-import com.journaldev.mvpdagger2.Data.AppPreference;
-import com.journaldev.mvpdagger2.Data.ImageUrls;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
-import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.data.ImageUrls;
+import com.journaldev.mvpdagger2.data.ItemPhotoData;
+import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.MainActivity;
 import com.journaldev.mvpdagger2.activity.ViewImagesActivity;

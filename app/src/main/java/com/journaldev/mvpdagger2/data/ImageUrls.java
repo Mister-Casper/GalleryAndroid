@@ -1,24 +1,17 @@
-package com.journaldev.mvpdagger2.Data;
+package com.journaldev.mvpdagger2.data;
 
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 public class ImageUrls {

@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.journaldev.mvpdagger2.Data.Album;
-import com.journaldev.mvpdagger2.Data.AlbumsInfo;
+import com.journaldev.mvpdagger2.data.Album;
+import com.journaldev.mvpdagger2.data.AlbumsInfo;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.AlbumsAdapter;

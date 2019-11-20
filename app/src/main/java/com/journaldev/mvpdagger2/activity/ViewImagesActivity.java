@@ -18,12 +18,10 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.journaldev.mvpdagger2.Data.AlbumsInfo;
-import com.journaldev.mvpdagger2.Data.AppPreference;
-import com.journaldev.mvpdagger2.Data.ImageUrls;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
+import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.data.ImageUrls;
+import com.journaldev.mvpdagger2.data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;

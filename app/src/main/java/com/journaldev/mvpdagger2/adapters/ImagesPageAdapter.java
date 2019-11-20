@@ -2,8 +2,6 @@ package com.journaldev.mvpdagger2.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -20,17 +18,13 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.journaldev.mvpdagger2.Data.AppPreference;
-import com.journaldev.mvpdagger2.Data.ItemPhotoData;
+import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.data.ItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.zoomImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.LinkedList;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;

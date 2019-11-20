@@ -9,7 +9,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v14.preference.SwitchPreference;
 
-import com.journaldev.mvpdagger2.Data.AppPreference;
+import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;

@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.journaldev.mvpdagger2.Data.AppPreference;
+import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;

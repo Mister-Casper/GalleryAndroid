@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.journaldev.mvpdagger2.Data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.myVIew.MyImageView;
 
