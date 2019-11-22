@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class ImageUrls {
-    private static LinkedList<ItemPhotoData> mUrls;
+    private static LinkedList<ItemPhotoData> imageUrls;
 
     public static LinkedList<ItemPhotoData> getUrls(Context context) {
-        if (mUrls == null) {
+        if (imageUrls == null) {
             getImageUrl(context);
         }
-        return mUrls;
+        return imageUrls;
     }
 
     private static Cursor cc = null;
@@ -42,13 +42,13 @@ public class ImageUrls {
     private static void loadUrl() {
         if (cc != null) {
             cc.moveToFirst();
-            mUrls = new LinkedList<>();
+            imageUrls = new LinkedList<>();
             for (int i = cc.getCount() - 1; i >= 0; i--) {
                 cc.moveToPosition(i);
                 Uri temp = Uri.parse(cc.getString(1));
                 File file = new File(temp.toString());
                 if (file.exists())
-                    mUrls.add(new ItemPhotoData(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
+                    imageUrls.add(new ItemPhotoData(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
             }
         }
     }
