@@ -24,28 +24,33 @@ public class ImageUrls {
         return imageUrls;
     }
 
-    private static Cursor cc = null;
-
     private static void getImageUrl(Context context) {
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        context.getContentResolver().registerContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                true, new ImageObserver(handler));
-
-        cc = context.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null,
-                null);
-
-        loadUrl();
+        Cursor imageCursor = getCursor(context);
+        registerContentObserver(context, imageCursor);
+        loadUrl(imageCursor);
     }
 
-    private static void loadUrl() {
-        if (cc != null) {
-            cc.moveToFirst();
+    private static Cursor getCursor(Context context) {
+        return context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, null,
+                null, null);
+    }
+
+    private static void registerContentObserver(Context context, Cursor imageCursor) {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        context.getContentResolver().registerContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                true, new ImageObserver(handler, imageCursor));
+    }
+
+    private static void loadUrl(Cursor imageCursor) {
+        if (imageCursor != null) {
+            imageCursor.moveToFirst();
             imageUrls = new LinkedList<>();
-            for (int i = cc.getCount() - 1; i >= 0; i--) {
-                cc.moveToPosition(i);
-                Uri temp = Uri.parse(cc.getString(1));
+            for (int i = imageCursor.getCount() - 1; i >= 0; i--) {
+                imageCursor.moveToPosition(i);
+                Uri temp = Uri.parse(imageCursor.getString(1));
                 File file = new File(temp.toString());
                 if (file.exists())
                     imageUrls.add(new ItemPhotoData(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
@@ -65,9 +70,11 @@ public class ImageUrls {
     }
 
     static class ImageObserver extends ContentObserver {
+        Cursor cursor;
 
-        public ImageObserver(Handler handler) {
+        public ImageObserver(Handler handler, Cursor cursor) {
             super(handler);
+            this.cursor = cursor;
         }
 
         @Override
@@ -78,7 +85,7 @@ public class ImageUrls {
         @Override
         public void onChange(boolean arg0) {
             super.onChange(arg0);
-            loadUrl();
+            loadUrl(cursor);
         }
     }
 }
