@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Album {
     private String name;
+    private ArrayList<String> like = new ArrayList<>();
+    private ArrayList<Uri> uri = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -24,15 +26,14 @@ public class Album {
             this.like.set(position,like.toString());
     }
 
-
-    private ArrayList<String> like;
-    private ArrayList<Uri> uri;
-
-
     Album(String name, ArrayList<Uri> uri, ArrayList<String> like) {
         this.name = name;
         this.uri = uri;
         this.like = like;
+    }
+
+    Album(String name) {
+        this.name = name;
     }
 
 }

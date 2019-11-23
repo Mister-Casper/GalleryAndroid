@@ -28,26 +28,13 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     @BindView(R.id.field)
     RecyclerView field;
     Unbinder unbinder;
-    Album[] albums;
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-                AlbumsInfo.loadImageUrl(getContext());
-                albums = AlbumsInfo.getAllAlbum();
-                setAdapter();
-                AlbumsInfo.loadImageUrl(getContext());
-        }
-    }
+    ArrayList<Album> albums;
 
     @Override
     public void onStart() {
         super.onStart();
-        AlbumsInfo.loadImageUrl(getContext());
-        albums = AlbumsInfo.getAllAlbum();
-        setAdapter();
-        AlbumsInfo.loadImageUrl(getContext());
+        albums = AlbumsInfo.getAllAlbum(getContext());
+        setAdapter();   
     }
 
     private void setAdapter() {
@@ -64,8 +51,6 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
 
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
-        albums = AlbumsInfo.getAllAlbum();
-        setAdapter();
         return view;
     }
 
@@ -85,7 +70,7 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     }
 
     private ArrayList<String> convertArraysUrlToArraysString(int id) {
-        ArrayList<Uri> uri = albums[id].getUri();
+        ArrayList<Uri> uri = albums.get(id).getUri();
         ArrayList<String> strUri = new ArrayList<>();
         for (int i = 0; i < uri.size(); i++)
             strUri.add(uri.get(i).toString());
@@ -93,7 +78,7 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     }
 
     private ArrayList<String> convertArraysLikeToArraysString(int id) {
-        return albums[id].getLike();
+        return albums.get(id).getLike();
     }
 
 }

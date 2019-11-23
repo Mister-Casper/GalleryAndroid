@@ -67,10 +67,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         getOtherIntent();
         initViewPager();
         processingChangeCurrentItem();
-        if (getImageId() == 0)
-            setLikeState(0);
+        setLikeState(getImageId());
     }
-
 
     private void prepareTheLook() {
         ThemeUtils.chandgeTheme(this, R.style.DarkTheme, R.style.LightTheme);
@@ -118,6 +116,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
             uri = getAllImageDataFromIntent(strUri, strLike);
         } else
             uri = ImageUrls.getUrls(getApplicationContext());
+
         return uri;
     }
 
@@ -136,7 +135,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         Boolean isLike = Boolean.parseBoolean(strLike.get(id));
         return new ItemPhotoData(uri, isLike);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -291,13 +289,12 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         pager.setCurrentItem(currentPosition);
     }
 
-
     @OnClick(R.id.likeImage)
     public void clickLikeImage(View view) {
         chandgeLikeState(view);
         Uri fileUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         Boolean like = view.isSelected();
-        ExifInterface exif = null;
+        ExifInterface exif;
         try {
             exif = new ExifInterface(fileUri.toString());
             exif.setAttribute(ExifInterface.TAG_USER_COMMENT, like.toString());

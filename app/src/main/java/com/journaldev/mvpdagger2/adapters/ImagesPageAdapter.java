@@ -69,14 +69,14 @@ public class ImagesPageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
         final ImageViewTouch imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
-        Uri uri =getCurrectUri(imageUri.get(position).getPhoto());
+        Uri uri = getCorrectUri(imageUri.get(position).getPhoto());
         setTransitionName(position,imageView);
-        viewImage(uri,position,imageView);
+        showImage(uri,position,imageView);
         container.addView(itemView);
         return itemView;
     }
 
-    private void viewImage(Uri uri , final int position , final ImageViewTouch imageView ){
+    private void showImage(Uri uri , final int position , final ImageViewTouch imageView ){
         Glide.with(mContext)
                 .load(uri)
                 .apply(setIsCache())
@@ -115,16 +115,16 @@ public class ImagesPageAdapter extends PagerAdapter {
         imageView.setTransitionName(name);
     }
 
-    private Uri getCurrectUri(Uri uri){
-        Uri currectUri;
+    private Uri getCorrectUri(Uri uri){
+        Uri correctUri;
         File file = new File(uri.toString());
 
         if (uri.toString().contains("content"))
-            currectUri = uri;
+            correctUri = uri;
         else
-            currectUri = Uri.fromFile(file);
+            correctUri = Uri.fromFile(file);
 
-        return currectUri;
+        return correctUri;
     }
 
 

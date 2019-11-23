@@ -19,15 +19,16 @@ import com.journaldev.mvpdagger2.myVIew.MyImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
 
-    private Album[] mData;
+    private ArrayList<Album> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public AlbumsAdapter(Context context, Album[] albums) {
+    public AlbumsAdapter(Context context, ArrayList<Album> albums) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = albums;
     }
@@ -43,8 +44,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull AlbumsAdapter.ViewHolder holder, int position) {
-        Uri albumPhoto = mData[position].getUri().get(0);
-        String AlbumName = mData[position].getName();
+        Uri albumPhoto = mData.get(position).getUri().get(0);
+        String AlbumName = mData.get(position).getName();
         File file = new File(String.valueOf(albumPhoto));
         Uri uri = Uri.fromFile(file);
 
@@ -68,7 +69,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.length;
+        return mData.size();
     }
 
 
@@ -90,10 +91,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         }
     }
 
-    // convenience method for getting data at click position
-    Album getItem(int id) {
-        return mData[id];
-    }
 
     // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
