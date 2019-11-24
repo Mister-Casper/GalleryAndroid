@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/windowViewImages"
-    tools:context=".activity.ViewImagesActivity"
+    tools:context=".view.activity.ViewImagesActivity"
     android:orientation="vertical">
 
-    <com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.journaldev.mvpdagger2.view.customView.ImageViewTouchViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:clickable="true"
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
         android:alpha="0.9"
         app:layout_constraintTop_toTopOf="parent">
 
-    </com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager>
+    </com.journaldev.mvpdagger2.view.customView.ImageViewTouchViewPager>
 
 
     <android.support.constraint.ConstraintLayout

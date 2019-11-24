@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.activity;
+package com.journaldev.mvpdagger2.view.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -14,10 +14,8 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.adapters.FragmentPagerAdapter;
-import com.journaldev.mvpdagger2.fragments.PreferenceScreen;
-import com.journaldev.mvpdagger2.fragments.ViewAllImagesByDate;
-import com.journaldev.mvpdagger2.fragments.albums;
+import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
+import com.journaldev.mvpdagger2.view.fragment.*;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import butterknife.BindView;
@@ -79,9 +77,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private FragmentPagerAdapter loadAdapter() {
-        ViewAllImagesByDate fragment1 = new ViewAllImagesByDate();
-
-        albums fragment2 = new albums();
+        GridImages fragment1 = new GridImages();
+        Albums fragment2 = new Albums();
         PreferenceScreen fragment3 = new PreferenceScreen();
 
         final FragmentPagerAdapter adapter = new FragmentPagerAdapter

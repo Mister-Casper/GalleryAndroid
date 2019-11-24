@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.adapters;
+package com.journaldev.mvpdagger2.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,19 +12,20 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.data.AppPreference;
-import com.journaldev.mvpdagger2.data.ItemPhotoData;
-import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.data.Image;
+import com.journaldev.mvpdagger2.view.customView.SelectableImage;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.adapters.SelectableViewHolder.MULTI_SELECTION;
+import static com.journaldev.mvpdagger2.view.adapter.SelectableViewHolder.MULTI_SELECTION;
+
 
 public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> implements SelectableViewHolder.OnItemSelectedListener {
 
-    private ArrayList<SelectableItemPhotoData> items;
+    private ArrayList<SelectableImage> items;
     private boolean isMultiSelectionEnabled = true;
     SelectableViewHolder.OnItemSelectedListener listener;
     private LayoutInflater mInflater;
@@ -42,12 +43,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     private boolean isSelectable = false;
 
     // data is passed into the constructor
-    public PhotosAdapter(Context context, ArrayList<ItemPhotoData> items, SelectableViewHolder.OnItemSelectedListener listener) {
+    public PhotosAdapter(Context context, ArrayList<Image> items, SelectableViewHolder.OnItemSelectedListener listener) {
         this.mInflater = LayoutInflater.from(context);
         this.listener = listener;
         this.items = new ArrayList<>();
-        for (ItemPhotoData item : items) {
-            this.items.add(new SelectableItemPhotoData(item, false));
+        for (Image item : items) {
+            this.items.add(new SelectableImage(item, false));
         }
     }
 
@@ -69,7 +70,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull final SelectableViewHolder holder, final int position) {
         Uri photo = items.get(position).getPhoto();
-        SelectableItemPhotoData selectableItem = items.get(position);
+        SelectableImage selectableItem = items.get(position);
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
         buttonLikeVisibility(holder, position);
@@ -81,7 +82,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         setTransitionName(holder, position);
     }
 
-    private void settingSelectableMod(SelectableViewHolder holder, SelectableItemPhotoData selectableItem) {
+    private void settingSelectableMod(SelectableViewHolder holder, SelectableImage selectableItem) {
         if (isSelectable) {
             holder.selectMultiPhoto.setChecked(selectableItem.isSelected());
             holder.selectMultiPhoto.setVisibility(View.VISIBLE);
@@ -89,12 +90,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
             holder.selectMultiPhoto.setVisibility(View.GONE);
     }
 
-    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem) {
+    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableImage selectableItem) {
         imageOnClickListener(holder, position, selectableItem);
         imageLongClickListener(holder, selectableItem);
     }
 
-    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableItemPhotoData selectableItem) {
+    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableImage selectableItem) {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +108,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         });
     }
 
-    private void imageLongClickListener(final SelectableViewHolder holder, final SelectableItemPhotoData selectableItem) {
+    private void imageLongClickListener(final SelectableViewHolder holder, final SelectableImage selectableItem) {
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -118,7 +119,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         });
     }
 
-    private void checkedCheckBox(SelectableViewHolder holder, SelectableItemPhotoData selectableItem) {
+    private void checkedCheckBox(SelectableViewHolder holder, SelectableImage selectableItem) {
         holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
         holder.setChecked(holder.selectMultiPhoto.isChecked());
         onItemSelected(selectableItem);
@@ -173,10 +174,10 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     }
 
 
-    public ArrayList<SelectableItemPhotoData> getSelectedItems() {
+    public ArrayList<SelectableImage> getSelectedItems() {
 
-        ArrayList<SelectableItemPhotoData> selectedItems = new ArrayList<>();
-        for (SelectableItemPhotoData item : items) {
+        ArrayList<SelectableImage> selectedItems = new ArrayList<>();
+        for (SelectableImage item : items) {
             if (item.isSelected()) {
                 selectedItems.add(item);
             }
@@ -193,15 +194,13 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         }
     }
 
-
-    // total number of cells
     @Override
     public int getItemCount() {
         return items.size();
     }
 
     @Override
-    public void onItemSelected(SelectableItemPhotoData item) {
+    public void onItemSelected(SelectableImage item) {
         listener.onItemSelected(item);
     }
 

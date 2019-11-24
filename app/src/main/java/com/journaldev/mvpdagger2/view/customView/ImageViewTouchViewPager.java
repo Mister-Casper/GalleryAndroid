@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.myVIew;
+package com.journaldev.mvpdagger2.view.customView;
 
 import android.content.Context;
 import android.graphics.Rect;

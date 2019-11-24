@@ -1,14 +1,10 @@
 package com.journaldev.mvpdagger2.data;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,25 +26,6 @@ public class AlbumsInfo {
             readAlbums(context);
             return imageAlbums;
         }
-    }
-
-  /*  private static void getAccess(Context context) {
-        ActivityCompat.requestPermissions((Activity) context,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-    }
-
-    private static boolean checkReadExternalPermission(Context context) {
-        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
-        int res = context.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
-    }*/
-
-
-    private static void loadImageUrl(Context context) {
-      /*  if (!checkReadExternalPermission(context)) {
-            getAccess(context);
-        }*/
-        readAlbums(context);
     }
 
     private static void readAlbums(Context context) {

@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class ImageUrls {
-    private static LinkedList<ItemPhotoData> imageUrls;
+    private static LinkedList<Image> imageUrls;
 
-    public static LinkedList<ItemPhotoData> getUrls(Context context) {
+    public static LinkedList<Image> getUrls(Context context) {
         if (imageUrls == null) {
             getImageUrl(context);
         }
@@ -53,7 +53,7 @@ public class ImageUrls {
                 Uri temp = Uri.parse(imageCursor.getString(1));
                 File file = new File(temp.toString());
                 if (file.exists())
-                    imageUrls.add(new ItemPhotoData(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
+                    imageUrls.add(new Image(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
             }
         }
     }

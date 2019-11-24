@@ -28,7 +28,7 @@
         </provider>
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ViewImagesActivity"
+            android:name=".view.activity.ViewImagesActivity"
             android:screenOrientation="portrait">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
@@ -44,7 +44,7 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FIleInfo"/>
+        <activity android:name=".view.activity.FIleInfo"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

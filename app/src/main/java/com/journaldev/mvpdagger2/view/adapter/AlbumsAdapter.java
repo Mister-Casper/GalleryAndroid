@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.adapters;
+package com.journaldev.mvpdagger2.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.data.Album;
 import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.myVIew.SquareImageView;
+import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;

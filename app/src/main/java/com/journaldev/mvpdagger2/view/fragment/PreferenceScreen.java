@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.fragments;
+package com.journaldev.mvpdagger2.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,10 +1,12 @@
-package com.journaldev.mvpdagger2.data;
+package com.journaldev.mvpdagger2.view.customView;
 
-public class SelectableItemPhotoData extends ItemPhotoData {
+import com.journaldev.mvpdagger2.data.Image;
+
+public class SelectableImage extends Image {
 
     private boolean isSelected = false;
 
-    public SelectableItemPhotoData(ItemPhotoData item, boolean isSelected) {
+    public SelectableImage(Image item, boolean isSelected) {
         super(item.getPhoto(),item.getLike());
         this.isSelected = isSelected;
     }

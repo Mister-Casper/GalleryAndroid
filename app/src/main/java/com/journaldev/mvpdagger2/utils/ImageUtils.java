@@ -12,7 +12,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.view.customView.SelectableImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class ImageUtils {
                 MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.toString()});
     }
 
-    public static void deleteImage(ContentResolver contentResolver, ArrayList<SelectableItemPhotoData> uri) {
+    public static void deleteImage(ContentResolver contentResolver, ArrayList<SelectableImage> uri) {
         String[] uriStr = convertToStringArray(uri);
 
         for (int i = 0; i < uriStr.length; i++) {
@@ -35,7 +35,7 @@ public class ImageUtils {
         }
     }
 
-    private static String[] convertToStringArray(ArrayList<SelectableItemPhotoData> uri) {
+    private static String[] convertToStringArray(ArrayList<SelectableImage> uri) {
         String[] str = new String[uri.size()];
 
         for (int i = 0; i < str.length; i++) {

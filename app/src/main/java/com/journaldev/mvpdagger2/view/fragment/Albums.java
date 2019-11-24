@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.fragments;
+package com.journaldev.mvpdagger2.view.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.journaldev.mvpdagger2.data.Album;
 import com.journaldev.mvpdagger2.data.AlbumsInfo;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
-import com.journaldev.mvpdagger2.adapters.AlbumsAdapter;
+import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
+import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class albums extends Fragment implements AlbumsAdapter.ItemClickListener {
+public class Albums extends Fragment implements AlbumsAdapter.ItemClickListener {
 
     @BindView(R.id.field)
     RecyclerView field;

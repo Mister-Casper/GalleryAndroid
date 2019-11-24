@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.adapters;
+package com.journaldev.mvpdagger2.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,7 +19,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.journaldev.mvpdagger2.data.AppPreference;
-import com.journaldev.mvpdagger2.data.ItemPhotoData;
+import com.journaldev.mvpdagger2.data.Image;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
@@ -31,7 +31,7 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 public class ImagesPageAdapter extends PagerAdapter {
 
-    private final LinkedList<ItemPhotoData> imageUri;
+    private final LinkedList<Image> imageUri;
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private PagerClickListener listener;
@@ -41,7 +41,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         void setStartPostTransition(View view);
     }
 
-    public ImagesPageAdapter(Context context, LinkedList<ItemPhotoData> images, PagerClickListener listener, int current ) {
+    public ImagesPageAdapter(Context context, LinkedList<Image> images, PagerClickListener listener, int current ) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
@@ -54,7 +54,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         return imageUri.size();
     }
 
-    public ItemPhotoData getCurrentUri(int position) {
+    public Image getCurrentUri(int position) {
         return imageUri.get(position);
     }
 

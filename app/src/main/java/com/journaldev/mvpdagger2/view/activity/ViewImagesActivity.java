@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.activity;
+package com.journaldev.mvpdagger2.view.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -21,10 +21,10 @@ import android.widget.Button;
 
 import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.data.ImageUrls;
-import com.journaldev.mvpdagger2.data.ItemPhotoData;
+import com.journaldev.mvpdagger2.data.Image;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.adapters.ImagesPageAdapter;
-import com.journaldev.mvpdagger2.myVIew.ImageViewTouchViewPager;
+import com.journaldev.mvpdagger2.view.adapter.ImagesPageAdapter;
+import com.journaldev.mvpdagger2.view.customView.ImageViewTouchViewPager;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
@@ -44,7 +44,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     ImagesPageAdapter mCustomPagerAdapter = null;
     @BindView(R.id.deleteImage)
     Button deleteImage;
-    LinkedList<ItemPhotoData> uri;
+    LinkedList<Image> uri;
     @BindView(R.id.likeImage)
     Button likeImage;
     @BindView(R.id.shareButtonImage)
@@ -107,8 +107,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
 
-    private LinkedList<ItemPhotoData> getAllDataImage() {
-        LinkedList<ItemPhotoData> uri;
+    private LinkedList<Image> getAllDataImage() {
+        LinkedList<Image> uri;
         ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
         ArrayList<String> strLike = getIntent().getStringArrayListExtra("like");
 
@@ -120,8 +120,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         return uri;
     }
 
-    private LinkedList<ItemPhotoData> getAllImageDataFromIntent(ArrayList<String> strUri, ArrayList<String> strLike) {
-        LinkedList<ItemPhotoData> itemPhotoData = new LinkedList<>();
+    private LinkedList<Image> getAllImageDataFromIntent(ArrayList<String> strUri, ArrayList<String> strLike) {
+        LinkedList<Image> itemPhotoData = new LinkedList<>();
 
         for (int i = 0; i < strUri.size(); i++) {
             itemPhotoData.add(getImageDataFromIntent(i, strUri, strLike));
@@ -130,10 +130,10 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         return itemPhotoData;
     }
 
-    private ItemPhotoData getImageDataFromIntent(int id, ArrayList<String> strUri, ArrayList<String> strLike) {
+    private Image getImageDataFromIntent(int id, ArrayList<String> strUri, ArrayList<String> strLike) {
         Uri uri = Uri.parse(strUri.get(id));
         Boolean isLike = Boolean.parseBoolean(strLike.get(id));
-        return new ItemPhotoData(uri, isLike);
+        return new Image(uri, isLike);
     }
 
     @Override

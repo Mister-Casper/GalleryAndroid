@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.activity;
+package com.journaldev.mvpdagger2.view.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

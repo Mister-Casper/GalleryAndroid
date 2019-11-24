@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.fragments;
+package com.journaldev.mvpdagger2.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
@@ -19,20 +19,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.data.ImageUrls;
-import com.journaldev.mvpdagger2.data.ItemPhotoData;
-import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.data.Image;
+import com.journaldev.mvpdagger2.view.customView.SelectableImage;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.activity.MainActivity;
-import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
-import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
-import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
+import com.journaldev.mvpdagger2.view.activity.MainActivity;
+import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
+import com.journaldev.mvpdagger2.view.adapter.PhotosAdapter;
+import com.journaldev.mvpdagger2.view.adapter.SelectableViewHolder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -42,13 +41,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ViewAllImagesByDate extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
+public class GridImages extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
 
 
     @BindView(R.id.DataList)
     RecyclerView DataList;
     Unbinder unbinder;
-    LinkedList<ItemPhotoData> uri = null;
+    LinkedList<Image> uri = null;
     @BindView(R.id.textView)
     TextView textView;
     @BindView(R.id.exitButton)
@@ -65,7 +64,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
     @BindView(R.id.showMenuButton)
     Button showMenuButton;
 
-    private ArrayList<SelectableItemPhotoData> selectedItems;
+    private ArrayList<SelectableImage> selectedItems;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,18 +92,18 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         DataList.invalidate();
     }
 
-    private ArrayList<ItemPhotoData> loadUri() {
+    private ArrayList<Image> loadUri() {
         uri = ImageUrls.getUrls(getContext());
-        ArrayList<ItemPhotoData> photo = new ArrayList<>();
+        ArrayList<Image> photo = new ArrayList<>();
         for (int i = 0; i < uri.size(); i++)
-            photo.add(new ItemPhotoData(uri.get(i).getPhoto(), uri.get(i).getLike()));
+            photo.add(new Image(uri.get(i).getPhoto(), uri.get(i).getLike()));
         return photo;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmentviewallimagesbydate, container, false);
+        View view = inflater.inflate(R.layout.fragment_viewallimagesbydate, container, false);
         unbinder = ButterKnife.bind(this, view);
         viewStandartMod();
         setAdapter();
@@ -136,7 +135,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onItemSelected(SelectableItemPhotoData item) {
+    public void onItemSelected(SelectableImage item) {
         selectedItems = adapter.getSelectedItems();
 
         if (!adapter.isSelectable())
@@ -178,7 +177,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
      ImageUtils.shareImages(getContext(),getAllFilePath(selectedItems));
     }
 
-    private ArrayList<Uri> getAllFilePath(ArrayList<SelectableItemPhotoData> selectedItems) {
+    private ArrayList<Uri> getAllFilePath(ArrayList<SelectableImage> selectedItems) {
         ArrayList<Uri> files = new ArrayList<>();
 
         for (int i = 0; i < selectedItems.size(); i++) {

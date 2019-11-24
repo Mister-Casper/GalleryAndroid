@@ -1,13 +1,13 @@
-package com.journaldev.mvpdagger2.adapters;
+package com.journaldev.mvpdagger2.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
+import com.journaldev.mvpdagger2.view.customView.SelectableImage;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.myVIew.SquareImageView;
+import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 
 public class SelectableViewHolder extends RecyclerView.ViewHolder {
 
@@ -18,7 +18,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
 
     public interface OnItemSelectedListener {
 
-        void onItemSelected(SelectableItemPhotoData item);
+        void onItemSelected(SelectableImage item);
     }
 
 
@@ -27,7 +27,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
     CheckBox selectMultiPhoto;
     public SquareImageView image;
     ImageView like;
-    SelectableItemPhotoData mItem;
+    SelectableImage mItem;
     OnItemSelectedListener itemSelectedListener;
 
     public SelectableViewHolder(View view, OnItemSelectedListener listener) {

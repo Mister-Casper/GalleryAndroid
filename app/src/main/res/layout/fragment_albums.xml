@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/albumItem"
-    tools:context=".fragments.albums"
+    tools:context=".view.fragment.albums"
     android:orientation="vertical">
 
     <TextView

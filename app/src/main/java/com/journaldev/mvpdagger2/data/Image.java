@@ -2,7 +2,7 @@ package com.journaldev.mvpdagger2.data;
 
 import android.net.Uri;
 
-public class ItemPhotoData {
+public class Image {
 
     public Uri getPhoto() {
         return photo;
@@ -20,7 +20,7 @@ public class ItemPhotoData {
 
 
 
-    public ItemPhotoData(Uri photo , Boolean isLike) {
+    public Image(Uri photo , Boolean isLike) {
         this.photo = photo;
         this.isLike = isLike;
     }
