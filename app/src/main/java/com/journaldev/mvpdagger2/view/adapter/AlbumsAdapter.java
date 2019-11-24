@@ -41,7 +41,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
-    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull AlbumsAdapter.ViewHolder holder, int position) {
         Uri albumPhoto = mData.get(position).getUri().get(0);
@@ -52,11 +51,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         RequestOptions options = new RequestOptions();
 
         if (!AppPreference.getIsCache())
-            GlideUtils.optionsCleanCache(options);
+            options = GlideUtils.optionsCleanCache(options);
 
-        options.fitCenter();
-        options.centerCrop();
-        options.placeholder(R.drawable.standartphoto);
+        options = options.fitCenter();
+        options = options.centerCrop();
+        options =options.placeholder(R.drawable.standartphoto);
 
         Glide.with(mInflater.getContext())
                 .load(uri)

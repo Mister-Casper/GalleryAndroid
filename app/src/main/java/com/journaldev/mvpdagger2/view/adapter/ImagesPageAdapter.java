@@ -108,7 +108,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         RequestOptions options = new RequestOptions();
 
         if (!AppPreference.getIsCache())
-            GlideUtils.optionsCleanCache(options);
+            options = GlideUtils.optionsCleanCache(options);
 
         return options;
     }

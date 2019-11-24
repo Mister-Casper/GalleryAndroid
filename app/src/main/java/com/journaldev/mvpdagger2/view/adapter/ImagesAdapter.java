@@ -132,13 +132,12 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     private void viewImage(SelectableViewHolder holder, Uri uri) {
         RequestOptions options = new RequestOptions();
 
-        options.sizeMultiplier(0.75f);
-        options.centerCrop();
+        options = options.sizeMultiplier(0.75f);
+        options = options.centerCrop();
+        options = options.placeholder(R.drawable.standartphoto);
 
         if (!AppPreference.getIsCache())
-            GlideUtils.optionsCleanCache(options);
-
-        options.placeholder(R.drawable.standartphoto);
+            options = GlideUtils.optionsCleanCache(options);
 
         Glide.with(mInflater.getContext())
                 .load(uri)

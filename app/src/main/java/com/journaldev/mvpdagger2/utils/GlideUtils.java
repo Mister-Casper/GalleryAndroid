@@ -8,8 +8,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 public class GlideUtils {
 
-    public static void cleanCache(final Context context)
-    {
+    public static void cleanCache(final Context context) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -18,8 +17,10 @@ public class GlideUtils {
         }).start();
     }
 
-    public static void optionsCleanCache(RequestOptions options) {
-        options.diskCacheStrategy(DiskCacheStrategy.NONE);
-        options.skipMemoryCache(true);
+    public static RequestOptions optionsCleanCache(RequestOptions options) {
+        RequestOptions resultOptions = options;
+        resultOptions = resultOptions.diskCacheStrategy(DiskCacheStrategy.NONE);
+        resultOptions = resultOptions.skipMemoryCache(true);
+        return resultOptions;
     }
 }
