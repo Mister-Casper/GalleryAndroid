@@ -1,6 +1,5 @@
 package com.journaldev.mvpdagger2.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -55,7 +54,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
         options = options.fitCenter();
         options = options.centerCrop();
-        options =options.placeholder(R.drawable.standartphoto);
+        options =options.placeholder(R.drawable.placeholder);
 
         Glide.with(mInflater.getContext())
                 .load(uri)

@@ -134,7 +134,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
 
         options = options.sizeMultiplier(0.75f);
         options = options.centerCrop();
-        options = options.placeholder(R.drawable.standartphoto);
+        options = options.placeholder(R.drawable.placeholder);
 
         if (!AppPreference.getIsCache())
             options = GlideUtils.optionsCleanCache(options);
