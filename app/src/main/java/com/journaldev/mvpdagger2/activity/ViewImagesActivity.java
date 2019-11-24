@@ -71,7 +71,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
     private void prepareTheLook() {
-        ThemeUtils.chandgeTheme(this, R.style.DarkTheme, R.style.LightTheme);
+        ThemeUtils.changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setTitle("");
         transparentActionBar();
     }

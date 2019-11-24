@@ -34,7 +34,7 @@ public class albums extends Fragment implements AlbumsAdapter.ItemClickListener 
     public void onStart() {
         super.onStart();
         albums = AlbumsInfo.getAllAlbum(getContext());
-        setAdapter();   
+        setAdapter();
     }
 
     private void setAdapter() {

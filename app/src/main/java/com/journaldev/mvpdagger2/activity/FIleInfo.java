@@ -43,7 +43,7 @@ public class FIleInfo extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ThemeUtils.chandgeTheme(this, R.style.DarkTheme, R.style.LightTheme);
+        ThemeUtils.changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
         Uri uriFile = getUri();

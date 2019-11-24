@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTitle(""); 
         AppPreference.load(this);
-        ThemeUtils.chandgeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
+        ThemeUtils.changeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);

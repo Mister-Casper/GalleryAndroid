@@ -32,9 +32,7 @@ import com.journaldev.mvpdagger2.activity.MainActivity;
 import com.journaldev.mvpdagger2.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
 import com.journaldev.mvpdagger2.adapters.SelectableViewHolder;
-import com.journaldev.mvpdagger2.utils.FabricEvents;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
-import com.journaldev.mvpdagger2.utils.MeasurementLaunchTime;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -112,22 +110,7 @@ public class ViewAllImagesByDate extends Fragment implements SelectableViewHolde
         setAdapter();
         DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
-        if (savedInstanceState == null) {
-            writeStartTime(container);
-        }
-
         return view;
-    }
-
-    private void writeStartTime(final View container) {
-        container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                MeasurementLaunchTime.loadTime = System.currentTimeMillis();
-                FabricEvents.sendLaunchTime(MeasurementLaunchTime.getLaunchTime());
-            }
-        });
     }
 
     @Override

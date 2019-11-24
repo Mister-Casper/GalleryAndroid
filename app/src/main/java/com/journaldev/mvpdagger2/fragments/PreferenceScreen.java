@@ -32,7 +32,7 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 AppPreference.setIsDarkTheme((Boolean) newValue);
                 savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
-                ThemeUtils.chandgeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
+                ThemeUtils.changeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
                 changeToTheme(getActivity());
                 preferenceDarkTheme.setChecked((Boolean) newValue);
                 return false;

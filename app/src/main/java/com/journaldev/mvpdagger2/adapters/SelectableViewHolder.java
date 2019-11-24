@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.journaldev.mvpdagger2.data.SelectableItemPhotoData;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.myVIew.MyImageView;
+import com.journaldev.mvpdagger2.myVIew.SquareImageView;
 
 public class SelectableViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,7 +25,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
     public static final int MULTI_SELECTION = 2;
     public static final int SINGLE_SELECTION = 1;
     CheckBox selectMultiPhoto;
-    public MyImageView image;
+    public SquareImageView image;
     ImageView like;
     SelectableItemPhotoData mItem;
     OnItemSelectedListener itemSelectedListener;

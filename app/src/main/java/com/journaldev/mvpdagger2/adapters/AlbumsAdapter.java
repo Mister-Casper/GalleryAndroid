@@ -15,7 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.data.Album;
 import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.myVIew.MyImageView;
+import com.journaldev.mvpdagger2.myVIew.SquareImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;
@@ -75,7 +75,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        MyImageView image;
+        SquareImageView image;
         TextView albumName;
 
         ViewHolder(View itemView) {
