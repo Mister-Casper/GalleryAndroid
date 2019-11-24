@@ -30,8 +30,8 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
-import com.journaldev.mvpdagger2.view.adapter.PhotosAdapter;
-import com.journaldev.mvpdagger2.view.adapter.SelectableViewHolder;
+import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
+import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableViewHolder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,7 +60,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     Button shareButton;
     @BindView(R.id.selectablemenu)
     ConstraintLayout selectablemenu;
-    PhotosAdapter adapter;
+    ImagesAdapter adapter;
     @BindView(R.id.showMenuButton)
     Button showMenuButton;
 
@@ -86,7 +86,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     }
 
     private void setAdapter() {
-        adapter = new PhotosAdapter(getActivity().getApplicationContext(), loadUri(), this);
+        adapter = new ImagesAdapter(getActivity().getApplicationContext(), loadUri(), this);
         adapter.setClickListener(this);
         DataList.setAdapter(adapter);
         DataList.invalidate();

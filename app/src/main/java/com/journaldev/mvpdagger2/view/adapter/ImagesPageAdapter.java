@@ -7,10 +7,13 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -22,6 +25,8 @@ import com.journaldev.mvpdagger2.data.AppPreference;
 import com.journaldev.mvpdagger2.data.Image;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
+import com.journaldev.mvpdagger2.view.customView.SelectableImage;
+import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -41,7 +46,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         void setStartPostTransition(View view);
     }
 
-    public ImagesPageAdapter(Context context, LinkedList<Image> images, PagerClickListener listener, int current ) {
+    public ImagesPageAdapter(Context context, LinkedList<Image> images, PagerClickListener listener, int current) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageUri = images;
@@ -70,13 +75,13 @@ public class ImagesPageAdapter extends PagerAdapter {
         final ImageViewTouch imageView = itemView.findViewById(R.id.picture);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
         Uri uri = getCorrectUri(imageUri.get(position).getPhoto());
-        setTransitionName(position,imageView);
-        showImage(uri,position,imageView);
+        setTransitionName(position, imageView);
+        showImage(uri, position, imageView);
         container.addView(itemView);
         return itemView;
     }
 
-    private void showImage(Uri uri , final int position , final ImageViewTouch imageView ){
+    private void showImage(Uri uri, final int position, final ImageViewTouch imageView) {
         Glide.with(mContext)
                 .load(uri)
                 .apply(setIsCache())
@@ -99,8 +104,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     }
 
 
-    private RequestOptions setIsCache()
-    {
+    private RequestOptions setIsCache() {
         RequestOptions options = new RequestOptions();
 
         if (!AppPreference.getIsCache())
@@ -109,13 +113,12 @@ public class ImagesPageAdapter extends PagerAdapter {
         return options;
     }
 
-    private void setTransitionName(int position ,ImageViewTouch imageView )
-    {
+    private void setTransitionName(int position, ImageViewTouch imageView) {
         String name = mContext.getString(R.string.transition_name, position);
         imageView.setTransitionName(name);
     }
 
-    private Uri getCorrectUri(Uri uri){
+    private Uri getCorrectUri(Uri uri) {
         Uri correctUri;
         File file = new File(uri.toString());
 

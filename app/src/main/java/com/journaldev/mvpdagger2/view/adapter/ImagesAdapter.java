@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -16,20 +18,21 @@ import com.journaldev.mvpdagger2.data.Image;
 import com.journaldev.mvpdagger2.view.customView.SelectableImage;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
+import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.view.adapter.SelectableViewHolder.MULTI_SELECTION;
+import static com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableViewHolder.MULTI_SELECTION;
 
 
-public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> implements SelectableViewHolder.OnItemSelectedListener {
+public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
     private ArrayList<SelectableImage> items;
     private boolean isMultiSelectionEnabled = true;
-    SelectableViewHolder.OnItemSelectedListener listener;
     private LayoutInflater mInflater;
-    private SelectableViewHolder.OnItemClickListener mClickListener;
+    private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
+    private SelectableViewHolder.OnItemClickListener itemClickListener;
 
     public boolean isSelectable() {
         return isSelectable;
@@ -43,9 +46,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
     private boolean isSelectable = false;
 
     // data is passed into the constructor
-    public PhotosAdapter(Context context, ArrayList<Image> items, SelectableViewHolder.OnItemSelectedListener listener) {
+    public ImagesAdapter(Context context, ArrayList<Image> items, SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
         this.mInflater = LayoutInflater.from(context);
-        this.listener = listener;
+        this.selectedItemClickListener = selectedItemClickListener;
         this.items = new ArrayList<>();
         for (Image item : items) {
             this.items.add(new SelectableImage(item, false));
@@ -55,7 +58,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
 
     // allows clicks events to be caught
     public void setClickListener(SelectableViewHolder.OnItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -63,7 +66,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.imageitem, parent, false);
 
-        return new SelectableViewHolder(itemView, this);
+        return new SelectableViewHolder(itemView, selectedItemClickListener);
     }
 
     @SuppressLint("CheckResult")
@@ -100,7 +103,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
             @Override
             public void onClick(View view) {
                 if (!isSelectable)
-                    mClickListener.onItemClick(view, position);
+                    itemClickListener.onItemClick(view, position);
                 else {
                     checkedCheckBox(holder, selectableItem);
                 }
@@ -123,7 +126,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
         holder.setChecked(holder.selectMultiPhoto.isChecked());
         onItemSelected(selectableItem);
-        listener.onItemSelected(selectableItem);
+        selectedItemClickListener.onItemSelected(selectableItem);
     }
 
     private void viewImage(SelectableViewHolder holder, Uri uri) {
@@ -169,7 +172,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         for (int i = 0; i < items.size(); i++) {
             items.get(i).setSelected(selectable);
         }
-        listener.onItemSelected(null);
+        selectedItemClickListener.onItemSelected(null);
         notifyDataSetChanged();
     }
 
@@ -199,10 +202,48 @@ public class PhotosAdapter extends RecyclerView.Adapter<SelectableViewHolder> im
         return items.size();
     }
 
-    @Override
-    public void onItemSelected(SelectableImage item) {
-        listener.onItemSelected(item);
+    private void onItemSelected(SelectableImage item) {
+        selectedItemClickListener.onItemSelected(item);
     }
 
+    public static class SelectableViewHolder extends RecyclerView.ViewHolder {
+        public interface OnItemClickListener {
+            void onItemClick(View view, int position);
+        }
 
+        public interface OnItemSelectedListener {
+            void onItemSelected(SelectableImage item);
+        }
+
+        public static final int MULTI_SELECTION = 2;
+        public static final int SINGLE_SELECTION = 1;
+        CheckBox selectMultiPhoto;
+        public SquareImageView image;
+        ImageView like;
+        SelectableImage mItem;
+        OnItemSelectedListener itemSelectedListener;
+
+        public SelectableViewHolder(View view, OnItemSelectedListener listener) {
+            super(view);
+            itemSelectedListener = listener;
+            image = itemView.findViewById(R.id.picture);
+            like = itemView.findViewById(R.id.like);
+            selectMultiPhoto = view.findViewById(R.id.checked_text_item);
+            selectMultiPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mItem.isSelected() && getItemViewType() == MULTI_SELECTION) {
+                        setChecked(false);
+                    } else {
+                        setChecked(true);
+                    }
+                    itemSelectedListener.onItemSelected(mItem);
+                }
+            });
+        }
+
+        public void setChecked(boolean value) {
+            mItem.setSelected(value);
+        }
+    }
 }
