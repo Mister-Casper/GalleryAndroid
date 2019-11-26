@@ -100,6 +100,7 @@ public class ImageUtils {
 
         return bitmap;
     }
+
     public interface alertDialogListener {
         void deleteClick();
     }
