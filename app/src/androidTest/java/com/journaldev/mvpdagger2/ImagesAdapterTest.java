@@ -11,12 +11,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.journaldev.mvpdagger2.activity.MainActivity;
-import com.journaldev.mvpdagger2.adapters.PhotosAdapter;
+import com.journaldev.mvpdagger2.view.activity.MainActivity;
+import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
 
 import junit.framework.Assert;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,42 +25,45 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.hamcrest.CoreMatchers.anything;
+import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class PhotoRecycleAdapterTest {
-
+public class ImagesAdapterTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
 
     RecyclerView recyclerView;
-    PhotosAdapter photosAdapter;
+    ImagesAdapter imagesAdapter;
 
     @Before
-    public void start() throws InterruptedException {
-        Thread.sleep(650);
+    public void setUp() {
+        onView(allOf(isDisplayed(), withId(R.id.DataList))).check(matches(isDisplayed()));
         recyclerView = mActivityRule.getActivity().findViewById(R.id.DataList);
-        photosAdapter = (PhotosAdapter) recyclerView.getAdapter();
+        imagesAdapter = (ImagesAdapter) recyclerView.getAdapter();
     }
 
+
     @Test
-    public void testChandgeSelecable() {
-        recyclerView.post(new Runnable() {
+    public void testChangeSelectable() throws Throwable {
+        mActivityRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                photosAdapter.setSelectable(true);
-                assertTrue(photosAdapter.isSelectable());
+                imagesAdapter.setSelectable(true);
+                assertTrue(imagesAdapter.isSelectable());
             }
         });
     }
+
 
     @Test
     public void testGoneVisibilityCheckBoxByDoubleLongClick() {
@@ -91,7 +95,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(2, clickChildViewWithId(R.id.checked_text_item)));
 
-        assertEquals(photosAdapter.getSelectedItems().size(), 2);
+        assertEquals(imagesAdapter.getSelectedItems().size(), 2);
     }
 
 
@@ -103,7 +107,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checked_text_item)));
 
-        assertEquals(photosAdapter.getSelectedItems().size(), 0);
+        assertEquals(imagesAdapter.getSelectedItems().size(), 0);
     }
 
     @Test
@@ -122,11 +126,11 @@ public class PhotoRecycleAdapterTest {
 
     @Test
     public void testLongClickItem() {
-        boolean startSelectable = photosAdapter.isSelectable();
+        boolean startSelectable = imagesAdapter.isSelectable();
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-        assertEquals(photosAdapter.isSelectable(), !startSelectable);
+        assertEquals(imagesAdapter.isSelectable(), !startSelectable);
     }
 
     @Test
@@ -134,7 +138,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-        assertEquals(photosAdapter.getSelectedItems().size(), 1);
+        assertEquals(imagesAdapter.getSelectedItems().size(), 1);
     }
 
     @Test
@@ -142,7 +146,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-        assertTrue(photosAdapter.isSelectable());
+        assertTrue(imagesAdapter.isSelectable());
     }
 
     @Test
@@ -157,7 +161,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(3, clickChildViewWithId(R.id.picture)));
 
-        assertEquals(photosAdapter.getSelectedItems().size(), 4);
+        assertEquals(imagesAdapter.getSelectedItems().size(), 4);
     }
 
     @Test
@@ -168,7 +172,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.picture)));
 
-        assertEquals(photosAdapter.getSelectedItems().size(), 0);
+        assertEquals(imagesAdapter.getSelectedItems().size(), 0);
     }
 
     @Test
@@ -179,7 +183,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-        assertFalse(photosAdapter.isSelectable());
+        assertFalse(imagesAdapter.isSelectable());
     }
 
     @Test
@@ -190,7 +194,7 @@ public class PhotoRecycleAdapterTest {
         onView(withId(R.id.exitButton)).
                 perform(click());
 
-        assertFalse(photosAdapter.isSelectable());
+        assertFalse(imagesAdapter.isSelectable());
     }
 
     @Test
@@ -208,7 +212,7 @@ public class PhotoRecycleAdapterTest {
         TextView text = mActivityRule.getActivity().findViewById(R.id.itemSelected);
         int itemSelected = Integer.parseInt(text.getText().toString());
 
-        photosAdapter.getSelectedItems();
+        imagesAdapter.getSelectedItems();
         assertEquals(itemSelected, 2);
 
     }
@@ -218,8 +222,8 @@ public class PhotoRecycleAdapterTest {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                photosAdapter.setItemsSelectable(true);
-                Assert.assertEquals(photosAdapter.getSelectedItems().size(), photosAdapter.getItemCount());
+                imagesAdapter.setItemsSelectable(true);
+                Assert.assertEquals(imagesAdapter.getSelectedItems().size(), imagesAdapter.getItemCount());
             }
         });
     }
@@ -234,8 +238,8 @@ public class PhotoRecycleAdapterTest {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                photosAdapter.setItemsSelectable(false);
-                Assert.assertEquals(photosAdapter.getSelectedItems().size(),0);
+                imagesAdapter.setItemsSelectable(false);
+                Assert.assertEquals(imagesAdapter.getSelectedItems().size(),0);
             }
         });
     }
