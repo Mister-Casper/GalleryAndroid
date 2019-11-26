@@ -71,25 +71,16 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        setAdapter();
-        if (unbinder != null) {
-            viewStandartMod();
-        }
-    }
-
-    private void viewStandartMod() {
+    private void showStartInstrumentsMenu() {
         selectablemenu.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
     }
 
-    private void setAdapter() {
+    private void initRecyclerView() {
         adapter = new ImagesAdapter(getActivity().getApplicationContext(), loadUri(), this);
         adapter.setClickListener(this);
         DataList.setAdapter(adapter);
-        DataList.invalidate();
+        DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
     }
 
     private ArrayList<Image> loadUri() {
@@ -105,10 +96,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewallimagesbydate, container, false);
         unbinder = ButterKnife.bind(this, view);
-        viewStandartMod();
-        setAdapter();
-        DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
+        initRecyclerView();
         return view;
     }
 
@@ -139,7 +127,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         selectedItems = adapter.getSelectedItems();
 
         if (!adapter.isSelectable())
-            viewStandartMod();
+            showStartInstrumentsMenu();
         else {
             selectablemenu.setVisibility(View.VISIBLE);
             itemSelected.setText(Integer.toString(selectedItems.size()));
@@ -151,7 +139,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     @OnClick(R.id.exitButton)
     public void exitButtonClick() {
         adapter.setSelectable(false);
-        viewStandartMod();
+        showStartInstrumentsMenu();
     }
 
     @OnClick(R.id.deleteItemsSelected)
@@ -191,7 +179,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     public void onBackPressed() {
         if (adapter.isSelectable()) {
             adapter.setSelectable(false);
-            viewStandartMod();
+            showStartInstrumentsMenu();
         } else
             getActivity().finish();
     }
@@ -200,7 +188,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     public void deleteClick() {
         selectedItems = adapter.getSelectedItems();
         ImageUtils.deleteImage(getActivity().getContentResolver(), selectedItems);
-        viewStandartMod();
+        showStartInstrumentsMenu();
         removeSelectedItems();
         adapter.setSelectable(false);
     }
