@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         viewpager.setCurrentItem(3);
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         viewpager.setAdapter(loadAdapter());
-        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         setTableSelector();
         viewpager.setOffscreenPageLimit(3);
     }
