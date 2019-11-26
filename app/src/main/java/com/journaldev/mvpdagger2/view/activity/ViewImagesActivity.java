@@ -66,7 +66,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         uri = getAllDataImage();
         getOtherIntent();
         initViewPager();
-        processingChangeCurrentItem();
         setLikeState(getImageId());
     }
 
@@ -90,22 +89,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         abDrawable.setAlpha(0);
         getSupportActionBar().setBackgroundDrawable(abDrawable);
     }
-
-
-    private void processingChangeCurrentItem() {
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {
-            }
-
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            public void onPageSelected(int position) {
-                setLikeState(position);
-            }
-        });
-    }
-
 
     private LinkedList<Image> getAllDataImage() {
         LinkedList<Image> uri;
@@ -262,11 +245,9 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
-
     private int getImageId() {
         return getIntent().getIntExtra("idImage", 0);
     }
-
 
     @SuppressLint("ResourceAsColor")
     @OnClick(R.id.deleteImage)
