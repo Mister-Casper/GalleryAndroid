@@ -291,7 +291,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     @OnClick(R.id.likeImage)
     public void clickLikeImage(View view) {
-        chandgeLikeState(view);
+        changeLikeState(view);
         Uri fileUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         Boolean like = view.isSelected();
         ExifInterface exif;
@@ -309,7 +309,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         likeImage.setSelected(images.get(imageId).getLike());
     }
 
-    private void chandgeLikeState(View v) {
+    private void changeLikeState(View v) {
         v.setSelected(!v.isSelected());
     }
 
