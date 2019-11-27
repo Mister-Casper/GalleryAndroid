@@ -73,7 +73,6 @@ public class ImagesPageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
         final ImageViewTouch imageView = itemView.findViewById(R.id.picture);
-        imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
         Uri uri = getCorrectUri(imageUri.get(position).getPhoto());
         setTransitionName(position, imageView);
         showImage(uri, position, imageView);
@@ -129,7 +128,6 @@ public class ImagesPageAdapter extends PagerAdapter {
 
         return correctUri;
     }
-
 
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((FrameLayout) object);
