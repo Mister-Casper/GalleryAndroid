@@ -67,6 +67,13 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     private ArrayList<SelectableImage> selectedItems;
 
     @Override
+    public void onStart() {
+        super.onStart();
+        initRecyclerView();
+    }
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
