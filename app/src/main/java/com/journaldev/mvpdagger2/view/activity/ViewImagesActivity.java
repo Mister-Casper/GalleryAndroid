@@ -58,8 +58,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     protected void onCreate(Bundle savedInstanceState) {
         AppPreference.load(getApplicationContext());
         prepareTheLook();
-        super.onCreate(savedInstanceState);
         allScreen();
+        super.onCreate(savedInstanceState);
         postponeEnterTransition();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
@@ -285,8 +285,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     private void viewPagerUpdate(int currentPosition) {
         pager.setAdapter(mCustomPagerAdapter);
-        pager.invalidate();
-        pager.setCurrentItem(currentPosition);
+        pager.setCurrentItem(currentPosition,false);
     }
 
     @OnClick(R.id.likeImage)
