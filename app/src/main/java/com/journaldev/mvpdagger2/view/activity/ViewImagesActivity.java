@@ -44,7 +44,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     ImagesPageAdapter mCustomPagerAdapter = null;
     @BindView(R.id.deleteImage)
     Button deleteImage;
-    LinkedList<Image> uri;
+    LinkedList<Image> images;
     @BindView(R.id.likeImage)
     Button likeImage;
     @BindView(R.id.shareButtonImage)
@@ -63,7 +63,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         postponeEnterTransition();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
-        uri = getAllDataImage();
+        images = getAllDataImage();
         getOtherIntent();
         initViewPager();
         processingChangeCurrentItem();
@@ -80,7 +80,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     private void initViewPager() {
         pager.setOffscreenPageLimit(3);
         current = getImageId();
-        mCustomPagerAdapter = new ImagesPageAdapter(this, uri, this, current);
+        mCustomPagerAdapter = new ImagesPageAdapter(this, images, this, current);
         pager.setAdapter(mCustomPagerAdapter);
         pager.setCurrentItem(current, AppPreference.getIsAnim());
     }
@@ -148,7 +148,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
             case R.id.info:
                 return viewFileInfoActivity();
             case R.id.wallpaper:
-                Uri imageUri = uri.get(pager.getCurrentItem()).getPhoto();
+                Uri imageUri = images.get(pager.getCurrentItem()).getPhoto();
                 ImageUtils.Wallpaper(getApplicationContext(), ImageUtils.convertUriToBitmap(imageUri, this.getContentResolver()));
             default:
                 return super.onOptionsItemSelected(item);
@@ -209,10 +209,10 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
     private String[] getAllPath() {
-        String[] allFileName = new String[uri.size()];
+        String[] allFileName = new String[images.size()];
 
-        for (int i = 0; i < uri.size(); i++) {
-            allFileName[i] = getFileNameFromPath(uri.get(i).getPhoto().toString());
+        for (int i = 0; i < images.size(); i++) {
+            allFileName[i] = getFileNameFromPath(images.get(i).getPhoto().toString());
         }
 
         return allFileName;
@@ -277,9 +277,9 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
     private void deleteImage() {
-        ImageUtils.deleteImage(getContentResolver(), uri.get(pager.getCurrentItem()).getPhoto());
+        ImageUtils.deleteImage(getContentResolver(), images.get(pager.getCurrentItem()).getPhoto());
         int currentPosition = pager.getCurrentItem();
-        uri.remove(currentPosition);
+        images.remove(currentPosition);
         viewPagerUpdate(currentPosition);
     }
 
@@ -299,14 +299,14 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
             exif = new ExifInterface(fileUri.toString());
             exif.setAttribute(ExifInterface.TAG_USER_COMMENT, like.toString());
             exif.saveAttributes();
-            uri.get(pager.getCurrentItem()).setLike(like);
+            images.get(pager.getCurrentItem()).setLike(like);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void setLikeState(int imageId) {
-        likeImage.setSelected(uri.get(imageId).getLike());
+        likeImage.setSelected(images.get(imageId).getLike());
     }
 
     private void chandgeLikeState(View v) {
@@ -335,7 +335,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @OnClick(R.id.shareButtonImage)
     public void shareButtonImageClick() {
         ArrayList<Uri> urls = new ArrayList<>();
-        Uri localUri = uri.get(pager.getCurrentItem()).getPhoto();
+        Uri localUri = images.get(pager.getCurrentItem()).getPhoto();
         urls.add(ImageUtils.getGlobalPath(this, localUri.toString()));
         ImageUtils.shareImages(this, urls);
     }
