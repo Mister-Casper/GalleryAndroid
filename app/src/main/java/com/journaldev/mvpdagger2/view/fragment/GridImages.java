@@ -3,7 +3,6 @@ package com.journaldev.mvpdagger2.view.fragment;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,8 +22,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.data.AppPreference;
-import com.journaldev.mvpdagger2.data.ImageUrls;
+import com.journaldev.mvpdagger2.data.ImageUrls.ImageUrls;
 import com.journaldev.mvpdagger2.data.Image;
+import com.journaldev.mvpdagger2.data.ImageUrls.ImageUrlsRepositoryObserver;
 import com.journaldev.mvpdagger2.view.customView.SelectableImage;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
@@ -41,13 +41,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class GridImages extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
+public class GridImages extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener, ImageUrlsRepositoryObserver {
 
+    LinkedList<Image> uri = null;
+    Unbinder unbinder;
+    ImagesAdapter adapter;
 
     @BindView(R.id.DataList)
     RecyclerView DataList;
-    Unbinder unbinder;
-    LinkedList<Image> uri = null;
     @BindView(R.id.textView)
     TextView textView;
     @BindView(R.id.exitButton)
@@ -60,22 +61,31 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     Button shareButton;
     @BindView(R.id.selectablemenu)
     ConstraintLayout selectablemenu;
-    ImagesAdapter adapter;
     @BindView(R.id.showMenuButton)
     Button showMenuButton;
 
     private ArrayList<SelectableImage> selectedItems;
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_viewallimagesbydate, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        uri = ImageUrls.getUrls(getContext());
         initRecyclerView();
+        return view;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ImageUrls.ImageObserver.addImageUrlsRepositoryObserver(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ImageUrls.ImageObserver.removeImageUrlsRepositoryObserver(this);
     }
 
     private void showStartInstrumentsMenu() {
@@ -83,28 +93,17 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         textView.setVisibility(View.VISIBLE);
     }
 
+    private void showSelectableInstrumentsMenu() {
+        selectablemenu.setVisibility(View.VISIBLE);
+        itemSelected.setText(Integer.toString(selectedItems.size()));
+        textView.setVisibility(View.GONE);
+    }
+
     private void initRecyclerView() {
-        adapter = new ImagesAdapter(getActivity().getApplicationContext(), loadUri(), this);
+        adapter = new ImagesAdapter(getActivity().getApplicationContext(), uri, this);
         adapter.setClickListener(this);
         DataList.setAdapter(adapter);
         DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
-    }
-
-    private ArrayList<Image> loadUri() {
-        uri = ImageUrls.getUrls(getContext());
-        ArrayList<Image> photo = new ArrayList<>();
-        for (int i = 0; i < uri.size(); i++)
-            photo.add(new Image(uri.get(i).getPhoto(), uri.get(i).getLike()));
-        return photo;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_viewallimagesbydate, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initRecyclerView();
-        return view;
     }
 
     @Override
@@ -120,8 +119,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         if (AppPreference.getIsAnim()) {
             String name = view.getTransitionName();
             ActivityOptions options =
-                    ActivityOptions.makeSceneTransitionAnimation(getActivity(), view,
-                            name);
+                    ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, name);
             startActivity(intent, options.toBundle());
         } else
             startActivity(intent);
@@ -136,9 +134,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         if (!adapter.isSelectable())
             showStartInstrumentsMenu();
         else {
-            selectablemenu.setVisibility(View.VISIBLE);
-            itemSelected.setText(Integer.toString(selectedItems.size()));
-            textView.setVisibility(View.GONE);
+            showSelectableInstrumentsMenu();
         }
     }
 
@@ -154,12 +150,12 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         AlertDialog.Builder dialog;
 
         if (selectedItems.size() != 0) {
-            dialog = ImageUtils.createAlertDialogDeleteImage(
+            dialog = ImageUtils.createDeleteImageAlertDialog(
                     getActivity()
                     , "Вы действительно хотите удалить изображения?"
                     , this);
         } else {
-            dialog = createAlertDialogNoHaveDeleteImage(
+            dialog = createErrorAlertDialog(
                     getActivity()
                     , "Выберите изображения , которые хотите удалить");
         }
@@ -169,14 +165,14 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
 
     @OnClick(R.id.shareButton)
     public void shareButtonClick() {
-     ImageUtils.shareImages(getContext(),getAllFilePath(selectedItems));
+        ImageUtils.shareImages(getContext(), getAllFilePath(selectedItems));
     }
 
     private ArrayList<Uri> getAllFilePath(ArrayList<SelectableImage> selectedItems) {
         ArrayList<Uri> files = new ArrayList<>();
 
         for (int i = 0; i < selectedItems.size(); i++) {
-            files.add(ImageUtils.getGlobalPath(getContext(),selectedItems.get(i).getPhoto().toString()));
+            files.add(ImageUtils.getGlobalPath(getContext(), selectedItems.get(i).getPhoto().toString()));
         }
 
         return files;
@@ -200,28 +196,19 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         adapter.setSelectable(false);
     }
 
-    public static AlertDialog.Builder createAlertDialogNoHaveDeleteImage(final Context context, String message) {
+    public static AlertDialog.Builder createErrorAlertDialog(final Context context, String message) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setMessage(message);
-        ad.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-
-            }
-        });
+        ad.setPositiveButton("Ок", null);
         return ad;
     }
 
     private void removeSelectedItems() {
         for (int i = 0; i < selectedItems.size(); i++) {
-            for (int q = 0; q < uri.size(); q++) {
-                if (selectedItems.get(i).getPhoto().equals(uri.get(q).getPhoto())) {
-                    adapter.removeItem(q);
-                    uri.remove(q);
-                }
-            }
+            uri.remove(selectedItems.get(i));
         }
+        adapter.notifyDataSetChanged();
     }
-
 
     @OnClick(R.id.showMenuButton)
     public void showMenuButtonClick(View view) {
@@ -243,5 +230,11 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onUpdateImage(LinkedList<Image> updateUrls) {
+        this.uri = updateUrls;
+        adapter.setImages(uri);
     }
 }
