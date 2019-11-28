@@ -22,13 +22,14 @@ import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableViewHolder.MULTI_SELECTION;
 
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
-    private ArrayList<SelectableImage> items;
+    private LinkedList<SelectableImage> items;
     private boolean isMultiSelectionEnabled = true;
     private LayoutInflater mInflater;
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
@@ -46,15 +47,24 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     private boolean isSelectable = false;
 
     // data is passed into the constructor
-    public ImagesAdapter(Context context, ArrayList<Image> items, SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
+    public ImagesAdapter(Context context, LinkedList<Image> items, SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.selectedItemClickListener = selectedItemClickListener;
-        this.items = new ArrayList<>();
-        for (Image item : items) {
-            this.items.add(new SelectableImage(item, false));
-        }
+        this.items = convertImageToSelectableImage(items);
     }
 
+    public void setImages(LinkedList<Image> items){
+        this.items = convertImageToSelectableImage(items);
+        notifyDataSetChanged();
+    }
+
+    private LinkedList<SelectableImage> convertImageToSelectableImage(LinkedList<Image> images) {
+        LinkedList<SelectableImage> selectableImages = new LinkedList<>();
+        for (Image item : images) {
+            selectableImages.add(new SelectableImage(item, false));
+        }
+        return selectableImages;
+    }
 
     // allows clicks events to be caught
     public void setClickListener(SelectableViewHolder.OnItemClickListener itemClickListener) {
