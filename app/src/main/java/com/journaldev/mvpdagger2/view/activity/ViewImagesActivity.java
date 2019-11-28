@@ -20,7 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.journaldev.mvpdagger2.data.AppPreference;
-import com.journaldev.mvpdagger2.data.ImageUrls;
+import com.journaldev.mvpdagger2.data.ImageUrls.ImageUrls;
 import com.journaldev.mvpdagger2.data.Image;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.ImagesPageAdapter;
@@ -271,7 +271,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @SuppressLint("ResourceAsColor")
     @OnClick(R.id.deleteImage)
     public void clickDeleteImage() {
-        AlertDialog.Builder dialog = ImageUtils.createAlertDialogDeleteImage(
+        AlertDialog.Builder dialog = ImageUtils.createDeleteImageAlertDialog(
                 this, "Вы действительно хотите удалить изображение?", this);
         dialog.show();
     }
