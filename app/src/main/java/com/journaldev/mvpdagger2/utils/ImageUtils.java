@@ -45,7 +45,7 @@ public class ImageUtils {
         return str;
     }
 
-    public static AlertDialog.Builder createAlertDialogDeleteImage(final Context context, String message, final alertDialogListener listener) {
+    public static AlertDialog.Builder createDeleteImageAlertDialog(final Context context, String message, final alertDialogListener listener) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setMessage(message);
         ad.setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
