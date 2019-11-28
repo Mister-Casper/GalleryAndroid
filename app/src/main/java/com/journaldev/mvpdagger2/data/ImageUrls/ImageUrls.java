@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.data;
+package com.journaldev.mvpdagger2.data.ImageUrls;
 
 import android.content.Context;
 import android.database.ContentObserver;
@@ -10,8 +10,11 @@ import android.os.Looper;
 import android.provider.MediaStore;
 
 
+import com.journaldev.mvpdagger2.data.Image;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ImageUrls {
@@ -26,8 +29,9 @@ public class ImageUrls {
 
     private static void getImageUrl(Context context) {
         Cursor imageCursor = getCursor(context);
-        registerContentObserver(context, imageCursor);
         loadUrl(imageCursor);
+
+        registerContentObserver(context);
     }
 
     private static Cursor getCursor(Context context) {
@@ -37,16 +41,15 @@ public class ImageUrls {
                 null, null);
     }
 
-    private static void registerContentObserver(Context context, Cursor imageCursor) {
+    private static void registerContentObserver(Context context) {
         Handler handler = new Handler(Looper.getMainLooper());
 
         context.getContentResolver().registerContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                true, new ImageObserver(handler, imageCursor));
+                true, new ImageObserver(handler,context));
     }
 
     private static void loadUrl(Cursor imageCursor) {
         if (imageCursor != null) {
-            imageCursor.moveToFirst();
             imageUrls = new LinkedList<>();
             for (int i = imageCursor.getCount() - 1; i >= 0; i--) {
                 imageCursor.moveToPosition(i);
@@ -69,12 +72,25 @@ public class ImageUrls {
         return attribute;
     }
 
-    static class ImageObserver extends ContentObserver {
-        Cursor cursor;
+    public static class ImageObserver extends ContentObserver {
 
-        public ImageObserver(Handler handler, Cursor cursor) {
+        private static ArrayList<ImageUrlsRepositoryObserver> observers = new ArrayList<>();
+
+        public static void addImageUrlsRepositoryObserver(ImageUrlsRepositoryObserver repositoryObserver) {
+            if (!observers.contains(repositoryObserver)) {
+                observers.add(repositoryObserver);
+            }
+        }
+
+        public static void removeImageUrlsRepositoryObserver(ImageUrlsRepositoryObserver repositoryObserver) {
+            observers.remove(repositoryObserver);
+        }
+
+        Context context;
+
+        public ImageObserver(Handler handler,Context context) {
             super(handler);
-            this.cursor = cursor;
+            this.context = context;
         }
 
         @Override
@@ -85,7 +101,11 @@ public class ImageUrls {
         @Override
         public void onChange(boolean arg0) {
             super.onChange(arg0);
+            Cursor cursor = getCursor(context);
             loadUrl(cursor);
+            for (int i = 0; i < observers.size(); i++) {
+                observers.get(i).onUpdateImage(imageUrls);
+            }
         }
     }
 }
