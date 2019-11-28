@@ -1,10 +1,10 @@
-package com.journaldev.mvpdagger2.data;
+package com.journaldev.mvpdagger2.model;
 
 import android.net.Uri;
 
 import java.util.ArrayList;
 
-public class Album {
+public class AlbumModel {
     private String name;
     private ArrayList<String> like = new ArrayList<>();
     private ArrayList<Uri> uri = new ArrayList<>();
@@ -26,13 +26,13 @@ public class Album {
             this.like.set(position,like.toString());
     }
 
-    Album(String name, ArrayList<Uri> uri, ArrayList<String> like) {
+    public AlbumModel(String name, ArrayList<Uri> uri, ArrayList<String> like) {
         this.name = name;
         this.uri = uri;
         this.like = like;
     }
 
-    Album(String name) {
+    public AlbumModel(String name) {
         this.name = name;
     }
 

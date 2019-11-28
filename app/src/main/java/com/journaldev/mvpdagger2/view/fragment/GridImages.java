@@ -21,11 +21,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.journaldev.mvpdagger2.data.AppPreference;
-import com.journaldev.mvpdagger2.data.ImageUrls.ImageUrls;
-import com.journaldev.mvpdagger2.data.Image;
-import com.journaldev.mvpdagger2.data.ImageUrls.ImageUrlsRepositoryObserver;
-import com.journaldev.mvpdagger2.view.customView.SelectableImage;
+import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.data.Image.ImageRepository;
+import com.journaldev.mvpdagger2.model.ImageModel;
+import com.journaldev.mvpdagger2.data.Image.ImageRepositoryObserver;
+import com.journaldev.mvpdagger2.view.customView.SelectableImageModel;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
@@ -41,9 +41,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class GridImages extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener, ImageUrlsRepositoryObserver {
+public class GridImages extends Fragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener, ImageRepositoryObserver {
 
-    LinkedList<Image> uri = null;
+    LinkedList<ImageModel> uri = null;
     Unbinder unbinder;
     ImagesAdapter adapter;
 
@@ -64,14 +64,14 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     @BindView(R.id.showMenuButton)
     Button showMenuButton;
 
-    private ArrayList<SelectableImage> selectedItems;
+    private ArrayList<SelectableImageModel> selectedItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewallimagesbydate, container, false);
         unbinder = ButterKnife.bind(this, view);
-        uri = ImageUrls.getUrls(getContext());
+        uri = ImageRepository.getUrls(getContext());
         initRecyclerView();
         return view;
     }
@@ -79,13 +79,13 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ImageUrls.ImageObserver.addImageUrlsRepositoryObserver(this);
+        ImageRepository.ImageObserver.addImageUrlsRepositoryObserver(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ImageUrls.ImageObserver.removeImageUrlsRepositoryObserver(this);
+        ImageRepository.ImageObserver.removeImageUrlsRepositoryObserver(this);
     }
 
     private void showStartInstrumentsMenu() {
@@ -116,7 +116,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesActivity.class);
         intent.putExtra("idImage", position);
-        if (AppPreference.getIsAnim()) {
+        if (AppPreferenceUtils.getIsAnim()) {
             String name = view.getTransitionName();
             ActivityOptions options =
                     ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, name);
@@ -128,7 +128,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onItemSelected(SelectableImage item) {
+    public void onItemSelected(SelectableImageModel item) {
         selectedItems = adapter.getSelectedItems();
 
         if (!adapter.isSelectable())
@@ -168,7 +168,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
         ImageUtils.shareImages(getContext(), getAllFilePath(selectedItems));
     }
 
-    private ArrayList<Uri> getAllFilePath(ArrayList<SelectableImage> selectedItems) {
+    private ArrayList<Uri> getAllFilePath(ArrayList<SelectableImageModel> selectedItems) {
         ArrayList<Uri> files = new ArrayList<>();
 
         for (int i = 0; i < selectedItems.size(); i++) {
@@ -233,7 +233,7 @@ public class GridImages extends Fragment implements SelectableViewHolder.OnItemC
     }
 
     @Override
-    public void onUpdateImage(LinkedList<Image> updateUrls) {
+    public void onUpdateImage(LinkedList<ImageModel> updateUrls) {
         this.uri = updateUrls;
         adapter.setImages(uri);
     }

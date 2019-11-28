@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.journaldev.mvpdagger2.data.Album;
-import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
@@ -22,17 +22,20 @@ import java.util.ArrayList;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
 
-    private ArrayList<Album> mData;
+    private ArrayList<AlbumModel> albums;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    // data is passed into the constructor
-    public AlbumsAdapter(Context context, ArrayList<Album> albums) {
+    public AlbumsAdapter(Context context, ArrayList<AlbumModel> albums) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = albums;
+        this.albums = albums;
     }
 
-    // inflates the cell layout from xml when needed
+    public void setAlbums(ArrayList<AlbumModel> albums){
+        this.albums = albums;
+        notifyDataSetChanged();
+    }
+
     @Override
     @NonNull
     public AlbumsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,14 +45,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull AlbumsAdapter.ViewHolder holder, int position) {
-        Uri albumPhoto = mData.get(position).getUri().get(0);
-        String AlbumName = mData.get(position).getName();
+        Uri albumPhoto = albums.get(position).getUri().get(0);
+        String AlbumName = albums.get(position).getName();
         File file = new File(String.valueOf(albumPhoto));
         Uri uri = Uri.fromFile(file);
 
         RequestOptions options = new RequestOptions();
 
-        if (!AppPreference.getIsCache())
+        if (!AppPreferenceUtils.getIsCache())
             options = GlideUtils.optionsCleanCache(options);
 
         options = options.fitCenter();
@@ -67,7 +70,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.size();
+        return albums.size();
     }
 
 

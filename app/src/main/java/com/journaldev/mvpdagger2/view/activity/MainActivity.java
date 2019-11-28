@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
-import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle(""); 
-        AppPreference.load(this);
+        AppPreferenceUtils.load(this);
         ThemeUtils.changeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,

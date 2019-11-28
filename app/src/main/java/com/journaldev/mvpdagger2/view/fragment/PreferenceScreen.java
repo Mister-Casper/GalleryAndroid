@@ -9,7 +9,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v14.preference.SwitchPreference;
 
-import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
@@ -24,13 +24,13 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
-        AppPreference.load(getActivity());
+        AppPreferenceUtils.load(getActivity());
         final SwitchPreference preferenceDarkTheme = (SwitchPreference) findPreference("isDarkTheme");
 
         preferenceDarkTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                AppPreference.setIsDarkTheme((Boolean) newValue);
+                AppPreferenceUtils.setIsDarkTheme((Boolean) newValue);
                 savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
                 ThemeUtils.changeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
                 changeToTheme(getActivity());
@@ -63,13 +63,13 @@ public class PreferenceScreen extends PreferenceFragmentCompat {
 
     private void saveIsAnim() {
         SwitchPreference preferenceAnim = (SwitchPreference) findPreference("isAnim");
-        AppPreference.setIsAnim(preferenceAnim.isChecked());
+        AppPreferenceUtils.setIsAnim(preferenceAnim.isChecked());
         savePreferences(preferenceAnim.getKey(), preferenceAnim.isChecked());
     }
 
     private void saveIsCache() {
         SwitchPreference preferenceCache = (SwitchPreference) findPreference("isCache");
-        AppPreference.setIsCache(preferenceCache.isChecked());
+        AppPreferenceUtils.setIsCache(preferenceCache.isChecked());
         savePreferences(preferenceCache.getKey(), preferenceCache.isChecked());
 
         cleanCache(preferenceCache.isChecked());

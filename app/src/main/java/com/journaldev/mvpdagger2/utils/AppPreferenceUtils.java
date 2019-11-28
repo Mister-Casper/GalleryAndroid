@@ -1,12 +1,13 @@
-package com.journaldev.mvpdagger2.data;
+package com.journaldev.mvpdagger2.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
-import com.journaldev.mvpdagger2.utils.ThemeUtils;
+public class AppPreferenceUtils {
 
-public class AppPreference {
+    private static Boolean isAnim = null;
+    private static Boolean isCache = null;
 
     public static Boolean getIsAnim() {
         if (isAnim == null)
@@ -23,7 +24,7 @@ public class AppPreference {
     }
 
     public static void setIsAnim(Boolean isAnim) {
-        AppPreference.isAnim = isAnim;
+        AppPreferenceUtils.isAnim = isAnim;
     }
 
     public static void setIsDarkTheme(Boolean isDarkTheme) {
@@ -31,12 +32,8 @@ public class AppPreference {
     }
 
     public static void setIsCache(Boolean isCache) {
-        AppPreference.isCache = isCache;
+        AppPreferenceUtils.isCache = isCache;
     }
-
-
-    private static Boolean isAnim = null;
-    private static Boolean isCache = null;
 
     public static void load(Context context) {
         SharedPreferences prefs = PreferenceManager
@@ -58,7 +55,7 @@ public class AppPreference {
     }
 
     private static void loadIsCache(SharedPreferences prefs) {
-        AppPreference.setIsCache(prefs.getBoolean("isCache",
+        AppPreferenceUtils.setIsCache(prefs.getBoolean("isCache",
                 true));
     }
 

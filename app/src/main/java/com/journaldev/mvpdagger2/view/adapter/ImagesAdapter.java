@@ -13,9 +13,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.journaldev.mvpdagger2.data.AppPreference;
-import com.journaldev.mvpdagger2.data.Image;
-import com.journaldev.mvpdagger2.view.customView.SelectableImage;
+import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.model.ImageModel;
+import com.journaldev.mvpdagger2.view.customView.SelectableImageModel;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.journaldev.mvpdagger2.view.customView.SquareImageView;
@@ -29,7 +29,7 @@ import static com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableVie
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
-    private LinkedList<SelectableImage> items;
+    private LinkedList<SelectableImageModel> items;
     private boolean isMultiSelectionEnabled = true;
     private LayoutInflater mInflater;
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
@@ -46,22 +46,21 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
 
     private boolean isSelectable = false;
 
-    // data is passed into the constructor
-    public ImagesAdapter(Context context, LinkedList<Image> items, SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
+    public ImagesAdapter(Context context, LinkedList<ImageModel> items, SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.selectedItemClickListener = selectedItemClickListener;
         this.items = convertImageToSelectableImage(items);
     }
 
-    public void setImages(LinkedList<Image> items){
+    public void setImages(LinkedList<ImageModel> items){
         this.items = convertImageToSelectableImage(items);
         notifyDataSetChanged();
     }
 
-    private LinkedList<SelectableImage> convertImageToSelectableImage(LinkedList<Image> images) {
-        LinkedList<SelectableImage> selectableImages = new LinkedList<>();
-        for (Image item : images) {
-            selectableImages.add(new SelectableImage(item, false));
+    private LinkedList<SelectableImageModel> convertImageToSelectableImage(LinkedList<ImageModel> imageModels) {
+        LinkedList<SelectableImageModel> selectableImages = new LinkedList<>();
+        for (ImageModel item : imageModels) {
+            selectableImages.add(new SelectableImageModel(item, false));
         }
         return selectableImages;
     }
@@ -83,7 +82,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     @Override
     public void onBindViewHolder(@NonNull final SelectableViewHolder holder, final int position) {
         Uri photo = items.get(position).getPhoto();
-        SelectableImage selectableItem = items.get(position);
+        SelectableImageModel selectableItem = items.get(position);
         File file = new File(String.valueOf(photo));
         Uri uri = Uri.fromFile(file);
         buttonLikeVisibility(holder, position);
@@ -95,7 +94,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         setTransitionName(holder, position);
     }
 
-    private void settingSelectableMod(SelectableViewHolder holder, SelectableImage selectableItem) {
+    private void settingSelectableMod(SelectableViewHolder holder, SelectableImageModel selectableItem) {
         if (isSelectable) {
             holder.selectMultiPhoto.setChecked(selectableItem.isSelected());
             holder.selectMultiPhoto.setVisibility(View.VISIBLE);
@@ -103,12 +102,12 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
             holder.selectMultiPhoto.setVisibility(View.GONE);
     }
 
-    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableImage selectableItem) {
+    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
         imageOnClickListener(holder, position, selectableItem);
         imageLongClickListener(holder, selectableItem);
     }
 
-    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableImage selectableItem) {
+    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +120,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         });
     }
 
-    private void imageLongClickListener(final SelectableViewHolder holder, final SelectableImage selectableItem) {
+    private void imageLongClickListener(final SelectableViewHolder holder, final SelectableImageModel selectableItem) {
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -132,7 +131,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         });
     }
 
-    private void checkedCheckBox(SelectableViewHolder holder, SelectableImage selectableItem) {
+    private void checkedCheckBox(SelectableViewHolder holder, SelectableImageModel selectableItem) {
         holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
         holder.setChecked(holder.selectMultiPhoto.isChecked());
         onItemSelected(selectableItem);
@@ -146,7 +145,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         options = options.centerCrop();
         options = options.placeholder(R.drawable.placeholder);
 
-        if (!AppPreference.getIsCache())
+        if (!AppPreferenceUtils.getIsCache())
             options = GlideUtils.optionsCleanCache(options);
 
         Glide.with(mInflater.getContext())
@@ -186,10 +185,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     }
 
 
-    public ArrayList<SelectableImage> getSelectedItems() {
+    public ArrayList<SelectableImageModel> getSelectedItems() {
 
-        ArrayList<SelectableImage> selectedItems = new ArrayList<>();
-        for (SelectableImage item : items) {
+        ArrayList<SelectableImageModel> selectedItems = new ArrayList<>();
+        for (SelectableImageModel item : items) {
             if (item.isSelected()) {
                 selectedItems.add(item);
             }
@@ -211,7 +210,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         return items.size();
     }
 
-    private void onItemSelected(SelectableImage item) {
+    private void onItemSelected(SelectableImageModel item) {
         selectedItemClickListener.onItemSelected(item);
     }
 
@@ -221,7 +220,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         }
 
         public interface OnItemSelectedListener {
-            void onItemSelected(SelectableImage item);
+            void onItemSelected(SelectableImageModel item);
         }
 
         public static final int MULTI_SELECTION = 2;
@@ -229,7 +228,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         CheckBox selectMultiPhoto;
         public SquareImageView image;
         ImageView like;
-        SelectableImage mItem;
+        SelectableImageModel mItem;
         OnItemSelectedListener itemSelectedListener;
 
         public SelectableViewHolder(View view, OnItemSelectedListener listener) {

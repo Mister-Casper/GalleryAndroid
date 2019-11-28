@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.journaldev.mvpdagger2.data.AppPreference;
+import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.utils.OnSwipeTouchListener;
+import com.journaldev.mvpdagger2.view.Utils.OnSwipeTouchListener;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.File;
@@ -119,7 +119,7 @@ public class FIleInfo extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (AppPreference.getIsAnim())
+        if (AppPreferenceUtils.getIsAnim())
             overridePendingTransition(R.anim.back2, R.anim.next2);
     }
 }

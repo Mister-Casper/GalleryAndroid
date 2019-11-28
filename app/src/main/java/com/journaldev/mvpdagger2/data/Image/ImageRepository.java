@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.data.ImageUrls;
+package com.journaldev.mvpdagger2.data.Image;
 
 import android.content.Context;
 import android.database.ContentObserver;
@@ -10,21 +10,21 @@ import android.os.Looper;
 import android.provider.MediaStore;
 
 
-import com.journaldev.mvpdagger2.data.Image;
+import com.journaldev.mvpdagger2.model.ImageModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class ImageUrls {
-    private static LinkedList<Image> imageUrls;
+public class ImageRepository {
+    private static LinkedList<ImageModel> imageModelUrls;
 
-    public static LinkedList<Image> getUrls(Context context) {
-        if (imageUrls == null) {
+    public static LinkedList<ImageModel> getUrls(Context context) {
+        if (imageModelUrls == null) {
             getImageUrl(context);
         }
-        return imageUrls;
+        return imageModelUrls;
     }
 
     private static void getImageUrl(Context context) {
@@ -50,13 +50,13 @@ public class ImageUrls {
 
     private static void loadUrl(Cursor imageCursor) {
         if (imageCursor != null) {
-            imageUrls = new LinkedList<>();
+            imageModelUrls = new LinkedList<>();
             for (int i = imageCursor.getCount() - 1; i >= 0; i--) {
                 imageCursor.moveToPosition(i);
                 Uri temp = Uri.parse(imageCursor.getString(1));
                 File file = new File(temp.toString());
                 if (file.exists())
-                    imageUrls.add(new Image(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
+                    imageModelUrls.add(new ImageModel(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
             }
         }
     }
@@ -74,15 +74,15 @@ public class ImageUrls {
 
     public static class ImageObserver extends ContentObserver {
 
-        private static ArrayList<ImageUrlsRepositoryObserver> observers = new ArrayList<>();
+        private static ArrayList<ImageRepositoryObserver> observers = new ArrayList<>();
 
-        public static void addImageUrlsRepositoryObserver(ImageUrlsRepositoryObserver repositoryObserver) {
+        public static void addImageUrlsRepositoryObserver(ImageRepositoryObserver repositoryObserver) {
             if (!observers.contains(repositoryObserver)) {
                 observers.add(repositoryObserver);
             }
         }
 
-        public static void removeImageUrlsRepositoryObserver(ImageUrlsRepositoryObserver repositoryObserver) {
+        public static void removeImageUrlsRepositoryObserver(ImageRepositoryObserver repositoryObserver) {
             observers.remove(repositoryObserver);
         }
 
@@ -104,7 +104,7 @@ public class ImageUrls {
             Cursor cursor = getCursor(context);
             loadUrl(cursor);
             for (int i = 0; i < observers.size(); i++) {
-                observers.get(i).onUpdateImage(imageUrls);
+                observers.get(i).onUpdateImage(imageModelUrls);
             }
         }
     }
