@@ -1,6 +1,5 @@
-package com.journaldev.mvpdagger2.view.customView;
+package com.journaldev.mvpdagger2.model;
 
-import com.journaldev.mvpdagger2.model.ImageModel;
 
 public class SelectableImageModel extends ImageModel {
 
