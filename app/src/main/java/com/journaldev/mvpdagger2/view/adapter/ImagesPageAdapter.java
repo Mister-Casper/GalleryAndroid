@@ -24,13 +24,14 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 public class ImagesPageAdapter extends PagerAdapter {
 
-    private final LinkedList<ImageModel> imageModelUri;
+    private final ArrayList<ImageModel> imageModelUri;
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private PagerClickListener listener;
@@ -40,7 +41,7 @@ public class ImagesPageAdapter extends PagerAdapter {
         void setStartPostTransition(View view);
     }
 
-    public ImagesPageAdapter(Context context, LinkedList<ImageModel> imageModels, PagerClickListener listener, int current) {
+    public ImagesPageAdapter(Context context, ArrayList<ImageModel> imageModels, PagerClickListener listener, int current) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageModelUri = imageModels;
