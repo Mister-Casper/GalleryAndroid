@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ImageRepository {
-    private static LinkedList<ImageModel> imageModelUrls;
+    private static ArrayList<ImageModel> imageModelUrls;
 
-    public static LinkedList<ImageModel> getUrls(Context context) {
+    public static ArrayList<ImageModel> getUrls(Context context) {
         if (imageModelUrls == null) {
             getImageUrl(context);
         }
@@ -50,7 +50,7 @@ public class ImageRepository {
 
     private static void loadUrl(Cursor imageCursor) {
         if (imageCursor != null) {
-            imageModelUrls = new LinkedList<>();
+            imageModelUrls = new ArrayList<>();
             for (int i = imageCursor.getCount() - 1; i >= 0; i--) {
                 imageCursor.moveToPosition(i);
                 Uri temp = Uri.parse(imageCursor.getString(1));
