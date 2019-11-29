@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private FragmentPagerAdapter loadAdapter() {
-        GridImages fragment1 = new GridImages();
-        Albums fragment2 = new Albums();
-        PreferenceScreen fragment3 = new PreferenceScreen();
+        GridImagesFragment fragment1 = new GridImagesFragment();
+        AlbumsFragment fragment2 = new AlbumsFragment();
+        PreferenceScreenFragment fragment3 = new PreferenceScreenFragment();
 
         final FragmentPagerAdapter adapter = new FragmentPagerAdapter
                 (getSupportFragmentManager(), tabs.getTabCount(), new Fragment[]{fragment1, fragment2, fragment3});

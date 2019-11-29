@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class Albums extends Fragment implements AlbumsAdapter.ItemClickListener, AlbumRepositoryObserver {
+public class AlbumsFragment extends Fragment implements AlbumsAdapter.ItemClickListener, AlbumRepositoryObserver {
 
     @BindView(R.id.field)
     RecyclerView field;

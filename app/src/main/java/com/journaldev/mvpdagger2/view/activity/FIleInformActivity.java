@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FIleInfo extends Activity {
+public class FIleInformActivity extends Activity {
 
     @BindView(R.id.path)
     TextView path;
@@ -54,7 +54,7 @@ public class FIleInfo extends Activity {
     }
 
     private void setOnSwipeTouchListener(View view) {
-        view.setOnTouchListener(new OnSwipeTouchListener(FIleInfo.this) {
+        view.setOnTouchListener(new OnSwipeTouchListener(FIleInformActivity.this) {
             public void onSwipeTop() {
                 onBackPressed();
             }

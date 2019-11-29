@@ -35,7 +35,7 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.FIleInfo" />
+        <activity android:name=".view.activity.FIleInformActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

@@ -9,7 +9,7 @@ import com.journaldev.mvpdagger2.data.Image.ImageRepositoryObserver;
 import java.util.ArrayList;
 
 
-public class GridImages extends BaseGridImages implements ImageRepositoryObserver {
+public class GridImagesFragment extends BaseGridImagesFragment implements ImageRepositoryObserver {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,6 +1,5 @@
 package com.journaldev.mvpdagger2.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -15,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.model.ImageModel;
-import com.journaldev.mvpdagger2.view.customView.SelectableImageModel;
+import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 import com.journaldev.mvpdagger2.view.customView.SquareImageView;

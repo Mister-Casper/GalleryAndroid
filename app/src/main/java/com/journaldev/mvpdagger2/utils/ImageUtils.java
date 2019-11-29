@@ -12,7 +12,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-import com.journaldev.mvpdagger2.view.customView.SelectableImageModel;
+import com.journaldev.mvpdagger2.model.SelectableImageModel;
 
 import java.io.File;
 import java.io.IOException;

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
-import com.journaldev.mvpdagger2.view.fragment.BaseGridImages;
+import com.journaldev.mvpdagger2.view.fragment.BaseGridImagesFragment;
 
 
 
@@ -23,7 +23,7 @@ public class ViewImagesGridActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment baseGridImages = new BaseGridImages();
+        Fragment baseGridImages = new BaseGridImagesFragment();
         Bundle images = getIntent().getExtras();
         baseGridImages.setArguments(images);
         fragmentTransaction.add(R.id.imagesFragment,baseGridImages);

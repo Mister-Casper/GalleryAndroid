@@ -29,7 +29,7 @@ import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
-import com.journaldev.mvpdagger2.view.customView.SelectableImageModel;
+import com.journaldev.mvpdagger2.model.SelectableImageModel;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class BaseGridImages extends Fragment implements ImagesAdapter.SelectableViewHolder.OnItemClickListener, ImagesAdapter.SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
+public class BaseGridImagesFragment extends Fragment implements ImagesAdapter.SelectableViewHolder.OnItemClickListener, ImagesAdapter.SelectableViewHolder.OnItemSelectedListener, MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
 
     ArrayList<ImageModel> images = null;
     Unbinder unbinder;

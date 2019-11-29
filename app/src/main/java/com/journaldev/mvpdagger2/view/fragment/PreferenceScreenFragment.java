@@ -16,7 +16,7 @@ import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class PreferenceScreen extends PreferenceFragmentCompat {
+public class PreferenceScreenFragment extends PreferenceFragmentCompat {
 
     public static final String APP_PREFERENCES = "mysettings";
 

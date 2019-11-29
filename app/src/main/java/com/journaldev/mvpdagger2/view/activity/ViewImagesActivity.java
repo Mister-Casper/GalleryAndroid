@@ -30,7 +30,6 @@ import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -138,7 +137,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     private Boolean viewFileInfoActivity() {
         hideNavigationBar();
-        Intent intent = new Intent(this, FIleInfo.class);
+        Intent intent = new Intent(this, FIleInformActivity.class);
         Uri currentUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         intent.putExtra("uri", currentUri.toString());
         startActivity(intent);
