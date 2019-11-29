@@ -41,16 +41,17 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
 
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
-    ImagesPageAdapter mCustomPagerAdapter = null;
     @BindView(R.id.deleteImage)
     Button deleteImage;
-    LinkedList<ImageModel> imageModels;
     @BindView(R.id.likeImage)
     Button likeImage;
     @BindView(R.id.shareButtonImage)
     Button shareButtonImage;
     @BindView(R.id.windowViewImages)
     ConstraintLayout windowViewImages;
+
+    ArrayList<ImageModel> imageModels;
+    ImagesPageAdapter imagesPageAdapter = null;
 
     private int current;
 
@@ -80,8 +81,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     private void initViewPager() {
         pager.setOffscreenPageLimit(3);
         current = getImageId();
-        mCustomPagerAdapter = new ImagesPageAdapter(this, imageModels, this, current);
-        pager.setAdapter(mCustomPagerAdapter);
+        imagesPageAdapter = new ImagesPageAdapter(this, imageModels, this, current);
+        pager.setAdapter(imagesPageAdapter);
         pager.setCurrentItem(current, AppPreferenceUtils.getIsAnim());
     }
 
@@ -107,33 +108,13 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
 
-    private LinkedList<ImageModel> getAllDataImage() {
-        LinkedList<ImageModel> uri;
-        ArrayList<String> strUri = getIntent().getStringArrayListExtra("uri");
-        ArrayList<String> strLike = getIntent().getStringArrayListExtra("like");
+    private ArrayList<ImageModel> getAllDataImage() {
+        ArrayList<ImageModel> uri = getIntent().getParcelableArrayListExtra("uri");
 
-        if (strUri != null) {
-            uri = getAllImageDataFromIntent(strUri, strLike);
-        } else
+        if (uri == null)
             uri = ImageRepository.getUrls(getApplicationContext());
 
         return uri;
-    }
-
-    private LinkedList<ImageModel> getAllImageDataFromIntent(ArrayList<String> strUri, ArrayList<String> strLike) {
-        LinkedList<ImageModel> itemPhotoData = new LinkedList<>();
-
-        for (int i = 0; i < strUri.size(); i++) {
-            itemPhotoData.add(getImageDataFromIntent(i, strUri, strLike));
-        }
-
-        return itemPhotoData;
-    }
-
-    private ImageModel getImageDataFromIntent(int id, ArrayList<String> strUri, ArrayList<String> strLike) {
-        Uri uri = Uri.parse(strUri.get(id));
-        Boolean isLike = Boolean.parseBoolean(strLike.get(id));
-        return new ImageModel(uri, isLike);
     }
 
     @Override
@@ -158,7 +139,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     private Boolean viewFileInfoActivity() {
         hideNavigationBar();
         Intent intent = new Intent(this, FIleInfo.class);
-        Uri currentUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
+        Uri currentUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         intent.putExtra("uri", currentUri.toString());
         startActivity(intent);
         if (AppPreferenceUtils.getIsAnim()) {
@@ -284,14 +265,14 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
     private void viewPagerUpdate(int currentPosition) {
-        pager.setAdapter(mCustomPagerAdapter);
+        pager.setAdapter(imagesPageAdapter);
         pager.setCurrentItem(currentPosition,false);
     }
 
     @OnClick(R.id.likeImage)
     public void clickLikeImage(View view) {
         changeLikeState(view);
-        Uri fileUri = mCustomPagerAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
+        Uri fileUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
         Boolean like = view.isSelected();
         ExifInterface exif;
         try {
