@@ -16,7 +16,9 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.AlbumModel;
+import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
+import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
 
 import java.util.ArrayList;
@@ -79,10 +81,22 @@ public class Albums extends Fragment implements AlbumsAdapter.ItemClickListener,
 
     @Override
     public void onItemClick(View view, int position) {
-        Intent intent = new Intent(getContext(), ViewImagesActivity.class);
-        intent.putStringArrayListExtra("uri", convertArraysUrlToArraysString(position));
-        intent.putStringArrayListExtra("like", convertArraysLikeToArraysString(position));
+        Intent intent = new Intent(getContext(), ViewImagesGridActivity.class);
+        intent.putParcelableArrayListExtra("image", getImages(position));
         getContext().startActivity(intent);
+    }
+
+    private ArrayList<ImageModel> getImages(int position) {
+        ArrayList<ImageModel> images = new ArrayList<>();
+
+        ArrayList<String> uri = convertArraysUrlToArraysString(position);
+        ArrayList<String> like = convertArraysLikeToArraysString(position);
+
+        for (int i = 0; i < uri.size(); i++) {
+            images.add(new ImageModel(Uri.parse(uri.get(i)), Boolean.parseBoolean(like.get(i))));
+        }
+
+        return images;
     }
 
     private ArrayList<String> convertArraysUrlToArraysString(int id) {
