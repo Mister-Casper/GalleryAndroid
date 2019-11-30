@@ -2,7 +2,7 @@ package com.journaldev.mvpdagger2.model;
 
 import java.util.ArrayList;
 
-public class SelectableAlbumModel extends AlbumModel {
+public class SelectableAlbumModel extends AlbumModel implements Selectable{
 
     private boolean isSelected;
 
@@ -19,14 +19,14 @@ public class SelectableAlbumModel extends AlbumModel {
         isSelected = selected;
     }
 
-    public static String[] convertAlbumsToStringArray(ArrayList<SelectableAlbumModel> albums) {
+    public static String[] convertAlbumsToStringArray(ArrayList<Selectable> albums) {
         ArrayList<String> urls = new ArrayList<>();
         String[] urlArray = new String[urls.size()];
 
         for (int i = 0; i < albums.size(); i++) {
             ArrayList<ImageModel> images = albums.get(i).getImages();
             for (int q = 0; q < images.size(); q++) {
-                urls.add(images.get(q).getPhoto().toString());
+                urls.add(images.get(q).getImage().toString());
             }
         }
 
@@ -34,4 +34,8 @@ public class SelectableAlbumModel extends AlbumModel {
     }
 
 
+    @Override
+    public ArrayList<ImageModel> getImages() {
+        return super.getImages();
+    }
 }
