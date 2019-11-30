@@ -211,7 +211,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         CheckBox selectMultiPhoto;
         SquareImageView image;
         ImageView like;
-        SelectableImageModel mItem;
+        SelectableImageModel item;
         OnItemSelectedListener itemSelectedListener;
 
         public SelectableViewHolder(View view, OnItemSelectedListener listener) {
@@ -223,18 +223,18 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
             selectMultiPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mItem.isSelected()) {
+                    if (item.isSelected()) {
                         setChecked(false);
                     } else {
                         setChecked(true);
                     }
-                    itemSelectedListener.onItemSelected(mItem);
+                    itemSelectedListener.onItemSelected(item);
                 }
             });
         }
 
         public void setChecked(boolean value) {
-            mItem.setSelected(value);
+            item.setSelected(value);
         }
     }
 }
