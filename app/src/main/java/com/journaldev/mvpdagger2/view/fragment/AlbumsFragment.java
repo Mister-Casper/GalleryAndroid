@@ -83,6 +83,7 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.ItemClickL
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesGridActivity.class);
         intent.putParcelableArrayListExtra("image", getImages(position));
+        intent.putExtra("albumName",albums.get(position).getName());
         getContext().startActivity(intent);
     }
 
@@ -112,8 +113,8 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.ItemClickL
     }
 
     @Override
-    public void onUpdateAlbum(ArrayList<AlbumModel> updateUrls) {
-        this.albums = updateUrls;
-        albumsAdapter.setAlbums(updateUrls);
+    public void onUpdateAlbum(ArrayList<AlbumModel> updateAlbums) {
+        this.albums = updateAlbums;
+        albumsAdapter.setAlbums(updateAlbums);
     }
 }

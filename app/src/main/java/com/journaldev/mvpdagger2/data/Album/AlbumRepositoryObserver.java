@@ -8,6 +8,6 @@ import java.util.LinkedList;
 
 public interface AlbumRepositoryObserver {
 
-    void onUpdateAlbum(ArrayList<AlbumModel> updateUrls);
+    void onUpdateAlbum(ArrayList<AlbumModel> updateAlbums);
 
 }
