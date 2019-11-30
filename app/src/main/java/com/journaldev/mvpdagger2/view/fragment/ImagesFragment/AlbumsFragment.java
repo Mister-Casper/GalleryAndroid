@@ -5,14 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,23 +18,19 @@ import com.journaldev.mvpdagger2.data.Album.AlbumRepository;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.ImageModel;
+import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.utils.ImageUtils;
-import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
+import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseGridImagesFragment.createErrorAlertDialog;
-
-
-public class AlbumsFragment extends Fragment implements AlbumsAdapter.SelectableViewHolder.OnItemClickListener, AlbumsAdapter.SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver, PopupMenu.OnMenuItemClickListener, ImageUtils.alertDialogListener, MainActivity.OnBackPressedListener {
+public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdapter.SelectableViewHolder.OnItemClickListener, AlbumsAdapter.SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver {
 
     @BindView(R.id.field)
     RecyclerView field;
@@ -47,7 +38,7 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.Selectable
 
     private ArrayList<AlbumModel> albums;
     private AlbumsAdapter albumsAdapter;
-    private ArrayList<SelectableAlbumModel> selectedItems;
+    private ArrayList<Selectable> selectedItems;
 
     @BindView(R.id.exitButton)
     Button exitButton;
@@ -63,13 +54,6 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.Selectable
     Button showMenuButton;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        albums = AlbumRepository.getAllAlbum(getContext());
-        setAdapter();
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AlbumRepository.AlbumObserver.addImageUrlsRepositoryObserver(this);
@@ -81,7 +65,7 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.Selectable
         AlbumRepository.AlbumObserver.removeImageUrlsRepositoryObserver(this);
     }
 
-    private void setAdapter() {
+    private void initRecyclerView() {
         field.setLayoutManager(new GridLayoutManager(getContext(), 2));
         albumsAdapter = new AlbumsAdapter(getActivity().getApplicationContext(), albums);
         albumsAdapter.setSelectedItemClickListener(this);
@@ -95,6 +79,8 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.Selectable
 
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
+        albums = AlbumRepository.getAllAlbum(getContext());
+        initRecyclerView();
         return view;
     }
 
@@ -147,10 +133,6 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.Selectable
         }
     }
 
-    private void showStartInstrumentsMenu() {
-        selectablemenu.setVisibility(View.GONE);
-    }
-
     private void showSelectableInstrumentsMenu() {
         selectablemenu.setVisibility(View.VISIBLE);
         itemSelected.setText(Integer.toString(selectedItems.size()));
@@ -165,86 +147,34 @@ public class AlbumsFragment extends Fragment implements AlbumsAdapter.Selectable
     }
 
     @Override
-    public void deleteClick() {
-        selectedItems = albumsAdapter.getSelectedItems();
-        ImageUtils.deleteAlbums(getActivity().getContentResolver(), selectedItems);
-        showStartInstrumentsMenu();
-        removeSelectedItems();
-        albumsAdapter.setSelectable(false);
-    }
+    ArrayList<ImageModel> getImages() {
+        ArrayList<ImageModel> images = new ArrayList<>();
 
-    private void removeSelectedItems() {
-        for (int i = 0; i < selectedItems.size(); i++) {
-            albums.remove(selectedItems.get(i));
+        for(int i = 0 ; i < albums.size();i++){
+            images.addAll(albums.get(i).getImages());
         }
-        albumsAdapter.notifyDataSetChanged();
-    }
 
-    @OnClick(R.id.showMenuButton)
-    public void showMenuButtonClick(View view) {
-        PopupMenu popup = new PopupMenu(getContext(), view);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.selectable_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(this);
-        popup.show();
+        return images;
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.selectAll:
-                albumsAdapter.setItemsSelectable(true);
-                return true;
-            case R.id.offSelectAll:
-                albumsAdapter.setItemsSelectable(false);
-                return true;
-        }
-        return false;
+    ArrayList<Selectable> getSelectedItems() {
+        return selectedItems;
     }
 
     @Override
-    public void onBackPressed() {
-        if (albumsAdapter.isSelectable()) {
-            albumsAdapter.setSelectable(false);
-            showStartInstrumentsMenu();
-        } else
-            getActivity().finish();
+    void setSelectedItems(ArrayList<Selectable> selectedItems) {
+        this.selectedItems = selectedItems;
     }
 
-    @OnClick(R.id.shareButton)
-    public void shareButtonClick() {
-        ImageUtils.shareImages(getContext(), getAllFilePath(selectedItems));
+    @Override
+    public void showStartInstrumentsMenu() {
+        selectablemenu.setVisibility(View.GONE);
     }
 
-    private ArrayList<Uri> getAllFilePath(ArrayList<SelectableAlbumModel> selectedItems) {
-        ArrayList<Uri> files = new ArrayList<>();
-
-        for (int i = 0; i < selectedItems.size(); i++) {
-            ArrayList<ImageModel> images= selectedItems.get(i).getImages();
-            for (int q = 0; q < images.size(); q++) {
-                files.add(ImageUtils.getGlobalPath(getActivity().getApplicationContext(),
-                        images.get(q).getPhoto().toString()));
-            }
-        }
-
-        return files;
+    @Override
+    SelectableAdapter getAdapter() {
+        return albumsAdapter;
     }
 
-    @OnClick(R.id.deleteItemsSelected)
-    public void deleteItemsSelectedClick() {
-        AlertDialog.Builder dialog;
-
-        if (selectedItems.size() != 0) {
-            dialog = ImageUtils.createDeleteImageAlertDialog(
-                    getActivity()
-                    , "Вы действительно хотите удалить изображения?"
-                    , this);
-        } else {
-            dialog = createErrorAlertDialog(
-                    getActivity()
-                    , "Выберите изображения , которые хотите удалить");
-        }
-
-        dialog.show();
-    }
 }
