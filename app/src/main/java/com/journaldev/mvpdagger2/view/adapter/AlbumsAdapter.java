@@ -90,6 +90,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
         Uri firstImage = albums.get(position).getUri().get(0);
         String AlbumName = albums.get(position).getName();
         SelectableAlbumModel selectableItem = albums.get(position);
+        holder.item = selectableItem;
         settingSelectableMod(holder, selectableItem);
         showFirstImageInAlbum(holder, firstImage);
         setImageClickListener(holder, position, selectableItem);
