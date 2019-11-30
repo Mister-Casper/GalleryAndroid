@@ -88,7 +88,7 @@ public class ImageRepository {
 
         Context context;
 
-        public ImageObserver(Handler handler,Context context) {
+        ImageObserver(Handler handler, Context context) {
             super(handler);
             this.context = context;
         }
