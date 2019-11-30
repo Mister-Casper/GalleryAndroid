@@ -128,7 +128,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
             case R.id.info:
                 return viewFileInfoActivity();
             case R.id.wallpaper:
-                Uri imageUri = imageModels.get(pager.getCurrentItem()).getPhoto();
+                Uri imageUri = imageModels.get(pager.getCurrentItem()).getImage();
                 ImageUtils.Wallpaper(getApplicationContext(), ImageUtils.convertUriToBitmap(imageUri, this.getContentResolver()));
             default:
                 return super.onOptionsItemSelected(item);
@@ -138,7 +138,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     private Boolean viewFileInfoActivity() {
         hideNavigationBar();
         Intent intent = new Intent(this, FIleInformActivity.class);
-        Uri currentUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
+        Uri currentUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getImage();
         intent.putExtra("uri", currentUri.toString());
         startActivity(intent);
         if (AppPreferenceUtils.getIsAnim()) {
@@ -192,7 +192,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         String[] allFileName = new String[imageModels.size()];
 
         for (int i = 0; i < imageModels.size(); i++) {
-            allFileName[i] = getFileNameFromPath(imageModels.get(i).getPhoto().toString());
+            allFileName[i] = getFileNameFromPath(imageModels.get(i).getImage().toString());
         }
 
         return allFileName;
@@ -257,7 +257,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     }
 
     private void deleteImage() {
-        ImageUtils.deleteImage(getContentResolver(), imageModels.get(pager.getCurrentItem()).getPhoto());
+        ImageUtils.deleteImage(getContentResolver(), imageModels.get(pager.getCurrentItem()).getImage());
         int currentPosition = pager.getCurrentItem();
         imageModels.remove(currentPosition);
         viewPagerUpdate(currentPosition);
@@ -271,7 +271,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @OnClick(R.id.likeImage)
     public void clickLikeImage(View view) {
         changeLikeState(view);
-        Uri fileUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getPhoto();
+        Uri fileUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getImage();
         Boolean like = view.isSelected();
         ExifInterface exif;
         try {
@@ -314,7 +314,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @OnClick(R.id.shareButtonImage)
     public void shareButtonImageClick() {
         ArrayList<Uri> urls = new ArrayList<>();
-        Uri localUri = imageModels.get(pager.getCurrentItem()).getPhoto();
+        Uri localUri = imageModels.get(pager.getCurrentItem()).getImage();
         urls.add(ImageUtils.getGlobalPath(this, localUri.toString()));
         ImageUtils.shareImages(this, urls);
     }
