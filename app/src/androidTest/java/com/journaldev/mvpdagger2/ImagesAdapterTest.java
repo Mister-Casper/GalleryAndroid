@@ -191,8 +191,7 @@ public class ImagesAdapterTest {
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
 
-        onView(withId(R.id.exitButton)).
-                perform(click());
+        onView(allOf(isDisplayed(),withId(R.id.exitButton))).perform(click());
 
         assertFalse(imagesAdapter.isSelectable());
     }
