@@ -12,12 +12,16 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.journaldev.mvpdagger2.model.SelectableAlbumModel.convertAlbumsToStringArray;
+import static com.journaldev.mvpdagger2.model.SelectableImageModel.convertImagesToStringArray;
 
 public class ImageUtils {
 
@@ -27,7 +31,7 @@ public class ImageUtils {
     }
 
     public static void deleteImage(ContentResolver contentResolver, ArrayList<SelectableImageModel> uri) {
-        String[] uriStr = convertToStringArray(uri);
+        String[] uriStr = convertImagesToStringArray(uri);
 
         for (int i = 0; i < uriStr.length; i++) {
             contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -35,14 +39,13 @@ public class ImageUtils {
         }
     }
 
-    private static String[] convertToStringArray(ArrayList<SelectableImageModel> uri) {
-        String[] str = new String[uri.size()];
+    public static void deleteAlbums(ContentResolver contentResolver, ArrayList<SelectableAlbumModel> albums) {
+        String[] uriStr = convertAlbumsToStringArray(albums);
 
-        for (int i = 0; i < str.length; i++) {
-            str[i] = uri.get(i).getPhoto().toString();
+        for (int i = 0; i < uriStr.length; i++) {
+            contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uriStr[i]});
         }
-
-        return str;
     }
 
     public static AlertDialog.Builder createDeleteImageAlertDialog(final Context context, String message, final alertDialogListener listener) {
