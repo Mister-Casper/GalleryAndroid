@@ -3,7 +3,7 @@ package com.journaldev.mvpdagger2.model;
 
 public class SelectableImageModel extends ImageModel {
 
-    private boolean isSelected = false;
+    private boolean isSelected;
 
     public SelectableImageModel(ImageModel item, boolean isSelected) {
         super(item.getPhoto(),item.getLike());
