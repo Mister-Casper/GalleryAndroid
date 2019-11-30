@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
@@ -206,7 +205,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         }
 
         public interface OnItemSelectedListener {
-            void onItemSelected(Selectable item);
+            void onItemSelected(SelectableImageModel item);
         }
 
         CheckBox selectMultiPhoto;
