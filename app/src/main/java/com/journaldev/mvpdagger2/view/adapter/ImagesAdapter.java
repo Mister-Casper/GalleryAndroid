@@ -22,6 +22,8 @@ import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.journaldev.mvpdagger2.utils.ImageModelConverter.convertImageToSelectableImage;
+
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
@@ -64,14 +66,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     public void setImages(ArrayList<ImageModel> items){
         this.items = convertImageToSelectableImage(items);
         notifyDataSetChanged();
-    }
-
-    private ArrayList<SelectableImageModel> convertImageToSelectableImage(ArrayList<ImageModel> imageModels) {
-        ArrayList<SelectableImageModel> selectableImages = new ArrayList<>();
-        for (ImageModel item : imageModels) {
-            selectableImages.add(new SelectableImageModel(item, false));
-        }
-        return selectableImages;
     }
 
     @Override
