@@ -27,7 +27,7 @@ public class ImageModel implements Parcelable {
         }
     };
 
-    public Uri getPhoto() {
+    public Uri getImage() {
         return photo;
     }
 
