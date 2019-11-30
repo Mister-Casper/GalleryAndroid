@@ -92,7 +92,8 @@ public class BaseGridImagesFragment extends Fragment implements ImagesAdapter.Se
     }
 
     private void initRecyclerView() {
-        adapter = new ImagesAdapter(getActivity().getApplicationContext(),images, this);
+        adapter = new ImagesAdapter(getActivity().getApplicationContext(),images);
+        adapter.setSelectedItemClickListener(this);
         adapter.setClickListener(this);
         DataList.setAdapter(adapter);
         DataList.setLayoutManager(new GridLayoutManager(getContext(), 4));
