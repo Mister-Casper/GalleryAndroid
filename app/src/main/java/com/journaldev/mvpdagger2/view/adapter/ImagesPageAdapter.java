@@ -25,7 +25,6 @@ import com.journaldev.mvpdagger2.utils.GlideUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
@@ -68,7 +67,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.zoomimage, container, false);
         final ImageViewTouch imageView = itemView.findViewById(R.id.picture);
-        Uri uri = getCorrectUri(imageModelUri.get(position).getPhoto());
+        Uri uri = getCorrectUri(imageModelUri.get(position).getImage());
         setTransitionName(position, imageView);
         showImage(uri, position, imageView);
         container.addView(itemView);
