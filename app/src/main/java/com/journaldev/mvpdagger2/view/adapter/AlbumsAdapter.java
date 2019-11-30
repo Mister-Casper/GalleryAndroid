@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.journaldev.mvpdagger2.model.ImageModel;
+import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.AlbumModel;
@@ -24,7 +23,9 @@ import com.journaldev.mvpdagger2.utils.GlideUtils;
 import java.io.File;
 import java.util.ArrayList;
 
-public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SelectableViewHolder> {
+import static com.journaldev.mvpdagger2.utils.AlbumModelConverter.convertAlbumsToSelectableAlbums;
+
+public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SelectableViewHolder> implements SelectableAdapter {
 
     private SelectableViewHolder.OnItemClickListener itemClickListener;
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
@@ -50,8 +51,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
         notifyDataSetChanged();
     }
 
-    public ArrayList<SelectableAlbumModel> getSelectedItems() {
-        ArrayList<SelectableAlbumModel> selectedItems = new ArrayList<>();
+    public ArrayList<Selectable> getSelectedItems() {
+        ArrayList<Selectable> selectedItems = new ArrayList<>();
         for (SelectableAlbumModel item : albums) {
             if (item.isSelected()) {
                 selectedItems.add(item);
@@ -81,19 +82,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
         notifyDataSetChanged();
     }
 
-    private ArrayList<SelectableAlbumModel> convertAlbumsToSelectableAlbums(ArrayList<AlbumModel> albums) {
-        ArrayList<SelectableAlbumModel> selectableImages = new ArrayList<>();
-        for (AlbumModel item : albums) {
-            selectableImages.add(new SelectableAlbumModel(item, false));
-        }
-        return selectableImages;
-    }
-
     @Override
-    @NonNull
     public SelectableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.albumitem, parent, false);
-        return new SelectableViewHolder(view,selectedItemClickListener);
+        return new SelectableViewHolder(view, selectedItemClickListener);
     }
 
     @Override
@@ -101,10 +93,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
         Uri firstImage = albums.get(position).getUri().get(0);
         String AlbumName = albums.get(position).getName();
         SelectableAlbumModel selectableItem = albums.get(position);
-        holder.item = selectableItem;
-        settingSelectableMod(holder, selectableItem);
         showFirstImageInAlbum(holder, firstImage);
         setImageClickListener(holder, position, selectableItem);
+        holder.item = selectableItem;
+        holder.setChecked(holder.item.isSelected());
+        settingSelectableMod(holder, selectableItem);
         holder.albumName.setText(AlbumName);
     }
 
@@ -112,8 +105,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
         if (isSelectable) {
             holder.selectMultiPhoto.setChecked(selectableItem.isSelected());
             holder.selectMultiPhoto.setVisibility(View.VISIBLE);
-        } else
+        } else {
+            holder.selectMultiPhoto.setChecked(false);
             holder.selectMultiPhoto.setVisibility(View.GONE);
+        }
     }
 
     private void showFirstImageInAlbum(SelectableViewHolder holder, Uri firstImage) {
@@ -165,7 +160,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
     }
 
     private void checkedCheckBox(AlbumsAdapter.SelectableViewHolder holder, SelectableAlbumModel selectableItem) {
-        holder.selectMultiPhoto.setChecked(!holder.selectMultiPhoto.isChecked());
+        boolean checked = !holder.selectMultiPhoto.isChecked();
+        holder.selectMultiPhoto.setChecked(checked);
         holder.setChecked(holder.selectMultiPhoto.isChecked());
         onItemSelected(selectableItem);
         selectedItemClickListener.onItemSelected(selectableItem);
@@ -181,7 +177,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
     }
 
 
-    public static class SelectableViewHolder extends RecyclerView.ViewHolder{
+    public static class SelectableViewHolder extends RecyclerView.ViewHolder {
         public interface OnItemClickListener {
             void onItemClick(View view, int position);
         }
@@ -205,11 +201,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
             selectMultiPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (item.isSelected()) {
-                        setChecked(false);
-                    } else {
-                        setChecked(true);
-                    }
+                    setChecked(!item.isSelected());
                     itemSelectedListener.onItemSelected(item);
                 }
             });
