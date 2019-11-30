@@ -20,6 +20,7 @@ import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
+import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;

@@ -37,10 +37,6 @@
         </activity>
         <activity android:name=".view.activity.FIleInformActivity" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="53212b6aa05ef823638a5f63a1394d263a19d545" />
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.journaldev.mvpdagger2.provider"
@@ -51,10 +47,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
     </application>
+
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

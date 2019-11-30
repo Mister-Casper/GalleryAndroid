@@ -9,9 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
@@ -22,7 +19,6 @@ import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.GridImagesFragment
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadActivity() {
-        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
+        //Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         viewpager.setAdapter(loadAdapter());

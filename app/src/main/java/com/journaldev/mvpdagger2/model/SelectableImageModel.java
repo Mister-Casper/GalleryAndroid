@@ -21,13 +21,16 @@ public class SelectableImageModel extends ImageModel implements Selectable {
     }
 
     public static String[] convertImagesToStringArray(ArrayList<Selectable> uri) {
-        String[] str = new String[uri.size()];
+        ArrayList<String> str = new ArrayList<>();
 
-        for (int i = 0; i < str.length; i++) {
-            str[i] = uri.get(i).getImages().get(0).toString();
+        for (int i = 0; i < uri.size(); i++) {
+            ArrayList<ImageModel> images = uri.get(i).getImages();
+            for (int q = 0; q < images.size(); q++)
+                str.add(images.get(q).getImage().toString());
         }
 
-        return str;
+        String[] strUri = new String[str.size()];
+        return str.toArray(strUri);
     }
 
     @Override
