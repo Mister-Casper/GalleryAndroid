@@ -28,7 +28,7 @@ import static com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableVie
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
     private boolean isSelectable = false;
-    
+
     private ArrayList<SelectableImageModel> items;
     private LayoutInflater mInflater;
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
@@ -36,6 +36,13 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
 
     public boolean isSelectable() {
         return isSelectable;
+    }
+
+    public void setSelectable(boolean value) {
+        if (value)
+            setItemsSelectable(false);
+        isSelectable = value;
+        notifyDataSetChanged();
     }
 
     public void removeItem(int position) {
@@ -162,14 +169,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     private void setTransitionName(SelectableViewHolder holder, int position) {
         String name = holder.image.getContext().getString(R.string.transition_name, position);
         holder.image.setTransitionName(name);
-    }
-
-
-    public void setSelectable(boolean value) {
-        if (value)
-            setItemsSelectable(false);
-        isSelectable = value;
-        notifyDataSetChanged();
     }
 
     public void setItemsSelectable(boolean selectable) {
