@@ -1,6 +1,5 @@
-package com.journaldev.mvpdagger2.view.fragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
@@ -38,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.journaldev.mvpdagger2.view.fragment.BaseGridImagesFragment.createErrorAlertDialog;
+import static com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseGridImagesFragment.createErrorAlertDialog;
 
 
 public class AlbumsFragment extends Fragment implements AlbumsAdapter.SelectableViewHolder.OnItemClickListener, AlbumsAdapter.SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver, PopupMenu.OnMenuItemClickListener, ImageUtils.alertDialogListener, MainActivity.OnBackPressedListener {

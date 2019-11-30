@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
-import com.journaldev.mvpdagger2.view.fragment.GridAlbumImagesFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.GridAlbumImagesFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

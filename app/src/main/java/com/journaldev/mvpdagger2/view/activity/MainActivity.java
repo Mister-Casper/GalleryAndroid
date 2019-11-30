@@ -17,6 +17,8 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.AlbumsFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.GridImagesFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,10 +1,11 @@
-package com.journaldev.mvpdagger2.view.fragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.data.Image.ImageRepositoryObserver;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseGridImagesFragment;
 
 import java.util.ArrayList;
 

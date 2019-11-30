@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
