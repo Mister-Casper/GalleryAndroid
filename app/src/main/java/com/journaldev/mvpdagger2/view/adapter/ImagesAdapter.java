@@ -22,9 +22,6 @@ import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableViewHolder.MULTI_SELECTION;
-
-
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
     private boolean isSelectable = false;
@@ -106,11 +103,11 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
     }
 
     private void setImageClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
-        imageOnClickListener(holder, position, selectableItem);
-        imageLongClickListener(holder, selectableItem);
+        setImageOnClickListener(holder, position, selectableItem);
+        setImageLongClickListener(holder, selectableItem);
     }
 
-    private void imageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
+    private void setImageOnClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +120,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         });
     }
 
-    private void imageLongClickListener(final SelectableViewHolder holder, final SelectableImageModel selectableItem) {
+    private void setImageLongClickListener(final SelectableViewHolder holder, final SelectableImageModel selectableItem) {
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -191,10 +188,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         return selectedItems;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-            return MULTI_SELECTION;
-    }
 
     @Override
     public int getItemCount() {
@@ -214,10 +207,9 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
             void onItemSelected(SelectableImageModel item);
         }
 
-        public static final int MULTI_SELECTION = 2;
-        public static final int SINGLE_SELECTION = 1;
+
         CheckBox selectMultiPhoto;
-        public SquareImageView image;
+        SquareImageView image;
         ImageView like;
         SelectableImageModel mItem;
         OnItemSelectedListener itemSelectedListener;
@@ -231,7 +223,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
             selectMultiPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mItem.isSelected() && getItemViewType() == MULTI_SELECTION) {
+                    if (mItem.isSelected()) {
                         setChecked(false);
                     } else {
                         setChecked(true);
