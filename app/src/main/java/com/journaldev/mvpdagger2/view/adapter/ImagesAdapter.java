@@ -214,7 +214,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         SelectableImageModel item;
         OnItemSelectedListener itemSelectedListener;
 
-        public SelectableViewHolder(View view, OnItemSelectedListener listener) {
+        SelectableViewHolder(View view, OnItemSelectedListener listener) {
             super(view);
             itemSelectedListener = listener;
             image = itemView.findViewById(R.id.picture);
