@@ -21,9 +21,19 @@ public class AlbumModel {
         return like;
     }
 
-    public void setLike(int position , Boolean like) {
+    public void setLike(int position, Boolean like) {
         if (like != null && this.like.size() > position)
-            this.like.set(position,like.toString());
+            this.like.set(position, like.toString());
+    }
+
+    public ArrayList<ImageModel> getImages() {
+        ArrayList<ImageModel> images = new ArrayList<>();
+
+        for (int i = 0; i < uri.size(); i++) {
+            images.add(new ImageModel(uri.get(i), Boolean.parseBoolean(like.get(i))));
+        }
+
+        return images;
     }
 
     public AlbumModel(String name, ArrayList<Uri> uri, ArrayList<String> like) {
