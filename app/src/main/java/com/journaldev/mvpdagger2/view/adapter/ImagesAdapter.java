@@ -27,8 +27,9 @@ import static com.journaldev.mvpdagger2.view.adapter.ImagesAdapter.SelectableVie
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> {
 
+    private boolean isSelectable = false;
+    
     private ArrayList<SelectableImageModel> items;
-    private boolean isMultiSelectionEnabled = true;
     private LayoutInflater mInflater;
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
     private SelectableViewHolder.OnItemClickListener itemClickListener;
@@ -42,7 +43,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         notifyItemRemoved(position);
     }
 
-    private boolean isSelectable = false;
 
     public ImagesAdapter(Context context, ArrayList<ImageModel> items, SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
         this.mInflater = LayoutInflater.from(context);
@@ -194,11 +194,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
 
     @Override
     public int getItemViewType(int position) {
-        if (isMultiSelectionEnabled) {
             return MULTI_SELECTION;
-        } else {
-            return SelectableViewHolder.SINGLE_SELECTION;
-        }
     }
 
     @Override
