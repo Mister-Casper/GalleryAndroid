@@ -12,6 +12,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
 
@@ -30,7 +31,7 @@ public class ImageUtils {
                 MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.toString()});
     }
 
-    public static void deleteImage(ContentResolver contentResolver, ArrayList<SelectableImageModel> uri) {
+    public static void deleteImage(ContentResolver contentResolver, ArrayList<Selectable> uri) {
         String[] uriStr = convertImagesToStringArray(uri);
 
         for (int i = 0; i < uriStr.length; i++) {
@@ -39,7 +40,7 @@ public class ImageUtils {
         }
     }
 
-    public static void deleteAlbums(ContentResolver contentResolver, ArrayList<SelectableAlbumModel> albums) {
+    public static void deleteAlbums(ContentResolver contentResolver, ArrayList<Selectable> albums) {
         String[] uriStr = convertAlbumsToStringArray(albums);
 
         for (int i = 0; i < uriStr.length; i++) {
