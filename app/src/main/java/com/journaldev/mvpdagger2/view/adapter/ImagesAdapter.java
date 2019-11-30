@@ -90,7 +90,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         Uri uri = Uri.fromFile(file);
         buttonLikeVisibility(holder, position);
         viewImage(holder, uri);
-        imageClickListener(holder, position, selectableItem);
+        setImageClickListener(holder, position, selectableItem);
         holder.mItem = selectableItem;
         holder.setChecked(holder.mItem.isSelected());
         settingSelectableMod(holder, selectableItem);
@@ -105,7 +105,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
             holder.selectMultiPhoto.setVisibility(View.GONE);
     }
 
-    private void imageClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
+    private void setImageClickListener(final SelectableViewHolder holder, final int position, final SelectableImageModel selectableItem) {
         imageOnClickListener(holder, position, selectableItem);
         imageLongClickListener(holder, selectableItem);
     }
