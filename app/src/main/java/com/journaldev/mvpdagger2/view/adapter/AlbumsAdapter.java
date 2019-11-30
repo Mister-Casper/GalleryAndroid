@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
@@ -47,6 +48,16 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
             setItemsSelectable(false);
         isSelectable = value;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<SelectableAlbumModel> getSelectedItems() {
+        ArrayList<SelectableAlbumModel> selectedItems = new ArrayList<>();
+        for (SelectableAlbumModel item : albums) {
+            if (item.isSelected()) {
+                selectedItems.add(item);
+            }
+        }
+        return selectedItems;
     }
 
     public void setItemsSelectable(boolean selectable) {
