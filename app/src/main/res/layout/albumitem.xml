@@ -2,11 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="1dp"
     android:paddingLeft="5dp"
-    android:paddingTop="5dp"
     android:paddingRight="5dp"
-    android:paddingBottom="5dp">
+    android:paddingBottom="10dp">
 
     <com.journaldev.mvpdagger2.view.customView.SquareImageView
         android:id="@+id/picture"
