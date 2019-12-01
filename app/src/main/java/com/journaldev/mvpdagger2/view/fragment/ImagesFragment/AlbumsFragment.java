@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,7 +21,6 @@ import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
@@ -176,6 +176,22 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
     @Override
     SelectableAdapter getAdapter() {
         return albumsAdapter;
+    }
+
+    @Override
+    int getMenu() {
+        return R.menu.album_selectable_menu;
+    }
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.combineAlbums:
+
+                return true;
+        }
+        return super.onMenuItemClick(item);
     }
 
 }

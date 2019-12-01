@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.utils;
+package com.journaldev.mvpdagger2.model.Converter;
 
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;

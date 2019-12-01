@@ -9,6 +9,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -144,5 +145,9 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
         return adapter;
     }
 
+    @Override
+    int getMenu() {
+        return R.menu.image_selectable_menu;
+    }
 }
 

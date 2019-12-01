@@ -23,7 +23,7 @@ import com.journaldev.mvpdagger2.view.customView.SquareImageView;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.utils.ImageModelConverter.convertImageToSelectableImage;
+import static com.journaldev.mvpdagger2.model.Converter.ImageModelConverter.convertImageToSelectableImage;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.SelectableViewHolder> implements SelectableAdapter {
 

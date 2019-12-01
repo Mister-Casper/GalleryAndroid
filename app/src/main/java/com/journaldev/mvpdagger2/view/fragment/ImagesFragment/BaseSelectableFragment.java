@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 import butterknife.OnClick;
 
-abstract public class BaseSelectableFragment extends Fragment implements  MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener{
+abstract public class BaseSelectableFragment extends Fragment implements MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
 
     @OnClick(R.id.showMenuButton)
     public void showMenuButtonClick(View view) {
         PopupMenu popup = new PopupMenu(getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.selectable_menu, popup.getMenu());
+        inflater.inflate(getMenu(), popup.getMenu());
         popup.setOnMenuItemClickListener(this);
         popup.show();
     }
@@ -86,7 +86,7 @@ abstract public class BaseSelectableFragment extends Fragment implements  MainAc
 
         for (int i = 0; i < selectedItems.size(); i++) {
             ArrayList<ImageModel> images = selectedItems.get(i).getImages();
-            for(int q = 0 ; q < images.size();q++) {
+            for (int q = 0; q < images.size(); q++) {
                 Uri imageUri = images.get(q).getImage();
                 files.add(ImageUtils.getGlobalPath(getContext(), imageUri.toString()));
             }
@@ -124,5 +124,6 @@ abstract public class BaseSelectableFragment extends Fragment implements  MainAc
     abstract void setSelectedItems(ArrayList<Selectable> selectedItems);
     abstract void showStartInstrumentsMenu();
     abstract SelectableAdapter getAdapter();
+    abstract int getMenu();
 
 }

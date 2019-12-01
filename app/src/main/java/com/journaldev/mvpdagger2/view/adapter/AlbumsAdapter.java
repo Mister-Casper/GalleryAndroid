@@ -23,7 +23,7 @@ import com.journaldev.mvpdagger2.utils.GlideUtils;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.utils.AlbumModelConverter.convertAlbumsToSelectableAlbums;
+import static com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter.convertAlbumsToSelectableAlbums;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SelectableViewHolder> implements SelectableAdapter {
 
