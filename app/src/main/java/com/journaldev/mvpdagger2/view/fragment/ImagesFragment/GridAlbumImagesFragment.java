@@ -1,5 +1,6 @@
 package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -42,6 +43,6 @@ public class GridAlbumImagesFragment extends BaseGridImagesFragment implements A
                 return albumModel;
         }
 
-        return new AlbumModel(null,null,null);
+        return new AlbumModel("",new ArrayList<Uri>(),new ArrayList<String>());
     }
 }

@@ -62,7 +62,7 @@ public class AlbumRepository {
             int bucketColumn = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
             int dateColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
 
-            for (int i = cursor.getCount() - 1; i >= 1; i--) {
+            for (int i = cursor.getCount()-1; i >= 0; i--) {
                 cursor.moveToPosition(i);
                 String albumName = cursor.getString(bucketColumn);
                 String albumUri = cursor.getString(dateColumn);
