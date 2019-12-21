@@ -11,11 +11,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
-
 import com.journaldev.mvpdagger2.model.Selectable;
-import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.model.SelectableImageModel;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,6 +99,16 @@ public class ImageUtils {
         }
 
         return bitmap;
+    }
+
+    public static String getFileName(Uri uri) {
+        String result;
+        result = uri.getPath();
+        int cut = result.lastIndexOf('/');
+        if (cut != -1) {
+            result = result.substring(cut + 1);
+        }
+        return result;
     }
 
     public interface alertDialogListener {
