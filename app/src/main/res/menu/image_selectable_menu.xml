@@ -8,4 +8,7 @@
     <item
         android:id="@+id/offSelectAll"
         android:title="Очистить выделение" />
+    <item
+        android:id="@+id/createAlbum"
+        android:title="Создать альбом" />
 </menu>
