@@ -110,7 +110,7 @@ public class CreateAlbumHelper {
 
         private void addImageToFolder(Context context, Uri image, String folderPath) throws IOException {
             Bitmap imageBitmap = getBitmapFromUri(context, image);
-            File imageFile = getFileFromBitmap(imageBitmap, folderPath, ImageUtils.getFileName(context, image));
+            File imageFile = getFileFromBitmap(imageBitmap, folderPath, ImageUtils.getFileName(image));
             if (!imageFile.getPath().equals(image.toString())) {
                 imageFile.createNewFile();
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
