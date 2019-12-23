@@ -140,6 +140,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
 
         options = options.sizeMultiplier(0.75f);
         options = options.centerCrop();
+        options = options.fitCenter();
         options = options.placeholder(R.drawable.placeholder);
 
         if (!AppPreferenceUtils.getIsCache())
