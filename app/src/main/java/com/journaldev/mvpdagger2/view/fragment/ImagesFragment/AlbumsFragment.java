@@ -68,7 +68,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
 
     private void initRecyclerView() {
         field.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        albumsAdapter = new AlbumsAdapter(getActivity().getApplicationContext(), albums);
+        albumsAdapter = new AlbumsAdapter(getContext().getApplicationContext(), albums);
         albumsAdapter.setSelectedItemClickListener(this);
         albumsAdapter.setClickListener(this);
         field.setAdapter(albumsAdapter);
@@ -80,7 +80,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
 
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
-        albums = AlbumRepository.getAllAlbum(getContext());
+        albums = AlbumRepository.getAllAlbum(getActivity());
         initRecyclerView();
         return view;
     }

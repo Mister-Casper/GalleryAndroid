@@ -111,7 +111,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         ArrayList<ImageModel> uri = getIntent().getParcelableArrayListExtra("uri");
 
         if (uri == null)
-            uri = ImageRepository.getUrls(getApplicationContext());
+            uri = ImageRepository.getUrls(this);
 
         return uri;
     }

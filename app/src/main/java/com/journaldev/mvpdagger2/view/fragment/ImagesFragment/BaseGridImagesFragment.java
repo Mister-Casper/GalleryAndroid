@@ -3,6 +3,7 @@ package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -14,19 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -62,7 +61,7 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
             images = getArguments().getParcelableArrayList("image");
 
         if (images == null) {
-            images = ImageRepository.getUrls(getContext());
+            images = ImageRepository.getUrls(getActivity());
         }
     }
 
@@ -80,8 +79,8 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
         itemSelected.setText(Integer.toString(selectedItems.size()));
     }
 
-    private void initRecyclerView() {
-        adapter = new ImagesAdapter(getActivity().getApplicationContext(), images);
+    protected void initRecyclerView() {
+        adapter = new ImagesAdapter(getContext(), images);
         adapter.setSelectedItemClickListener(this);
         adapter.setClickListener(this);
         DataList.setAdapter(adapter);
@@ -148,6 +147,20 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
     @Override
     int getMenu() {
         return R.menu.image_selectable_menu;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.createAlbum:
+                ArrayList<Uri> images = Selectable.getAll(selectedItems);
+                CreateAlbumHelper createAlbumHelper = new CreateAlbumHelper();
+                createAlbumHelper.createImageFolder(getContext(),images,"trer");
+                showStartInstrumentsMenu();
+                getAdapter().setSelectable(false);
+                return true;
+        }
+        return super.onMenuItemClick(item);
     }
 }
 
