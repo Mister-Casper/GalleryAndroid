@@ -36,15 +36,6 @@ public class ImageUtils {
         }
     }
 
-    public static void deleteAlbums(ContentResolver contentResolver, ArrayList<Selectable> albums) {
-        String[] uriStr = convertAlbumsToStringArray(albums);
-
-        for (int i = 0; i < uriStr.length; i++) {
-            contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uriStr[i]});
-        }
-    }
-
     public static AlertDialog.Builder createDeleteImageAlertDialog(final Context context, String message, final alertDialogListener listener) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setMessage(message);
