@@ -3,42 +3,41 @@ package com.journaldev.mvpdagger2.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.R;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.utils.ImageUtils.getGlobalPath;
+import static com.journaldev.mvpdagger2.utils.ImageUtils.getFileName;
 
 public class CreateAlbumHelper {
 
-    ProgressBar statusCreateFolder;
-    AlertDialog alertDialog;
+    private ProgressBar statusCreateFolder;
+    private TextView textStatus;
+    private AlertDialog alertDialog;
 
-    public void createImageFolder(Activity context, ArrayList<Uri> images, String folderName) {
+    public void createImageFolder(Context context, ArrayList<Uri> images, String folderName) {
         File dataDir = createFolder(folderName);
         alertDialog = onCreateDialog(context);
         statusCreateFolder = alertDialog.findViewById(R.id.statusCreateFolder);
+        textStatus = alertDialog.findViewById(R.id.countMove);
         TransferImages transferImages = new TransferImages();
         transferImages.execute(new TransferImagesParameters(images, context, dataDir.getPath()));
     }
 
-    private AlertDialog onCreateDialog(Activity context) {
+    private AlertDialog onCreateDialog(Context context) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        alertDialog.setTitle("Создание нового альбома");
-        LayoutInflater inflater = context.getLayoutInflater();
+        alertDialog.setCancelable(false);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.create_folder_status_dialog, null);
         alertDialog.setView(dialogView);
         return alertDialog.show();
@@ -54,72 +53,92 @@ public class CreateAlbumHelper {
         return dataDir;
     }
 
+    private class TransferImages extends AsyncTask<TransferImagesParameters, String, Void> {
+        Double progress = 0.;
 
-    private File getFileFromBitmap(Bitmap image, String folderPath, String imageName) throws IOException {
-        Bitmap bitmap = image;
-        File file = new File(folderPath + "/" + imageName);
-        FileOutputStream fOut = new FileOutputStream(file);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-        fOut.flush();
-        fOut.close();
-        return file;
-    }
+        int countImageMove = 0;
+        int countImageSync = 0;
 
-    private Bitmap getBitmapFromUri(Context context, Uri uriImage) throws IOException {
-        Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), getGlobalPath(context, uriImage.getPath()));
-        return imageBitmap;
-    }
+        int countAllImage;
+        int countAllImageSync;
 
+        Context context;
 
-    private class TransferImages extends AsyncTask<TransferImagesParameters, Double, Void> {
+        ArrayList<String> pathArray = new ArrayList<>();
 
-        double progress = 0;
+        String folderPath;
+        ArrayList<Uri> images;
+
+        double stepMoveProgress;
+        double stepSyncProgress;
 
         @Override
-        protected Void doInBackground(TransferImagesParameters... transferImagesParameters) {
-            TransferImagesParameters parameters = transferImagesParameters[0];
-            ArrayList<Uri> images = parameters.images;
-            Context context = parameters.context;
-            String folderPath = parameters.folderPath;
-            double stepProgress = 100 / images.size();
-
-            try {
-                for (int i = 0; i < images.size(); i++) {
-                    progress += stepProgress;
-                    publishProgress(progress);
-                    addImageToFolder(context, images.get(i), folderPath);
-                }
-            } catch (IOException e) {
-                return null;
-            }
-
-            return null;
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
 
         @Override
-        protected void onProgressUpdate(Double... values) {
+        protected Void doInBackground(TransferImagesParameters... transferImagesParameters) {
+            loadParameters(transferImagesParameters);
+            moveImage();
+            syncImage();
+            return null;
+        }
+
+        private void loadParameters(TransferImagesParameters... transferImagesParameters) {
+            TransferImagesParameters parameters = transferImagesParameters[0];
+            images = parameters.images;
+            context = parameters.context;
+            folderPath = parameters.folderPath;
+            countAllImage = images.size();
+            countAllImageSync = countAllImage * 2;
+            stepMoveProgress = 20. / countAllImage;
+            stepSyncProgress = 80. / countAllImageSync;
+        }
+
+        private void moveImage() {
+            for (int i = 0; i < images.size(); i++) {
+                moveImageToNewFolder(images.get(i), folderPath);
+                progress += stepMoveProgress;
+                countImageMove++;
+                publishProgress(progress.toString(), "Перемещено изображений : " + countImageMove + " / " + countAllImage);
+            }
+        }
+
+        private void syncImage() {
+            MediaScannerConnection.scanFile(context, pathArray.toArray(new String[pathArray.size()]), null, (path, uri) ->
+            {
+                if (path.equals(pathArray.get(pathArray.size() - 1))) {
+                    alertDialog.cancel();
+                }
+                progress += stepSyncProgress;
+                countImageSync++;
+                publishProgress(progress.toString(), "Синхранизировано изображений : " + countImageSync + " / " + countAllImageSync);
+            });
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            statusCreateFolder.setProgress(Double.valueOf(values[0]).intValue());
+            textStatus.setText(values[1]);
             super.onProgressUpdate(values);
-            statusCreateFolder.setProgress(values[0].intValue());
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            alertDialog.cancel();
         }
 
-        private void addImageToFolder(Context context, Uri image, String folderPath) throws IOException {
-            Bitmap imageBitmap = getBitmapFromUri(context, image);
-            File imageFile = getFileFromBitmap(imageBitmap, folderPath, ImageUtils.getFileName(image));
-            if (!imageFile.getPath().equals(image.toString())) {
-                imageFile.createNewFile();
-                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                intent.setData(Uri.fromFile(imageFile));
-                context.sendBroadcast(intent);
-                ImageUtils.deleteImage(context.getContentResolver(), image);
+        private void moveImageToNewFolder(Uri image, String folderPath) {
+            if (image != null) {
+                File imageFile = new File(image.getPath());
+                File newImageView = new File(folderPath + File.separator + getFileName(image));
+                imageFile.renameTo(newImageView);
+
+                pathArray.add(imageFile.getPath());
+                pathArray.add(newImageView.getPath());
             }
         }
-
     }
 
     private static class TransferImagesParameters {
