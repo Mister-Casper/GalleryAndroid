@@ -1,5 +1,6 @@
 package com.journaldev.mvpdagger2.data.Album;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -17,6 +18,8 @@ import com.journaldev.mvpdagger2.model.AlbumModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class AlbumRepository {
@@ -28,27 +31,27 @@ public class AlbumRepository {
             MediaStore.Images.Media.DATA,
     };
 
-    public static ArrayList<AlbumModel> getAllAlbum(Context context) {
+    public static ArrayList<AlbumModel> getAllAlbum(Activity context) {
         if (imageAlbums == null) {
             readAlbums(context);
         }
         return imageAlbums;
     }
 
-    private static void readAlbums(Context context) {
+    private static void readAlbums(Activity context) {
         Cursor cursor = getCursor(context);
         readAlbumsFromCursor(cursor);
 
         registerContentObserver(context);
     }
 
-    private static Cursor getCursor(Context context) {
+    private static Cursor getCursor(Activity context) {
         return context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, PROJECTION_BUCKET,
                 null, null, null);
     }
 
-    private static void registerContentObserver(Context context) {
+    private static void registerContentObserver(Activity context) {
         Handler handler = new Handler(Looper.getMainLooper());
 
         context.getContentResolver().registerContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -123,9 +126,9 @@ public class AlbumRepository {
             observers.remove(repositoryObserver);
         }
 
-        Context context;
+        Activity context;
 
-        public AlbumObserver(Handler handler,Context context) {
+        public AlbumObserver(Handler handler,Activity context) {
             super(handler);
             this.context = context;
         }
@@ -138,11 +141,34 @@ public class AlbumRepository {
         @Override
         public void onChange(boolean arg0) {
             super.onChange(arg0);
-            Cursor cursor = getCursor(context);
-            readAlbumsFromCursor(cursor);
-            for (int i = 0; i < observers.size(); i++) {
-                observers.get(i).onUpdateAlbum(imageAlbums);
+            sendDelayAction();
+        }
+
+        private Timer waitingTimer;
+
+        private void sendDelayAction() {
+
+            if (waitingTimer != null) {
+                waitingTimer.cancel();
+                waitingTimer = null;
             }
+
+            waitingTimer = new Timer();
+
+            final TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    context.runOnUiThread(() -> {
+                        Cursor cursor = getCursor(context);
+                        readAlbumsFromCursor(cursor);
+                        for (int i = 0; i < observers.size(); i++) {
+                            observers.get(i).onUpdateAlbum(imageAlbums);
+                        }
+                    });
+                }
+            };
+
+            waitingTimer.schedule(timerTask, 250);
         }
     }
 }
