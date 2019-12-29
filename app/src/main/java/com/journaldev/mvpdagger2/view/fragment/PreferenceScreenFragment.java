@@ -43,9 +43,9 @@ public class PreferenceScreenFragment extends PreferenceFragmentCompat {
     public static void changeToTheme(Activity activity) {
         activity.finish();
         Intent intent = new Intent(activity, activity.getClass());
-        intent.putExtra("isOptionsChandge", true);
+        intent.putExtra("isOptionsChange", true);
         activity.startActivity(intent);
-        activity.overridePendingTransition(android.R.anim.fade_in,
+        activity.overridePendingTransition(android.R.anim.fade_in,  
                 android.R.anim.fade_out);
     }
 
