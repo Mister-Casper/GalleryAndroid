@@ -10,5 +10,5 @@
         android:title="Очистить выделение" />
     <item
         android:id="@+id/createAlbum"
-        android:title="Создать альбом" />
+        android:title="Объединить в один альбом" />
 </menu>

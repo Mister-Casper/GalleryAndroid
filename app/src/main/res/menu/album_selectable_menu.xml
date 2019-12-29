@@ -9,6 +9,6 @@
         android:id="@+id/offSelectAll"
         android:title="Очистить выделение" />
     <item
-            android:id="@+id/combineAlbums"
-        android:title="Объединить альбомы" />
+        android:id="@+id/createAlbum"
+        android:title="Объединить в один альбом" />
 </menu>
