@@ -13,8 +13,8 @@
         android:id="@+id/darkTheme"
         android:key="isDarkTheme"
         android:title="Темная тема"
-        android:summary="Вы можете включить темную тему"
-        android:defaultValue="false"/>
+        android:summary="Вы можете выбрать тему"
+        android:defaultValue="true"/>
 
     <SwitchPreference
         android:id="@+id/cache"
