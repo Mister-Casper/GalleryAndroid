@@ -12,7 +12,9 @@ import android.view.View;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
+import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
 import com.journaldev.mvpdagger2.utils.ImageUtils;
+import com.journaldev.mvpdagger2.view.Utils.DialogsUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 
 import butterknife.OnClick;
 
-abstract public class BaseSelectableFragment extends Fragment implements MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener {
+abstract public class BaseSelectableFragment extends Fragment implements MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener, DialogsUtils.DialogsListener {
 
     @OnClick(R.id.showMenuButton)
     public void showMenuButtonClick(View view) {
@@ -39,6 +41,9 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
                 return true;
             case R.id.offSelectAll:
                 getAdapter().setItemsSelectable(false);
+                return true;
+            case R.id.createAlbum:
+                DialogsUtils.showAlbumNameDialog(getContext(), "Название альбома", this);
                 return true;
         }
         return false;
@@ -119,11 +124,25 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
         dialog.show();
     }
 
+    @Override
+    public void createAlbum(String albumName) {
+        ArrayList<Uri> images = Selectable.getAll(getSelectedItems());
+        CreateAlbumHelper createAlbumHelper = new CreateAlbumHelper();
+        createAlbumHelper.createImageFolder(getContext(),images,albumName);
+        showStartInstrumentsMenu();
+        getAdapter().setSelectable(false);
+    }
+
     abstract ArrayList<ImageModel> getImages();
+
     abstract ArrayList<Selectable> getSelectedItems();
+
     abstract void setSelectedItems(ArrayList<Selectable> selectedItems);
+
     abstract void showStartInstrumentsMenu();
+
     abstract SelectableAdapter getAdapter();
+
     abstract int getMenu();
 
 }
