@@ -61,11 +61,11 @@ public class ImageUtils {
         return imageUri;
     }
 
-    public static void Wallpaper(Context context, Bitmap image) {
+    public static void setWallpaper(Context context, Bitmap Wallpaper) {
         WallpaperManager myWallpaperManager
                 = WallpaperManager.getInstance(context);
         try {
-            myWallpaperManager.setBitmap(image);
+            myWallpaperManager.setBitmap(Wallpaper);
             Toast.makeText(context,"Обои установленны",Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(context,"Не удалось установить обои",Toast.LENGTH_LONG).show();

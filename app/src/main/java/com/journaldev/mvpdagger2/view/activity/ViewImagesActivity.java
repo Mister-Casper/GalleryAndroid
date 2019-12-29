@@ -129,7 +129,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
                 return viewFileInfoActivity();
             case R.id.wallpaper:
                 Uri imageUri = imageModels.get(pager.getCurrentItem()).getImage();
-                ImageUtils.Wallpaper(getApplicationContext(), ImageUtils.convertUriToBitmap(imageUri, this.getContentResolver()));
+                ImageUtils.setWallpaper(getApplicationContext(), ImageUtils.convertUriToBitmap(imageUri, this.getContentResolver()));
             default:
                 return super.onOptionsItemSelected(item);
         }
