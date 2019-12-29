@@ -148,19 +148,5 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
     int getMenu() {
         return R.menu.image_selectable_menu;
     }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.createAlbum:
-                ArrayList<Uri> images = Selectable.getAll(selectedItems);
-                CreateAlbumHelper createAlbumHelper = new CreateAlbumHelper();
-                createAlbumHelper.createImageFolder(getContext(),images,"trer");
-                showStartInstrumentsMenu();
-                getAdapter().setSelectable(false);
-                return true;
-        }
-        return super.onMenuItemClick(item);
-    }
 }
 

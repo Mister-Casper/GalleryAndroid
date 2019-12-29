@@ -21,6 +21,7 @@ import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
+import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
@@ -92,7 +93,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
         unbinder.unbind();
     }
 
-    private ArrayList<ImageModel> getImages(int position) {
+    private ArrayList<ImageModel> getImagesFromAlbum(int position) {
         ArrayList<ImageModel> images = new ArrayList<>();
 
         ArrayList<String> uri = convertArraysUrlToArraysString(position);
@@ -142,7 +143,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ViewImagesGridActivity.class);
-        intent.putParcelableArrayListExtra("image", getImages(position));
+        intent.putParcelableArrayListExtra("image", getImagesFromAlbum(position));
         intent.putExtra("albumName", albums.get(position).getName());
         getContext().startActivity(intent);
     }
@@ -182,16 +183,4 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
     int getMenu() {
         return R.menu.album_selectable_menu;
     }
-
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.combineAlbums:
-
-                return true;
-        }
-        return super.onMenuItemClick(item);
-    }
-
 }
