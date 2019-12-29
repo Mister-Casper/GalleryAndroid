@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadActivity() {
-        //Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         viewpager.setAdapter(loadAdapter());
