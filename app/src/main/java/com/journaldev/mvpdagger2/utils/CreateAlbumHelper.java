@@ -1,6 +1,5 @@
 package com.journaldev.mvpdagger2.utils;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.media.MediaScannerConnection;
@@ -17,7 +16,8 @@ import com.journaldev.mvpdagger2.R;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.journaldev.mvpdagger2.utils.ImageUtils.getFileName;
+import javax.inject.Inject;
+
 
 public class CreateAlbumHelper {
 
@@ -132,7 +132,7 @@ public class CreateAlbumHelper {
         private void moveImageToNewFolder(Uri image, String folderPath) {
             if (image != null) {
                 File imageFile = new File(image.getPath());
-                File newImageView = new File(folderPath + File.separator + getFileName(image));
+                File newImageView = new File(folderPath + File.separator + App.getImageHelper().getFileName(image));
                 imageFile.renameTo(newImageView);
 
                 pathArray.add(imageFile.getPath());

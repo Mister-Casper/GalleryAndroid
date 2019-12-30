@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,26 +17,30 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-
+import com.journaldev.mvpdagger2.utils.App;
 import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.view.customView.ImageViewTouchViewPager;
-import com.journaldev.mvpdagger2.utils.ImageUtils;
+import com.journaldev.mvpdagger2.utils.ImageHelper;
 import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.alertDialogListener, ImagesPageAdapter.PagerClickListener {
+public class ViewImagesActivity extends AppCompatActivity implements ImageHelper.alertDialogListener, ImagesPageAdapter.PagerClickListener {
 
+    @Inject
+    ImageHelper imageHelper;
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
     @BindView(R.id.deleteImage)
@@ -70,12 +73,17 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
         setLikeState(getImageId());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imageHelper = App.getImageHelper();
+    }
+
     private void prepareTheLook() {
         ThemeUtils.changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setTitle("");
         transparentActionBar();
     }
-
 
     private void initViewPager() {
         pager.setOffscreenPageLimit(3);
@@ -129,7 +137,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
                 return viewFileInfoActivity();
             case R.id.wallpaper:
                 Uri imageUri = imageModels.get(pager.getCurrentItem()).getImage();
-                ImageUtils.setWallpaper(getApplicationContext(), ImageUtils.convertUriToBitmap(imageUri, this.getContentResolver()));
+                imageHelper.setWallpaper(imageHelper.convertUriToBitmap(imageUri));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -251,13 +259,12 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     @SuppressLint("ResourceAsColor")
     @OnClick(R.id.deleteImage)
     public void clickDeleteImage() {
-        AlertDialog.Builder dialog = ImageUtils.createDeleteImageAlertDialog(
-                this, "Вы действительно хотите удалить изображение?", this);
-        dialog.show();
+        imageHelper.createDeleteImageAlertDialog(this,
+                "Вы действительно хотите удалить изображение?", this);
     }
 
     private void deleteImage() {
-        ImageUtils.deleteImage(getContentResolver(), imageModels.get(pager.getCurrentItem()).getImage());
+        imageHelper.deleteImage(imageModels.get(pager.getCurrentItem()).getImage());
         int currentPosition = pager.getCurrentItem();
         imageModels.remove(currentPosition);
         viewPagerUpdate(currentPosition);
@@ -315,8 +322,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageUtils.
     public void shareButtonImageClick() {
         ArrayList<Uri> urls = new ArrayList<>();
         Uri localUri = imageModels.get(pager.getCurrentItem()).getImage();
-        urls.add(ImageUtils.getGlobalPath(this, localUri.toString()));
-        ImageUtils.shareImages(this, urls);
+        urls.add(imageHelper.getGlobalPath(localUri.toString()));
+        imageHelper.shareImages(urls);
     }
 
 }
