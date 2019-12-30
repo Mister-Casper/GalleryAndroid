@@ -23,11 +23,8 @@ android {
                     'proguard-rules.pro'
         }
         debug {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
-                    'proguard-rules.pro',
-                    'proguard-rules-debug.pro'
+            shrinkResources false
+            minifyEnabled false
         }
     }
     compileOptions {
