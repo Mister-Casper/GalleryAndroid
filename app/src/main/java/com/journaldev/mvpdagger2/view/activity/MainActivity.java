@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void isToSettings() {
-        if (getIntent().getBooleanExtra("isOptionsChandge", false))
+        if (getIntent().getBooleanExtra("isOptionsChange", false))
             toSettings();
     }
 
