@@ -2,27 +2,40 @@ package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
+import com.journaldev.mvpdagger2.utils.App;
 import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
-import com.journaldev.mvpdagger2.utils.ImageUtils;
+import com.journaldev.mvpdagger2.utils.ImageHelper;
 import com.journaldev.mvpdagger2.view.Utils.DialogsUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.OnClick;
 
-abstract public class BaseSelectableFragment extends Fragment implements MainActivity.OnBackPressedListener, ImageUtils.alertDialogListener, PopupMenu.OnMenuItemClickListener, DialogsUtils.DialogsListener {
+abstract public class BaseSelectableFragment extends Fragment implements MainActivity.OnBackPressedListener, ImageHelper.alertDialogListener, PopupMenu.OnMenuItemClickListener, DialogsUtils.DialogsListener {
+
+    @Inject
+    ImageHelper imageHelper;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        imageHelper =  App.getImageHelper();
+    }
 
     @OnClick(R.id.showMenuButton)
     public void showMenuButtonClick(View view) {
@@ -61,17 +74,17 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
     @Override
     public void deleteClick() {
         setSelectedItems(getAdapter().getSelectedItems());
-        ImageUtils.deleteImage(getActivity().getContentResolver(), getSelectedItems());
+        imageHelper.deleteImage(getSelectedItems());
         showStartInstrumentsMenu();
         removeSelectedItems();
         getAdapter().setSelectable(false);
     }
 
-    public static AlertDialog.Builder createErrorAlertDialog(final Context context, String message) {
+    public static AlertDialog createErrorAlertDialog(final Context context, String message) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setMessage(message);
         ad.setPositiveButton("Ок", null);
-        return ad;
+        return ad.show();
     }
 
     private void removeSelectedItems() {
@@ -83,7 +96,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
 
     @OnClick(R.id.shareButton)
     public void shareButtonClick() {
-        ImageUtils.shareImages(getContext(), getAllFilePath(getSelectedItems()));
+        imageHelper.shareImages(getAllFilePath(getSelectedItems()));
     }
 
     private ArrayList<Uri> getAllFilePath(ArrayList<Selectable> selectedItems) {
@@ -93,7 +106,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
             ArrayList<ImageModel> images = selectedItems.get(i).getImages();
             for (int q = 0; q < images.size(); q++) {
                 Uri imageUri = images.get(q).getImage();
-                files.add(ImageUtils.getGlobalPath(getContext(), imageUri.toString()));
+                files.add(imageHelper.getGlobalPath(imageUri.toString()));
             }
         }
 
@@ -108,20 +121,16 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
 
     @OnClick(R.id.deleteItemsSelected)
     public void deleteItemsSelectedClick() {
-        AlertDialog.Builder dialog;
-
         if (getSelectedItems().size() != 0) {
-            dialog = ImageUtils.createDeleteImageAlertDialog(
-                    getActivity()
-                    , "Вы действительно хотите удалить изображения?"
+             imageHelper.createDeleteImageAlertDialog(getActivity(),
+                    "Вы действительно хотите удалить изображения?"
                     , this);
         } else {
-            dialog = createErrorAlertDialog(
+            createErrorAlertDialog(
                     getActivity()
                     , "Выберите изображения , которые хотите удалить");
         }
 
-        dialog.show();
     }
 
     @Override
