@@ -109,11 +109,11 @@ public class FIleInformActivity extends BaseThemeActivity {
 
     @Override
     int getDarkTheme() {
-        return R.style.DarkTheme;
+        return R.style.DarkTheme2;
     }
 
     @Override
     int getLightTheme() {
-        return R.style.LightTheme;
+        return R.style.LightTheme2;
     }
 }
