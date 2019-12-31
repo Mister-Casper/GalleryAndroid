@@ -189,12 +189,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
             image = itemView.findViewById(R.id.picture);
             albumName = itemView.findViewById(R.id.text);
             selectMultiPhoto = itemView.findViewById(R.id.checked_text_item);
-            selectMultiPhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    setChecked(!item.isSelected());
-                    itemSelectedListener.onItemSelected(item);
-                }
+            selectMultiPhoto.setOnClickListener(view -> {
+                setChecked(!item.isSelected());
+                itemSelectedListener.onItemSelected(item);
             });
         }
 
