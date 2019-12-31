@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.utils;
+package com.journaldev.mvpdagger2.application;
 
 import android.app.Application;
 

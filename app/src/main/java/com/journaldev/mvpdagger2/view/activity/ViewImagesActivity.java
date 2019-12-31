@@ -17,7 +17,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.R;

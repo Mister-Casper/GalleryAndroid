@@ -1,9 +1,11 @@
-package com.journaldev.mvpdagger2.utils;
+package com.journaldev.mvpdagger2.application;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
+
+import com.journaldev.mvpdagger2.application.App;
 
 public class AppPreference {
 

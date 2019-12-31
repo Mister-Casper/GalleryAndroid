@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.Utils.OnSwipeTouchListener;
 import java.io.File;

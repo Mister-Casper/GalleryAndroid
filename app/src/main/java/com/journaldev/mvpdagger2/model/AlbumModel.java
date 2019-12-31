@@ -5,7 +5,8 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 public class AlbumModel {
-    private String name;
+    private final String name;
+
     private ArrayList<String> like = new ArrayList<>();
     private ArrayList<Uri> uri = new ArrayList<>();
 

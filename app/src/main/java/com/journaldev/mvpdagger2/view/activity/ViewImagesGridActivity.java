@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.GridAlbumImagesFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -13,7 +13,6 @@ import android.view.View;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
-import com.journaldev.mvpdagger2.utils.App;
 import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
 import com.journaldev.mvpdagger2.utils.ImageHelper;
 import com.journaldev.mvpdagger2.view.Utils.DialogsUtils;
@@ -21,8 +20,6 @@ import com.journaldev.mvpdagger2.view.activity.MainActivity;
 import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import butterknife.OnClick;
 

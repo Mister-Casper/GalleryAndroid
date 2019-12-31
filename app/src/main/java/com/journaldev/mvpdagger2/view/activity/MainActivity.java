@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.AlbumsFragment;
