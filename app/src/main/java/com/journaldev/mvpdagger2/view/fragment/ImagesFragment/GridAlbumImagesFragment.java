@@ -3,14 +3,11 @@ package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.journaldev.mvpdagger2.data.Album.AlbumRepository;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
-import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseGridImagesFragment;
-
+import com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter;
 import java.util.ArrayList;
-
 
 public class GridAlbumImagesFragment extends BaseGridImagesFragment implements AlbumRepositoryObserver {
 
@@ -32,7 +29,7 @@ public class GridAlbumImagesFragment extends BaseGridImagesFragment implements A
     @Override
     public void onUpdateAlbum(ArrayList<AlbumModel> updateAlbums) {
         this.images = getCurrentAlbum(updateAlbums).getImages();
-        adapter.setImages(images);
+        adapter.setImages(AlbumModelConverter.convertAlbumsToSelectable(updateAlbums));
     }
 
     private AlbumModel getCurrentAlbum(ArrayList<AlbumModel> updateAlbums){

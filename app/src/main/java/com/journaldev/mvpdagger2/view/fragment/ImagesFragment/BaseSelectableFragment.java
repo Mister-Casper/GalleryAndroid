@@ -12,12 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.ImageModel;
-import com.journaldev.mvpdagger2.model.Selectable;
+import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
 import com.journaldev.mvpdagger2.utils.ImageHelper;
 import com.journaldev.mvpdagger2.view.utils.DialogsUtils;
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
-import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
 
 import java.util.ArrayList;
 

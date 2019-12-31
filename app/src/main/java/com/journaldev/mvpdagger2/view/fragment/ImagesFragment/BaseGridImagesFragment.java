@@ -16,18 +16,19 @@ import android.widget.TextView;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
-import com.journaldev.mvpdagger2.model.Selectable;
+import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
-import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
-import com.journaldev.mvpdagger2.model.SelectableImageModel;
-import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.ImagesAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHolder;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BaseGridImagesFragment extends BaseSelectableFragment implements ImagesAdapter.SelectableViewHolder.OnItemClickListener, ImagesAdapter.SelectableViewHolder.OnItemSelectedListener {
+public class BaseGridImagesFragment extends BaseSelectableFragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener {
 
     ArrayList<ImageModel> images = null;
     Unbinder unbinder;
@@ -107,7 +108,7 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onItemSelected(SelectableImageModel item) {
+    public void onItemSelected(Selectable item) {
         selectedItems = adapter.getSelectedItems();
 
         if (!adapter.isSelectable())

@@ -8,7 +8,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,13 +17,15 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepository;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
+import com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter;
 import com.journaldev.mvpdagger2.model.ImageModel;
-import com.journaldev.mvpdagger2.model.Selectable;
-import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
+import com.journaldev.mvpdagger2.model.Selectable.AlbumSelectable;
+import com.journaldev.mvpdagger2.model.Selectable.AlbumSelectableModel;
+import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
-import com.journaldev.mvpdagger2.view.adapter.AlbumsAdapter;
-import com.journaldev.mvpdagger2.view.adapter.SelectableAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.AlbumsAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHolder;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdapter.SelectableViewHolder.OnItemClickListener, AlbumsAdapter.SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver {
+public class AlbumsFragment extends BaseSelectableFragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver {
 
     @BindView(R.id.field)
     RecyclerView field;
@@ -69,7 +70,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
 
     private void initRecyclerView() {
         field.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        albumsAdapter = new AlbumsAdapter(getContext().getApplicationContext(), albums);
+        albumsAdapter = new AlbumsAdapter(getContext(), albums);
         albumsAdapter.setSelectedItemClickListener(this);
         albumsAdapter.setClickListener(this);
         field.setAdapter(albumsAdapter);
@@ -121,11 +122,11 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
     @Override
     public void onUpdateAlbum(ArrayList<AlbumModel> updateAlbums) {
         this.albums = updateAlbums;
-        albumsAdapter.setAlbums(updateAlbums);
+        albumsAdapter.setImages(AlbumModelConverter.convertAlbumsToSelectable(updateAlbums));
     }
 
     @Override
-    public void onItemSelected(SelectableAlbumModel item) {
+    public void onItemSelected(Selectable item) {
         selectedItems = albumsAdapter.getSelectedItems();
 
         if (!albumsAdapter.isSelectable())
@@ -152,7 +153,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements AlbumsAdap
     ArrayList<ImageModel> getImages() {
         ArrayList<ImageModel> images = new ArrayList<>();
 
-        for(int i = 0 ; i < albums.size();i++){
+        for (int i = 0; i < albums.size(); i++) {
             images.addAll(albums.get(i).getImages());
         }
 
