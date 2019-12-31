@@ -49,9 +49,9 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        prepareTheLook();
         allScreen();
         super.onCreate(savedInstanceState);
+        prepareTheLook();
         postponeEnterTransition();
         setContentView(R.layout.viewimages);
         ButterKnife.bind(this);
@@ -81,7 +81,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
     }
 
     private void transparentActionBar() {
-        ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.gray));
+        ColorDrawable abDrawable = new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark));
         abDrawable.setAlpha(0);
         getSupportActionBar().setBackgroundDrawable(abDrawable);
     }
