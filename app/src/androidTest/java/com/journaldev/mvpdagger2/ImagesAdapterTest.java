@@ -218,12 +218,9 @@ public class ImagesAdapterTest {
 
     @Test
     public void testAllSelect(){
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                imagesAdapter.setItemsSelectable(true);
-                Assert.assertEquals(imagesAdapter.getSelectedItems().size(), imagesAdapter.getItemCount());
-            }
+        recyclerView.post(() -> {
+            imagesAdapter.setItemsSelectable(true);
+            Assert.assertEquals(imagesAdapter.getSelectedItems().size(), imagesAdapter.getItemCount());
         });
     }
 
@@ -234,12 +231,9 @@ public class ImagesAdapterTest {
 
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.picture)));
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                imagesAdapter.setItemsSelectable(false);
-                Assert.assertEquals(imagesAdapter.getSelectedItems().size(),0);
-            }
+        recyclerView.post(() -> {
+            imagesAdapter.setItemsSelectable(false);
+            Assert.assertEquals(imagesAdapter.getSelectedItems().size(),0);
         });
     }
 
