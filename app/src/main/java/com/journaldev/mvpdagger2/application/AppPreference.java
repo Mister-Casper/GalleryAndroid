@@ -33,15 +33,15 @@ public class AppPreference {
     }
 
     public void setIsAnim(Boolean isAnim) {
-        this.isAnim = isAnim;
+        AppPreference.isAnim = isAnim;
     }
 
     public void setIsDarkTheme(Boolean isDarkTheme) {
-        App.getAppPreference().setIsDarkTheme(isDarkTheme);
+        AppPreference.isDarkTheme = isDarkTheme;
     }
 
     public void setIsCache(Boolean isCache) {
-        this.isCache = isCache;
+        AppPreference.isCache = isCache;
     }
 
     public AppPreference(Context context) {
