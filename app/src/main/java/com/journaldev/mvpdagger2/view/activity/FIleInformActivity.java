@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.view.Utils.OnSwipeTouchListener;
+import com.journaldev.mvpdagger2.view.utils.OnSwipeTouchListener;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -50,21 +50,10 @@ public class FIleInformActivity extends Activity {
     }
 
     private void setOnSwipeTouchListener(View view) {
-        view.setOnTouchListener(new OnSwipeTouchListener(FIleInformActivity.this) {
+        view.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeTop() {
                 onBackPressed();
             }
-
-            public void onSwipeRight() {
-            }
-
-            public void onSwipeLeft() {
-            }
-
-            public void onSwipeBottom() {
-
-            }
-
         });
     }
 
@@ -99,8 +88,8 @@ public class FIleInformActivity extends Activity {
         }
 
         double roundValue = new BigDecimal(length).setScale(2, RoundingMode.UP).doubleValue();
-        String resultLenght = roundValue + " " + prefix[prefixId];
-        return resultLenght;
+        String resultLength = roundValue + " " + prefix[prefixId];
+        return resultLength;
     }
 
     private Uri getUri() {

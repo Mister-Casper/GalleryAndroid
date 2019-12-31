@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.Utils;
+package com.journaldev.mvpdagger2.view.utils;
 
 import android.content.Context;
 import android.view.GestureDetector;

@@ -70,13 +70,14 @@ public class ImageRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String attribute = exif.getAttribute(tag);
-        return attribute;
+        return exif.getAttribute(tag);
     }
 
     public static class ImageObserver extends ContentObserver {
 
         private static ArrayList<ImageRepositoryObserver> observers = new ArrayList<>();
+        private Activity context;
+        private Timer waitingTimer;
 
         public static void addImageUrlsRepositoryObserver(ImageRepositoryObserver repositoryObserver) {
             if (!observers.contains(repositoryObserver)) {
@@ -87,8 +88,6 @@ public class ImageRepository {
         public static void removeImageUrlsRepositoryObserver(ImageRepositoryObserver repositoryObserver) {
             observers.remove(repositoryObserver);
         }
-
-        Activity context;
 
         ImageObserver(Handler handler, Activity context) {
             super(handler);
@@ -105,8 +104,6 @@ public class ImageRepository {
             super.onChange(arg0);
             sendDelayAction();
         }
-
-        private Timer waitingTimer;
 
         private void sendDelayAction() {
 

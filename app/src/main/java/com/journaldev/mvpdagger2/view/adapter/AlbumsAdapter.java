@@ -27,6 +27,10 @@ import static com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter.conv
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SelectableViewHolder> implements SelectableAdapter {
 
+    private boolean isSelectable = false;
+    private ArrayList<SelectableAlbumModel> albums;
+    private final LayoutInflater mInflater;
+
     private SelectableViewHolder.OnItemClickListener itemClickListener;
     private SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
 
@@ -37,8 +41,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
     public void setSelectedItemClickListener(SelectableViewHolder.OnItemSelectedListener selectedItemClickListener) {
         this.selectedItemClickListener = selectedItemClickListener;
     }
-
-    private boolean isSelectable = false;
 
     public boolean isSelectable() {
         return isSelectable;
@@ -68,9 +70,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
         selectedItemClickListener.onItemSelected(null);
         notifyDataSetChanged();
     }
-
-    private ArrayList<SelectableAlbumModel> albums;
-    private LayoutInflater mInflater;
 
     public AlbumsAdapter(Context context, ArrayList<AlbumModel> albums) {
         this.mInflater = LayoutInflater.from(context);
@@ -178,14 +177,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
 
 
     public static class SelectableViewHolder extends RecyclerView.ViewHolder {
-        public interface OnItemClickListener {
-            void onItemClick(View view, int position);
-        }
-
-        public interface OnItemSelectedListener {
-            void onItemSelected(SelectableAlbumModel item);
-        }
-
         CheckBox selectMultiPhoto;
         SquareImageView image;
         TextView albumName;
@@ -209,6 +200,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
 
         void setChecked(boolean value) {
             item.setSelected(value);
+        }
+
+        public interface OnItemClickListener {
+            void onItemClick(View view, int position);
+        }
+
+        public interface OnItemSelectedListener {
+            void onItemSelected(SelectableAlbumModel item);
         }
     }
 

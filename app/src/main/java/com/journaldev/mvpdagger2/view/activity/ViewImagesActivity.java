@@ -47,8 +47,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
     ArrayList<ImageModel> imageModels;
     ImagesPageAdapter imagesPageAdapter = null;
 
-    private int current;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         prepareTheLook();
@@ -77,7 +75,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
 
     private void initViewPager() {
         pager.setOffscreenPageLimit(3);
-        current = getImageId();
+        int current = getImageId();
         imagesPageAdapter = new ImagesPageAdapter(this, imageModels, this, current);
         pager.setAdapter(imagesPageAdapter);
         pager.setCurrentItem(current, App.getAppPreference().getIsAnim());
