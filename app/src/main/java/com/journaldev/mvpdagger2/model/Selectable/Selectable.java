@@ -1,6 +1,8 @@
-package com.journaldev.mvpdagger2.model;
+package com.journaldev.mvpdagger2.model.Selectable;
 
 import android.net.Uri;
+
+import com.journaldev.mvpdagger2.model.ImageModel;
 
 import java.util.ArrayList;
 
@@ -18,4 +20,7 @@ public interface Selectable {
         }
         return images;
     }
+
+    boolean isSelected();
+    void setSelected(boolean selected);
 }

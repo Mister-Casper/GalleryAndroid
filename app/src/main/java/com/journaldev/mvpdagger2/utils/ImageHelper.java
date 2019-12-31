@@ -13,7 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.journaldev.mvpdagger2.application.App;
-import com.journaldev.mvpdagger2.model.Selectable;
+import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.Objects;
 
 import javax.inject.Singleton;
 
-import static com.journaldev.mvpdagger2.model.SelectableImageModel.convertImagesToStringArray;
+import static com.journaldev.mvpdagger2.model.Selectable.ImageSelectableModel.convertImagesToStringArray;
 
 @Singleton
 public class ImageHelper {

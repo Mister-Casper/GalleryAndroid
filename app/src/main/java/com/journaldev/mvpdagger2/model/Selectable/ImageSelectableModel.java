@@ -1,15 +1,23 @@
-package com.journaldev.mvpdagger2.model;
+package com.journaldev.mvpdagger2.model.Selectable;
 
+
+import com.journaldev.mvpdagger2.model.ImageModel;
+import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 
 import java.util.ArrayList;
 
-public class SelectableImageModel extends ImageModel implements Selectable {
+public class ImageSelectableModel extends ImageModel implements ImageSelectable {
 
     private boolean isSelected;
 
-    public SelectableImageModel(ImageModel item, boolean isSelected) {
+    public ImageSelectableModel(ImageModel item, boolean isSelected) {
         super(item.getImage(), item.getLike());
         this.isSelected = isSelected;
+    }
+
+    public ImageSelectableModel(ImageModel item) {
+        super(item.getImage(), item.getLike());
+        this.isSelected = false;
     }
 
     public boolean isSelected() {

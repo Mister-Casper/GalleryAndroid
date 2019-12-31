@@ -12,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.view.activity.MainActivity;
-import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
+import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.ImagesAdapter;
 
 import junit.framework.Assert;
 

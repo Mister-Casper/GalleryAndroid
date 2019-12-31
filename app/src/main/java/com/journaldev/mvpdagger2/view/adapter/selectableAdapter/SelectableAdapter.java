@@ -1,6 +1,6 @@
-package com.journaldev.mvpdagger2.view.adapter;
+package com.journaldev.mvpdagger2.view.adapter.selectableAdapter;
 
-import com.journaldev.mvpdagger2.model.Selectable;
+import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 
 import java.util.ArrayList;
 
