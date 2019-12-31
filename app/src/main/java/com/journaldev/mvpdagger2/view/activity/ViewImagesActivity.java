@@ -18,20 +18,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import com.journaldev.mvpdagger2.utils.App;
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.ImagesPageAdapter;
 import com.journaldev.mvpdagger2.view.customView.ImageViewTouchViewPager;
 import com.journaldev.mvpdagger2.utils.ImageHelper;
-import com.journaldev.mvpdagger2.utils.ThemeUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,8 +33,6 @@ import butterknife.OnClick;
 
 public class ViewImagesActivity extends AppCompatActivity implements ImageHelper.alertDialogListener, ImagesPageAdapter.PagerClickListener {
 
-    @Inject
-    ImageHelper imageHelper;
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
     @BindView(R.id.deleteImage)
@@ -59,7 +51,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppPreferenceUtils.load(getApplicationContext());
         prepareTheLook();
         allScreen();
         super.onCreate(savedInstanceState);
@@ -76,11 +67,10 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
     @Override
     protected void onStart() {
         super.onStart();
-        imageHelper = App.getImageHelper();
     }
 
     private void prepareTheLook() {
-        ThemeUtils.changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
+        App.getAppPreference().changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setTitle("");
         transparentActionBar();
     }
@@ -90,7 +80,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
         current = getImageId();
         imagesPageAdapter = new ImagesPageAdapter(this, imageModels, this, current);
         pager.setAdapter(imagesPageAdapter);
-        pager.setCurrentItem(current, AppPreferenceUtils.getIsAnim());
+        pager.setCurrentItem(current, App.getAppPreference().getIsAnim());
     }
 
     private void transparentActionBar() {
@@ -137,7 +127,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
                 return viewFileInfoActivity();
             case R.id.wallpaper:
                 Uri imageUri = imageModels.get(pager.getCurrentItem()).getImage();
-                imageHelper.setWallpaper(imageHelper.convertUriToBitmap(imageUri));
+                ImageHelper.setWallpaper(ImageHelper.convertUriToBitmap(imageUri));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -149,7 +139,7 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
         Uri currentUri = imagesPageAdapter.getCurrentUri(pager.getCurrentItem()).getImage();
         intent.putExtra("uri", currentUri.toString());
         startActivity(intent);
-        if (AppPreferenceUtils.getIsAnim()) {
+        if (App.getAppPreference().getIsAnim()) {
             overridePendingTransition(R.anim.back, R.anim.next);
         }
         return true;
@@ -259,12 +249,12 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
     @SuppressLint("ResourceAsColor")
     @OnClick(R.id.deleteImage)
     public void clickDeleteImage() {
-        imageHelper.createDeleteImageAlertDialog(this,
+        ImageHelper.createDeleteImageAlertDialog(this,
                 "Вы действительно хотите удалить изображение?", this);
     }
 
     private void deleteImage() {
-        imageHelper.deleteImage(imageModels.get(pager.getCurrentItem()).getImage());
+        ImageHelper.deleteImage(imageModels.get(pager.getCurrentItem()).getImage());
         int currentPosition = pager.getCurrentItem();
         imageModels.remove(currentPosition);
         viewPagerUpdate(currentPosition);
@@ -322,8 +312,8 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
     public void shareButtonImageClick() {
         ArrayList<Uri> urls = new ArrayList<>();
         Uri localUri = imageModels.get(pager.getCurrentItem()).getImage();
-        urls.add(imageHelper.getGlobalPath(localUri.toString()));
-        imageHelper.shareImages(urls);
+        urls.add(ImageHelper.getGlobalPath(localUri.toString()));
+        ImageHelper.shareImages(urls);
     }
 
 }

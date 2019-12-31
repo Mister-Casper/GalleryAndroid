@@ -28,21 +28,15 @@ import static com.journaldev.mvpdagger2.model.SelectableImageModel.convertImages
 @Singleton
 public class ImageHelper {
 
-    Context context;
-    ContentResolver contentResolver;
+    static Context context = App.getApp();
+    static ContentResolver contentResolver = App.getApp().getContentResolver();
 
-    @Inject
-    public ImageHelper(Context context){
-        this.context = context;
-        contentResolver = context.getContentResolver();
-    }
-
-    public void deleteImage(Uri uri) {
+    public static void deleteImage(Uri uri) {
         contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.toString()});
     }
 
-    public void deleteImage(ArrayList<Selectable> uri) {
+    public static void deleteImage(ArrayList<Selectable> uri) {
         String[] uriStr = convertImagesToStringArray(uri);
 
         for (int i = 0; i < uriStr.length; i++) {
@@ -51,7 +45,7 @@ public class ImageHelper {
         }
     }
 
-    public AlertDialog createDeleteImageAlertDialog(Activity activity, String message, final alertDialogListener listener) {
+    public static AlertDialog createDeleteImageAlertDialog(Activity activity, String message, final alertDialogListener listener) {
         AlertDialog.Builder ad = new AlertDialog.Builder(activity);
         ad.setMessage(message);
         ad.setPositiveButton("Удалить", (dialog, arg1) -> listener.deleteClick());
@@ -59,7 +53,7 @@ public class ImageHelper {
         return ad.show();
     }
 
-    public void shareImages(ArrayList<Uri> urls) {
+    public static void shareImages(ArrayList<Uri> urls) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         sendIntent.setType("image/*");
@@ -67,7 +61,7 @@ public class ImageHelper {
         context.startActivity(sendIntent);
     }
 
-    public Uri getGlobalPath(String path) {
+    public static Uri getGlobalPath(String path) {
         File file = new File(path);
         Uri imageUri = FileProvider.getUriForFile(
                 context,
@@ -76,7 +70,7 @@ public class ImageHelper {
         return imageUri;
     }
 
-    public void setWallpaper(Bitmap Wallpaper) {
+    public static void setWallpaper(Bitmap Wallpaper) {
         WallpaperManager myWallpaperManager
                 = WallpaperManager.getInstance(context);
         try {
@@ -87,7 +81,7 @@ public class ImageHelper {
         }
     }
 
-    public Bitmap convertUriToBitmap(Uri uri)
+    public static Bitmap convertUriToBitmap(Uri uri)
     {
         Bitmap bitmap=null;
         try {
@@ -100,7 +94,7 @@ public class ImageHelper {
         return bitmap;
     }
 
-    public String getFileName(Uri uri) {
+    public static String getFileName(Uri uri) {
         String result;
         result = uri.getPath();
         int cut = result.lastIndexOf('/');

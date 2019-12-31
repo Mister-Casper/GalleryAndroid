@@ -28,13 +28,9 @@ import butterknife.OnClick;
 
 abstract public class BaseSelectableFragment extends Fragment implements MainActivity.OnBackPressedListener, ImageHelper.alertDialogListener, PopupMenu.OnMenuItemClickListener, DialogsUtils.DialogsListener {
 
-    @Inject
-    ImageHelper imageHelper;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageHelper =  App.getImageHelper();
     }
 
     @OnClick(R.id.showMenuButton)
@@ -74,7 +70,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
     @Override
     public void deleteClick() {
         setSelectedItems(getAdapter().getSelectedItems());
-        imageHelper.deleteImage(getSelectedItems());
+        ImageHelper.deleteImage(getSelectedItems());
         showStartInstrumentsMenu();
         removeSelectedItems();
         getAdapter().setSelectable(false);
@@ -96,7 +92,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
 
     @OnClick(R.id.shareButton)
     public void shareButtonClick() {
-        imageHelper.shareImages(getAllFilePath(getSelectedItems()));
+        ImageHelper.shareImages(getAllFilePath(getSelectedItems()));
     }
 
     private ArrayList<Uri> getAllFilePath(ArrayList<Selectable> selectedItems) {
@@ -106,7 +102,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
             ArrayList<ImageModel> images = selectedItems.get(i).getImages();
             for (int q = 0; q < images.size(); q++) {
                 Uri imageUri = images.get(q).getImage();
-                files.add(imageHelper.getGlobalPath(imageUri.toString()));
+                files.add(ImageHelper.getGlobalPath(imageUri.toString()));
             }
         }
 
@@ -122,7 +118,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
     @OnClick(R.id.deleteItemsSelected)
     public void deleteItemsSelectedClick() {
         if (getSelectedItems().size() != 0) {
-             imageHelper.createDeleteImageAlertDialog(getActivity(),
+            ImageHelper.createDeleteImageAlertDialog(getActivity(),
                     "Вы действительно хотите удалить изображения?"
                     , this);
         } else {

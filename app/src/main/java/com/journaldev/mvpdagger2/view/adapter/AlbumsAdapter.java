@@ -14,7 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.model.Selectable;
 import com.journaldev.mvpdagger2.model.SelectableAlbumModel;
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.utils.AppPreference;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.view.customView.SquareImageView;
@@ -117,7 +118,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.Selectable
 
         RequestOptions options = new RequestOptions();
 
-        if (!AppPreferenceUtils.getIsCache())
+        if (!App.getAppPreference().getIsCache())
             options = GlideUtils.optionsCleanCache(options);
 
         options = options.fitCenter();

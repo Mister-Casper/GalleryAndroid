@@ -18,7 +18,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.utils.AppPreference;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
@@ -81,14 +82,14 @@ public class ImagesPageAdapter extends PagerAdapter {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        if (position == current && AppPreferenceUtils.getIsAnim())
+                        if (position == current && App.getAppPreference().getIsAnim())
                             listener.setStartPostTransition(imageView);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        if (position == current && AppPreferenceUtils.getIsAnim())
+                        if (position == current && App.getAppPreference().getIsAnim())
                             listener.setStartPostTransition(imageView);
                         return false;
                     }
@@ -100,7 +101,7 @@ public class ImagesPageAdapter extends PagerAdapter {
     private RequestOptions setIsCache() {
         RequestOptions options = new RequestOptions();
 
-        if (!AppPreferenceUtils.getIsCache())
+        if (!App.getAppPreference().getIsCache())
             options = GlideUtils.optionsCleanCache(options);
 
         return options;

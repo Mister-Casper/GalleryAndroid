@@ -132,7 +132,7 @@ public class CreateAlbumHelper {
         private void moveImageToNewFolder(Uri image, String folderPath) {
             if (image != null) {
                 File imageFile = new File(image.getPath());
-                File newImageView = new File(folderPath + File.separator + App.getImageHelper().getFileName(image));
+                File newImageView = new File(folderPath + File.separator + ImageHelper.getFileName(image));
                 imageFile.renameTo(newImageView);
 
                 pathArray.add(imageFile.getPath());

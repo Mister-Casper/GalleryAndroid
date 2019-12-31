@@ -9,14 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.utils.App;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
-import com.journaldev.mvpdagger2.utils.ThemeUtils;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.AlbumsFragment;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.GridImagesFragment;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,9 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle(""); 
-        AppPreferenceUtils.load(this);
-        ThemeUtils.changeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
+        setTitle("");
+        App.getAppPreference().changeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);

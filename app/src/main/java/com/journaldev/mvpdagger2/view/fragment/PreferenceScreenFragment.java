@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v14.preference.SwitchPreference;
-
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.utils.App;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
-import com.journaldev.mvpdagger2.utils.ThemeUtils;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -24,15 +22,14 @@ public class PreferenceScreenFragment extends PreferenceFragmentCompat {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
-        AppPreferenceUtils.load(getActivity());
         final SwitchPreference preferenceDarkTheme = (SwitchPreference) findPreference("isDarkTheme");
 
         preferenceDarkTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                AppPreferenceUtils.setIsDarkTheme((Boolean) newValue);
+                App.getAppPreference().setIsDarkTheme((Boolean) newValue);
                 savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
-                ThemeUtils.changeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
+                App.getAppPreference().changeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
                 changeToTheme(getActivity());
                 preferenceDarkTheme.setChecked((Boolean) newValue);
                 return false;
@@ -63,13 +60,13 @@ public class PreferenceScreenFragment extends PreferenceFragmentCompat {
 
     private void saveIsAnim() {
         SwitchPreference preferenceAnim = (SwitchPreference) findPreference("isAnim");
-        AppPreferenceUtils.setIsAnim(preferenceAnim.isChecked());
+        App.getAppPreference().setIsAnim(preferenceAnim.isChecked());
         savePreferences(preferenceAnim.getKey(), preferenceAnim.isChecked());
     }
 
     private void saveIsCache() {
         SwitchPreference preferenceCache = (SwitchPreference) findPreference("isCache");
-        AppPreferenceUtils.setIsCache(preferenceCache.isChecked());
+        App.getAppPreference().setIsCache(preferenceCache.isChecked());
         savePreferences(preferenceCache.getKey(), preferenceCache.isChecked());
 
         cleanCache(preferenceCache.isChecked());

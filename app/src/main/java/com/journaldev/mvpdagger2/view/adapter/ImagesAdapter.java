@@ -13,7 +13,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.model.Selectable;
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.utils.AppPreference;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
 import com.journaldev.mvpdagger2.R;
@@ -143,7 +144,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Selectable
         options = options.fitCenter();
         options = options.placeholder(R.drawable.placeholder);
 
-        if (!AppPreferenceUtils.getIsCache())
+        if (!App.getAppPreference().getIsCache())
             options = GlideUtils.optionsCleanCache(options);
 
         Glide.with(mInflater.getContext())

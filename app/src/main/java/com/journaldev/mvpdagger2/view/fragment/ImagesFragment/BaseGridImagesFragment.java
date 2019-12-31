@@ -3,14 +3,12 @@ package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,8 +17,8 @@ import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable;
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
-import com.journaldev.mvpdagger2.utils.CreateAlbumHelper;
+import com.journaldev.mvpdagger2.utils.App;
+import com.journaldev.mvpdagger2.utils.AppPreference;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.view.adapter.ImagesAdapter;
 import com.journaldev.mvpdagger2.model.SelectableImageModel;
@@ -99,7 +97,7 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Im
         intent.putExtra("idImage", position);
         intent.putParcelableArrayListExtra("uri", images);
 
-        if (AppPreferenceUtils.getIsAnim()) {
+        if (App.getAppPreference().getIsAnim()) {
             String name = view.getTransitionName();
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, name);
             startActivity(intent, options.toBundle());

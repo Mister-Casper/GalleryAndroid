@@ -10,19 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.journaldev.mvpdagger2.utils.AppPreferenceUtils;
+import com.journaldev.mvpdagger2.utils.App;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.Utils.OnSwipeTouchListener;
-import com.journaldev.mvpdagger2.utils.ThemeUtils;
-
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -43,7 +39,7 @@ public class FIleInformActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ThemeUtils.changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
+        App.getAppPreference().changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
         Uri uriFile = getUri();
@@ -119,7 +115,7 @@ public class FIleInformActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (AppPreferenceUtils.getIsAnim())
+        if (App.getAppPreference().getIsAnim())
             overridePendingTransition(R.anim.back2, R.anim.next2);
     }
 }
