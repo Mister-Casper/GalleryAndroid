@@ -39,6 +39,7 @@ public class FIleInformActivity extends BaseThemeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
         Uri uriFile = getUri();
@@ -109,11 +110,11 @@ public class FIleInformActivity extends BaseThemeActivity {
 
     @Override
     int getDarkTheme() {
-        return R.style.DarkTheme2;
+        return R.style.DarkTheme;
     }
 
     @Override
     int getLightTheme() {
-        return R.style.LightTheme2;
+        return R.style.LightTheme;
     }
 }
