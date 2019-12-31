@@ -85,20 +85,20 @@ public class FIleInformActivity extends Activity {
                 + date.get(Calendar.YEAR));
 
         resolution.setText(bmp.getWidth() + "×" + bmp.getHeight());
-        size.setText(convertFileLenghtToString(FileByUri.length()));
+        size.setText(convertFileLengthToString(FileByUri.length()));
     }
 
-    private String convertFileLenghtToString(double lenght) {
-        int prefixLenght = 1024;
+    private String convertFileLengthToString(double length) {
+        int prefixLength = 1024;
         int prefixId = 0;
         String[] prefix = new String[]{"Б", "КБ", "МБ"};
 
-        while (lenght / prefixLenght >= 1) {
+        while (length / prefixLength >= 1) {
             prefixId++;
-            lenght /= prefixLenght;
+            length /= prefixLength;
         }
 
-        double roundValue = new BigDecimal(lenght).setScale(2, RoundingMode.UP).doubleValue();
+        double roundValue = new BigDecimal(length).setScale(2, RoundingMode.UP).doubleValue();
         String resultLenght = roundValue + " " + prefix[prefixId];
         return resultLenght;
     }
