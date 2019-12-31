@@ -20,7 +20,7 @@ import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.GridImagesFragment
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseThemeActivity {
 
     @BindView(R.id.tabs)
     TabLayout tabs;
@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("");
-        App.getAppPreference().changeTheme(this, R.style.DarkTheme2, R.style.LightTheme2);
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -118,6 +117,16 @@ public class MainActivity extends AppCompatActivity {
 
     public interface OnBackPressedListener {
         void onBackPressed();
+    }
+
+    @Override
+    int getDarkTheme() {
+        return R.style.DarkTheme2;
+    }
+
+    @Override
+    int getLightTheme() {
+        return R.style.LightTheme2;
     }
 }
 

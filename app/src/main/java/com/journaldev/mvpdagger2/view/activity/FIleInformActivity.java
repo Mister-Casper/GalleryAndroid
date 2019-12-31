@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FIleInformActivity extends Activity {
+public class FIleInformActivity extends BaseThemeActivity {
 
     @BindView(R.id.path)
     TextView path;
@@ -39,7 +39,6 @@ public class FIleInformActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getAppPreference().changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setContentView(R.layout.file_info);
         ButterKnife.bind(this);
         Uri uriFile = getUri();
@@ -106,5 +105,15 @@ public class FIleInformActivity extends Activity {
         super.onBackPressed();
         if (App.getAppPreference().getIsAnim())
             overridePendingTransition(R.anim.back2, R.anim.next2);
+    }
+
+    @Override
+    int getDarkTheme() {
+        return R.style.DarkTheme;
+    }
+
+    @Override
+    int getLightTheme() {
+        return R.style.LightTheme;
     }
 }

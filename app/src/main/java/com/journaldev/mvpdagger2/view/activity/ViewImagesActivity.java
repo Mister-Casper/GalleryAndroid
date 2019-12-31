@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ViewImagesActivity extends AppCompatActivity implements ImageHelper.alertDialogListener, ImagesPageAdapter.PagerClickListener {
+public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper.alertDialogListener, ImagesPageAdapter.PagerClickListener {
 
     @BindView(R.id.pager)
     ImageViewTouchViewPager pager;
@@ -68,7 +68,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
     }
 
     private void prepareTheLook() {
-        App.getAppPreference().changeTheme(this, R.style.DarkTheme, R.style.LightTheme);
         setTitle("");
         transparentActionBar();
     }
@@ -305,7 +304,6 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
         });
     }
 
-
     @OnClick(R.id.shareButtonImage)
     public void shareButtonImageClick() {
         ArrayList<Uri> urls = new ArrayList<>();
@@ -314,4 +312,13 @@ public class ViewImagesActivity extends AppCompatActivity implements ImageHelper
         ImageHelper.shareImages(urls);
     }
 
+    @Override
+    int getDarkTheme() {
+        return R.style.DarkTheme;
+    }
+
+    @Override
+    int getLightTheme() {
+        return R.style.LightTheme;
+    }
 }
