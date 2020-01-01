@@ -32,7 +32,7 @@
                 android:id="@+id/path"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,13 +46,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Изменен : "
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/chandge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,13 +66,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Разрешение : "
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/resolution"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,13 +86,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Размер : "
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -101,5 +101,5 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:text="Свединия"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 </LinearLayout>
