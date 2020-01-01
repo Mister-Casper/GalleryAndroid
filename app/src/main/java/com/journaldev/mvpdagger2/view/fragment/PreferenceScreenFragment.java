@@ -24,16 +24,13 @@ public class PreferenceScreenFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preference);
         final SwitchPreference preferenceDarkTheme = (SwitchPreference) findPreference("isDarkTheme");
 
-        preferenceDarkTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                App.getAppPreference().setIsDarkTheme((Boolean) newValue);
-                savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
-                App.getAppPreference().changeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
-                changeToTheme(getActivity());
-                preferenceDarkTheme.setChecked((Boolean) newValue);
-                return false;
-            }
+        preferenceDarkTheme.setOnPreferenceChangeListener((preference, newValue) -> {
+            App.getAppPreference().setIsDarkTheme((Boolean) newValue);
+            savePreferences(preferenceDarkTheme.getKey(), preferenceDarkTheme.isChecked());
+            App.getAppPreference().changeTheme(getActivity(), R.style.DarkTheme2, R.style.LightTheme2);
+            changeToTheme(getActivity());
+            preferenceDarkTheme.setChecked((Boolean) newValue);
+            return false;
         });
     }
 
