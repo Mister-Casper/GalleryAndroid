@@ -9,12 +9,7 @@ import com.bumptech.glide.request.RequestOptions;
 public class GlideUtils {
 
     public static void cleanCache(final Context context) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Glide.get(context).clearDiskCache();
-            }
-        }).start();
+        new Thread(() -> Glide.get(context).clearDiskCache()).start();
     }
 
     public static RequestOptions optionsCleanCache(RequestOptions options) {
