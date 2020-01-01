@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

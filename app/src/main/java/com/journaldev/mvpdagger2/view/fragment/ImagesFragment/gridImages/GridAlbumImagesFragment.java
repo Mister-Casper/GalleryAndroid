@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.Converter.ImageModelConverter;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseGridImagesFragment;
+
 import java.util.ArrayList;
 
 public class GridAlbumImagesFragment extends BaseGridImagesFragment implements AlbumRepositoryObserver {

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.application.App;
@@ -22,7 +21,6 @@ import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.ImagesAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHolder;
-
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +28,9 @@ import butterknife.Unbinder;
 
 public class BaseGridImagesFragment extends BaseSelectableFragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener {
 
-    ArrayList<ImageModel> images = null;
-    Unbinder unbinder;
-    ImagesAdapter adapter;
+    protected ArrayList<ImageModel> images = null;
+    private Unbinder unbinder;
+    protected ImagesAdapter adapter;
 
     @BindView(R.id.DataList)
     RecyclerView DataList;
