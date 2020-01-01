@@ -8,7 +8,11 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+
+import com.journaldev.mvpdagger2.data.BaseImageObserver;
+import com.journaldev.mvpdagger2.model.Converter.ImageModelConverter;
 import com.journaldev.mvpdagger2.model.ImageModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ public class ImageRepository {
 
     public ImageRepository(Context context) {
         Cursor imageCursor = getCursor(context);
-        loadUrl(imageCursor);
+        loadData(imageCursor);
         registerContentObserver(context);
     }
 
@@ -48,7 +52,7 @@ public class ImageRepository {
                 true, imageObserver);
     }
 
-    private void loadUrl(Cursor imageCursor) {
+    private void loadData(Cursor imageCursor) {
         if (imageCursor != null) {
             imageModelUrls = new ArrayList<>();
             for (int i = imageCursor.getCount() - 1; i >= 0; i--) {
@@ -71,12 +75,9 @@ public class ImageRepository {
         return exif.getAttribute(tag);
     }
 
-    public class ImageObserver extends ContentObserver {
+    public class ImageObserver extends BaseImageObserver {
 
         private ArrayList<ImageRepositoryObserver> observers = new ArrayList<>();
-        private Context context;
-        private Timer waitingTimer;
-        private final Handler handler;
 
         public void addImageUrlsRepositoryObserver(ImageRepositoryObserver repositoryObserver) {
             if (!observers.contains(repositoryObserver)) {
@@ -88,55 +89,25 @@ public class ImageRepository {
             observers.remove(repositoryObserver);
         }
 
+        ImageObserver(Handler handler, Context context) {
+            super(handler, context);
+        }
+
+        @Override
+        public void loadData(Cursor cursor) {
+            ImageRepository.this.loadData(cursor);
+        }
+
+        @Override
+        public Cursor getCursor(Context context) {
+            return ImageRepository.this.getCursor(context);
+        }
+
+        @Override
         public void notifyImage() {
             for (int i = 0; i < observers.size(); i++) {
                 observers.get(i).onUpdateImage(imageModelUrls);
             }
         }
-
-        ImageObserver(Handler handler, Context context) {
-            super(handler);
-            this.context = context;
-            this.handler = handler;
-        }
-
-        @Override
-        public boolean deliverSelfNotifications() {
-            return false;
-        }
-
-        @Override
-        public void onChange(boolean arg0) {
-            super.onChange(arg0);
-            sendDelayAction();
-        }
-
-        private void sendDelayAction() {
-
-            if (waitingTimer != null) {
-                waitingTimer.cancel();
-                waitingTimer = null;
-            }
-
-            waitingTimer = new Timer();
-
-            final TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(() -> {
-                        Cursor cursor = getCursor(context);
-                        loadUrl(cursor);
-                        notifyImage();
-                    });
-                }
-            };
-
-            waitingTimer.schedule(timerTask, 250);
-        }
-
-        private void runOnUiThread(Runnable r) {
-            handler.post(r);
-        }
     }
-
 }

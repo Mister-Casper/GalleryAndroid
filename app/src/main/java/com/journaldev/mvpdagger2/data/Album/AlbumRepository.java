@@ -1,6 +1,5 @@
 package com.journaldev.mvpdagger2.data.Album;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -12,9 +11,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 
-import com.journaldev.mvpdagger2.data.Image.ImageRepository;
-import com.journaldev.mvpdagger2.data.Image.ImageRepositoryObserver;
+import com.journaldev.mvpdagger2.data.BaseImageObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
+import com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,12 +114,9 @@ public class AlbumRepository {
         return "false";
     }
 
-    public class AlbumObserver extends ContentObserver {
+    public class AlbumObserver extends BaseImageObserver {
 
         private ArrayList<AlbumRepositoryObserver> observers = new ArrayList<>();
-        private Context context;
-        private Timer waitingTimer;
-        private final Handler handler;
 
         public void addImageUrlsRepositoryObserver(AlbumRepositoryObserver repositoryObserver) {
             if (!observers.contains(repositoryObserver)) {
@@ -132,50 +128,25 @@ public class AlbumRepository {
             observers.remove(repositoryObserver);
         }
 
-        public AlbumObserver(Handler handler,Context context) {
-            super(handler);
-            this.context = context;
-            this.handler = handler;
+        AlbumObserver(Handler handler, Context context) {
+            super(handler, context);
         }
 
         @Override
-        public boolean deliverSelfNotifications() {
-            return false;
+        public void loadData(Cursor cursor) {
+            readAlbumsFromCursor(cursor);
         }
 
         @Override
-        public void onChange(boolean arg0) {
-            super.onChange(arg0);
-            sendDelayAction();
+        public Cursor getCursor(Context context) {
+            return AlbumRepository.this.getCursor(context);
         }
 
-        private void sendDelayAction() {
-
-            if (waitingTimer != null) {
-                waitingTimer.cancel();
-                waitingTimer = null;
+        @Override
+        public void notifyImage() {
+            for (int i = 0; i < observers.size(); i++) {
+                observers.get(i).onUpdateAlbum(imageAlbums);
             }
-
-            waitingTimer = new Timer();
-
-            final TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(() -> {
-                        Cursor cursor = getCursor(context);
-                        readAlbumsFromCursor(cursor);
-                        for (int i = 0; i < observers.size(); i++) {
-                            observers.get(i).onUpdateAlbum(imageAlbums);
-                        }
-                    });
-                }
-            };
-
-            waitingTimer.schedule(timerTask, 250);
-        }
-
-        private void runOnUiThread(Runnable r) {
-            handler.post(r);
         }
     }
 }
