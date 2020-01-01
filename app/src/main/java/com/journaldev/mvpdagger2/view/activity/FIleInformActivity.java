@@ -26,7 +26,7 @@ public class FIleInformActivity extends BaseThemeActivity {
 
     @BindView(R.id.path)
     TextView path;
-    @BindView(R.id.chandge)
+    @BindView(R.id.change)
     TextView chandge;
     @BindView(R.id.resolution)
     TextView resolution;
