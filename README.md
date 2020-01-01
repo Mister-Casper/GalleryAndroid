@@ -10,4 +10,10 @@
 ## About GalleryAndroid
 GalleryAndroid is simple and standard gallery for viewing images and gifs on your device
 
-<a href="https://ibb.co/qxSgMjn"><img src="https://i.ibb.co/qxSgMjn/Screenshot-20200101-213907.jpg" alt="Screenshot-20200101-213907" border="0"></a> <a href="https://ibb.co/FKVTpzX"><img src="https://i.ibb.co/FKVTpzX/Screenshot-20200101-213955-1.jpg" alt="Screenshot-20200101-213955-1" border="0"></a> <a href="https://ibb.co/FKVTpzX"><img src="https://i.ibb.co/FKVTpzX/Screenshot-20200101-213955-1.jpg" alt="Screenshot-20200101-213955-1" border="0"></a> <a href="https://ibb.co/NWyVvJS"><img src="https://i.ibb.co/NWyVvJS/Screenshot-20200101-213944-1.jpg" alt="Screenshot-20200101-213944-1" border="0"></a> <a href="https://ibb.co/NWyVvJS"><img src="https://i.ibb.co/NWyVvJS/Screenshot-20200101-213944-1.jpg" alt="Screenshot-20200101-213944-1" border="0"></a> <a href="https://ibb.co/mbSWWkH"><img src="https://i.ibb.co/mbSWWkH/Screenshot-20200101-213937-1.jpg" alt="Screenshot-20200101-213937-1" border="0"></a> <a href="https://ibb.co/mbSWWkH"><img src="https://i.ibb.co/mbSWWkH/Screenshot-20200101-213937-1.jpg" alt="Screenshot-20200101-213937-1" border="0"></a> <a href="https://ibb.co/dGK64xM"><img src="https://i.ibb.co/dGK64xM/Screenshot-20200101-213927-1.jpg" alt="Screenshot-20200101-213927-1" border="0"></a> <a href="https://ibb.co/dGK64xM"><img src="https://i.ibb.co/dGK64xM/Screenshot-20200101-213927-1.jpg" alt="Screenshot-20200101-213927-1" border="0"></a>
+<p align="center">
+<img src="https://i.imgur.com/WvHB376.jpg" width="160">
+<img src="https://i.imgur.com/zcWFojo.jpg" width="160">
+<img src="https://i.imgur.com/xQsdWZ1.jpg" width="160">
+<img src="https://i.imgur.com/evQTa8k.jpg" width="160">
+<img src="https://i.imgur.com/B5ibnzb.jpg" width="160">
+  </p>
