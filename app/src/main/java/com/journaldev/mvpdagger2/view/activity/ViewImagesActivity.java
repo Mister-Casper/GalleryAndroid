@@ -175,12 +175,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
     }
 
     private void selectImageFromId(final int id) {
-        pager.post(new Runnable() {
-            @Override
-            public void run() {
-                pager.setCurrentItem(id, false);
-            }
-        });
+        pager.post(() -> pager.setCurrentItem(id, false));
     }
 
     private String[] getAllPath() {
