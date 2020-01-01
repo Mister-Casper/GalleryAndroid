@@ -23,7 +23,8 @@ import java.util.TimerTask;
 
 
 public class AlbumRepository {
-    private static ArrayList<AlbumModel> imageAlbums;
+    private ArrayList<AlbumModel> imageAlbums;
+    private AlbumObserver albumObserver;
 
     private static final String[] PROJECTION_BUCKET = {
             MediaStore.Images.Media._ID,
@@ -31,34 +32,36 @@ public class AlbumRepository {
             MediaStore.Images.Media.DATA,
     };
 
-    public static ArrayList<AlbumModel> getAllAlbum(Activity context) {
-        if (imageAlbums == null) {
-            readAlbums(context);
-        }
+    public ArrayList<AlbumModel> getAllAlbum() {
         return imageAlbums;
     }
 
-    private static void readAlbums(Activity context) {
+    public AlbumObserver getAlbumObserver() {
+        return albumObserver;
+    }
+
+    public AlbumRepository(Context context) {
         Cursor cursor = getCursor(context);
         readAlbumsFromCursor(cursor);
 
         registerContentObserver(context);
     }
 
-    private static Cursor getCursor(Activity context) {
+    private Cursor getCursor(Context context) {
         return context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, PROJECTION_BUCKET,
                 null, null, null);
     }
 
-    private static void registerContentObserver(Activity context) {
+    private void registerContentObserver(Context context) {
         Handler handler = new Handler(Looper.getMainLooper());
 
+        albumObserver = new AlbumRepository.AlbumObserver(handler, context);
         context.getContentResolver().registerContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                true, new AlbumRepository.AlbumObserver(handler, context));
+                true, albumObserver);
     }
 
-    private static void readAlbumsFromCursor(Cursor cursor) {
+    private void readAlbumsFromCursor(Cursor cursor) {
         if (cursor != null) {
             imageAlbums = new ArrayList<>();
 
@@ -75,7 +78,7 @@ public class AlbumRepository {
         }
     }
 
-    private static void loadAlbum(Uri uri, String albumName) {
+    private void loadAlbum(Uri uri, String albumName) {
         int albumID = getAlbumIdByName(albumName);
         AlbumModel album = imageAlbums.get(albumID);
         String isLikeImage = isLikeImage(uri, ExifInterface.TAG_USER_COMMENT);
@@ -83,12 +86,12 @@ public class AlbumRepository {
         album.getLike().add(isLikeImage);
     }
 
-    private static int createAlbum(String albumName) {
+    private int createAlbum(String albumName) {
         imageAlbums.add(new AlbumModel(albumName));
         return imageAlbums.size() - 1;
     }
 
-    private static int getAlbumIdByName(String albumName) {
+    private int getAlbumIdByName(String albumName) {
         for (int i = 0; i < imageAlbums.size(); i++) {
             if (imageAlbums.get(i).getName().equals(albumName))
                 return i;
@@ -97,7 +100,7 @@ public class AlbumRepository {
         return createAlbum(albumName);
     }
 
-    private static String isLikeImage(Uri uri, String tag) {
+    private String isLikeImage(Uri uri, String tag) {
         ExifInterface exif;
         try {
             exif = new ExifInterface(uri.toString());
@@ -112,25 +115,27 @@ public class AlbumRepository {
         return "false";
     }
 
-    public static class AlbumObserver extends ContentObserver {
+    public class AlbumObserver extends ContentObserver {
 
-        private static ArrayList<AlbumRepositoryObserver> observers = new ArrayList<>();
+        private ArrayList<AlbumRepositoryObserver> observers = new ArrayList<>();
+        private Context context;
+        private Timer waitingTimer;
+        private final Handler handler;
 
-        public static void addImageUrlsRepositoryObserver(AlbumRepositoryObserver repositoryObserver) {
+        public void addImageUrlsRepositoryObserver(AlbumRepositoryObserver repositoryObserver) {
             if (!observers.contains(repositoryObserver)) {
                 observers.add(repositoryObserver);
             }
         }
 
-        public static void removeImageUrlsRepositoryObserver(AlbumRepositoryObserver repositoryObserver) {
+        public void removeImageUrlsRepositoryObserver(AlbumRepositoryObserver repositoryObserver) {
             observers.remove(repositoryObserver);
         }
 
-        Activity context;
-
-        public AlbumObserver(Handler handler,Activity context) {
+        public AlbumObserver(Handler handler,Context context) {
             super(handler);
             this.context = context;
+            this.handler = handler;
         }
 
         @Override
@@ -144,8 +149,6 @@ public class AlbumRepository {
             sendDelayAction();
         }
 
-        private Timer waitingTimer;
-
         private void sendDelayAction() {
 
             if (waitingTimer != null) {
@@ -158,7 +161,7 @@ public class AlbumRepository {
             final TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    context.runOnUiThread(() -> {
+                    runOnUiThread(() -> {
                         Cursor cursor = getCursor(context);
                         readAlbumsFromCursor(cursor);
                         for (int i = 0; i < observers.size(); i++) {
@@ -169,6 +172,10 @@ public class AlbumRepository {
             };
 
             waitingTimer.schedule(timerTask, 250);
+        }
+
+        private void runOnUiThread(Runnable r) {
+            handler.post(r);
         }
     }
 }

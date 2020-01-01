@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.test.espresso.core.internal.deps.guava.collect.Lists;
 
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.Converter.ImageModelConverter;
 import com.journaldev.mvpdagger2.model.ImageModel;
@@ -23,13 +24,13 @@ public class GridImagesFragment extends BaseGridImagesFragment implements ImageR
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ImageRepository.ImageObserver.addImageUrlsRepositoryObserver(this);
+        App.getImageRepository().getImageObserver().addImageUrlsRepositoryObserver(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ImageRepository.ImageObserver.removeImageUrlsRepositoryObserver(this);
+        App.getImageRepository().getImageObserver().removeImageUrlsRepositoryObserver(this);
     }
 
     @Override

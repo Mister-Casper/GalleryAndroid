@@ -59,7 +59,7 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
             images = getArguments().getParcelableArrayList("image");
 
         if (images == null) {
-            images = ImageRepository.getUrls(getActivity());
+            images = App.getImageRepository().getUrls();
         }
     }
 

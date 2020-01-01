@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepository;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
@@ -59,13 +60,13 @@ public class AlbumsFragment extends BaseSelectableFragment implements Selectable
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AlbumRepository.AlbumObserver.addImageUrlsRepositoryObserver(this);
+        App.getAlbumRepository().getAlbumObserver().addImageUrlsRepositoryObserver(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        AlbumRepository.AlbumObserver.removeImageUrlsRepositoryObserver(this);
+        App.getAlbumRepository().getAlbumObserver().removeImageUrlsRepositoryObserver(this);
     }
 
     private void initRecyclerView() {
@@ -82,7 +83,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements Selectable
 
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
-        albums = AlbumRepository.getAllAlbum(getActivity());
+        albums =   App.getAlbumRepository().getAllAlbum();
         initRecyclerView();
         return view;
     }
