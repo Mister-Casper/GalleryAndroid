@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    <CheckBox
         android:theme="@style/MyCheckBox"
         android:visibility="gone"
         android:id="@+id/checked_text_item"
