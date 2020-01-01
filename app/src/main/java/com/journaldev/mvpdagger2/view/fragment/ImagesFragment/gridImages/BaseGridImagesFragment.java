@@ -9,12 +9,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.ImageModel;
+import com.journaldev.mvpdagger2.model.Selectable.ImageSelectableModel;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
@@ -24,6 +27,7 @@ import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHo
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseSelectableFragment;
 
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -108,7 +112,7 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onItemSelected(Selectable item) {
+    public void onItemSelected() {
         selectedItems = adapter.getSelectedItems();
 
         if (!adapter.isSelectable())
@@ -118,7 +122,24 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
         }
     }
 
-    
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.selectLove) {
+            selectOnlyLove();
+        }
+        return super.onMenuItemClick(item);
+    }
+
+    private void selectOnlyLove() {
+        ArrayList<Selectable> items = new ArrayList<>();
+        for (int i = 0; i < images.size(); i++) {
+            ImageModel item = images.get(i);
+            boolean isLike = item.getLike();
+            items.add(new ImageSelectableModel(item, isLike));
+        }
+        getAdapter().setSelectable(true);
+        getAdapter().setImages(items);
+    }
 
     @Override
     protected ArrayList<ImageModel> getImages() {

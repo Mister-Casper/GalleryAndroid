@@ -3,8 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <item
-        android:id="@+id/selectAll"
-        android:title="Выделить все" />
+    android:id="@+id/selectAll"
+    android:title="Выделить все" />
+    <item
+        android:id="@+id/selectLove"
+        android:title="Выделить любимое" />
     <item
         android:id="@+id/offSelectAll"
         android:title="Очистить выделение" />
