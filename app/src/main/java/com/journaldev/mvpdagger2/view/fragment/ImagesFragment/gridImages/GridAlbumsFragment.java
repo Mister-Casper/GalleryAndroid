@@ -48,7 +48,7 @@ public class GridAlbumsFragment extends BaseSelectableFragment implements Select
     Button deleteItemsSelected;
     @BindView(R.id.shareButton)
     Button shareButton;
-    @BindView(R.id.selectablemenu)
+    @BindView(R.id.selectableMenu)
     ConstraintLayout selectablemenu;
     @BindView(R.id.showMenuButton)
     Button showMenuButton;

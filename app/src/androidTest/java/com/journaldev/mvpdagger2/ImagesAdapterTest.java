@@ -112,13 +112,13 @@ public class ImagesAdapterTest {
 
     @Test
     public void testViewSelectableMenu() {
-        android.support.constraint.ConstraintLayout menu = mActivityRule.getActivity().findViewById(R.id.selectablemenu);
+        android.support.constraint.ConstraintLayout menu = mActivityRule.getActivity().findViewById(R.id.selectableMenu);
         Assert.assertEquals(menu.getVisibility(), View.GONE);
     }
 
     @Test
     public void testViewSelectableMenuAfterLongClick() {
-        android.support.constraint.ConstraintLayout menu = mActivityRule.getActivity().findViewById(R.id.selectablemenu);
+        android.support.constraint.ConstraintLayout menu = mActivityRule.getActivity().findViewById(R.id.selectableMenu);
         onView(withId(R.id.DataList)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, longClickChildViewWithId(R.id.picture)));
         Assert.assertEquals(menu.getVisibility(), View.VISIBLE);
