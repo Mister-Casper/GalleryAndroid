@@ -106,7 +106,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
         ArrayList<ImageModel> uri = getIntent().getParcelableArrayListExtra("uri");
 
         if (uri == null)
-            uri = ImageRepository.getUrls(this);
+            uri = App.getImageRepository().getUrls();
 
         return uri;
     }
@@ -273,6 +273,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
             exif.setAttribute(ExifInterface.TAG_USER_COMMENT, like.toString());
             exif.saveAttributes();
             imageModels.get(pager.getCurrentItem()).setLike(like);
+           App.getImageRepository().getImageObserver().onChange(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
