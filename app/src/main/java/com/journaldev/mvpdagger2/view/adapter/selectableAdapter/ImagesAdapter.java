@@ -24,7 +24,7 @@ public class ImagesAdapter extends BaseSelectableAdapter {
 
     @Override
     public SelectableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView =  mInflater.inflate(R.layout.imageitem, parent, false);
+        View itemView = mInflater.inflate(R.layout.imageitem, parent, false);
         return new SelectableViewHolder(itemView, selectedItemClickListener);
     }
 
