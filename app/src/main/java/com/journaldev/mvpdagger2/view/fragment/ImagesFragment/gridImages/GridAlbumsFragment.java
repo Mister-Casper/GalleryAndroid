@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.AlbumsAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHolder;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseSelectableFragment;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class AlbumsFragment extends BaseSelectableFragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver {
+public class GridAlbumsFragment extends BaseSelectableFragment implements SelectableViewHolder.OnItemClickListener, SelectableViewHolder.OnItemSelectedListener, AlbumRepositoryObserver {
 
     @BindView(R.id.field)
     RecyclerView field;

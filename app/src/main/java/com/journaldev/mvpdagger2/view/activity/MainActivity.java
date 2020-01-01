@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
-import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.AlbumsFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.GridAlbumsFragment;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.GridImagesFragment;
 
 import butterknife.BindView;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseThemeActivity {
 
     private FragmentPagerAdapter loadAdapter() {
         GridImagesFragment fragment1 = new GridImagesFragment();
-        AlbumsFragment fragment2 = new AlbumsFragment();
+        GridAlbumsFragment fragment2 = new GridAlbumsFragment();
         PreferenceScreenFragment fragment3 = new PreferenceScreenFragment();
 
         final FragmentPagerAdapter adapter = new FragmentPagerAdapter
