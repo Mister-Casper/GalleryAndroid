@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.application.App;
 
 public class DialogsUtils {
 
@@ -34,7 +35,7 @@ public class DialogsUtils {
             dialogsListener.createAlbum(albumText.getText().toString());
             createAlbumDialog.cancel();
         }else
-            albumText.setError("Введите название альбома");
+            albumText.setError(App.getApp().getString(R.string.enter_album_name));
     }
 
 

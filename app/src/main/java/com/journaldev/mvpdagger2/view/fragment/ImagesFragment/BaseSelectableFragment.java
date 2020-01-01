@@ -49,7 +49,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
                 getAdapter().setItemsSelectable(false);
                 return true;
             case R.id.createAlbum:
-                DialogsUtils.showAlbumNameDialog(getContext(), "Название альбома", this);
+                DialogsUtils.showAlbumNameDialog(getContext(), getString(R.string.album_name), this);
                 return true;
         }
         return false;
@@ -116,12 +116,12 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
     public void deleteItemsSelectedClick() {
         if (getSelectedItems().size() != 0) {
             ImageHelper.createDeleteImageAlertDialog(getActivity(),
-                    "Вы действительно хотите удалить изображения?"
+                    getString(R.string.delete_images_confirmation)
                     , this);
         } else {
             createErrorAlertDialog(
                     getActivity()
-                    , "Выберите изображения , которые хотите удалить");
+                    , getString(R.string.select_image_for_delete));
         }
 
     }

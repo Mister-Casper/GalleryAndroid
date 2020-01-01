@@ -4,8 +4,8 @@
     android:layout_height="wrap_content">
     <item
         android:id="@+id/info"
-        android:title="Справка" />
+        android:title="@string/menu_info" />
     <item
         android:id="@+id/wallpaper"
-        android:title="Использовать как обои" />
+        android:title="@string/menu_wallpaper" />
 </menu>

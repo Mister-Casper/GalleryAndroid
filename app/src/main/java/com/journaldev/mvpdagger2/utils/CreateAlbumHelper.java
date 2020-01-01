@@ -101,7 +101,9 @@ public class CreateAlbumHelper {
                 moveImageToNewFolder(images.get(i), folderPath);
                 progress += stepMoveProgress;
                 countImageMove++;
-                publishProgress(progress.toString(), "Перемещено изображений : " + countImageMove + " / " + countAllImage);
+                publishProgress(progress.toString(),
+                        context.getString(R.string.create_folder_status_move_image)
+                                + countImageMove + " / " + countAllImage);
             }
         }
 
@@ -113,7 +115,9 @@ public class CreateAlbumHelper {
                 }
                 progress += stepSyncProgress;
                 countImageSync++;
-                publishProgress(progress.toString(), "Синхранизировано изображений : " + countImageSync + " / " + countAllImageSync);
+                publishProgress(progress.toString(),
+                        context.getString(R.string.create_folder_status_sync_image)
+                                + countImageSync + " / " + countAllImageSync);
             });
         }
 

@@ -242,7 +242,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
     @OnClick(R.id.deleteImage)
     public void clickDeleteImage() {
         ImageHelper.createDeleteImageAlertDialog(this,
-                "Вы действительно хотите удалить изображение?", this);
+                this.getString(R.string.delete_image_confirmation), this);
     }
 
     private void deleteImage() {

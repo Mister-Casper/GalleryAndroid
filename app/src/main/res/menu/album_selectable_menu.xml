@@ -4,11 +4,11 @@
     android:layout_height="wrap_content">
     <item
         android:id="@+id/selectAll"
-        android:title="Выделить все" />
+        android:title="@string/menu_selectAll" />
     <item
         android:id="@+id/offSelectAll"
-        android:title="Очистить выделение" />
+        android:title="@string/menu_offSelectAll" />
     <item
         android:id="@+id/createAlbum"
-        android:title="Объединить в один альбом" />
+        android:title="@string/menu_createAlbum" />
 </menu>

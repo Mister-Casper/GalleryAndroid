@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -79,7 +80,8 @@ public class FIleInformActivity extends BaseThemeActivity {
     private String convertFileWeightToString(double fileWeight) {
         int prefixLength = 1024;
         int prefixId = 0;
-        String[] prefix = new String[]{"Б", "КБ", "МБ"};
+        String[] prefix = new String[]{this.getString(R.string.bytes),
+                this.getString(R.string.kilobytes),this.getString(R.string.megabytes)};
 
         while (fileWeight / prefixLength >= 1) {
             prefixId++;

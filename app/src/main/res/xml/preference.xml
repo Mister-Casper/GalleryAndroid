@@ -5,15 +5,15 @@
     <SwitchPreference
         android:id="@+id/anim"
         android:key="isAnim"
-        android:title="Анимации"
-        android:summary="Вы можете отключить анимации для оптимизации"
+        android:title="@string/preference_animation"
+        android:summary="@string/preference_animation_description"
         android:defaultValue="true"/>
 
     <SwitchPreference
         android:id="@+id/darkTheme"
         android:key="isDarkTheme"
-        android:title="Темная тема"
-        android:summary="Вы можете выбрать тему"
+        android:title="@string/preference_theme"
+        android:summary="@string/preference_theme_description"
         android:defaultValue="true"/>
 
     <SwitchPreference

@@ -12,6 +12,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import java.io.File;
@@ -73,9 +74,9 @@ public class ImageHelper {
                 = WallpaperManager.getInstance(context);
         try {
             myWallpaperManager.setBitmap(Wallpaper);
-            Toast.makeText(context,"Обои установленны",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,context.getString(R.string.setting_wallpaper_successful),Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Toast.makeText(context,"Не удалось установить обои",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,context.getString(R.string.setting_wallpaper_fail),Toast.LENGTH_LONG).show();
         }
     }
 

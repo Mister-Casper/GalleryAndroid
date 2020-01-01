@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Путь : "
+                android:text="@string/file_info_path"
                 android:textSize="16dp" />
 
             <TextView
@@ -45,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Изменен : "
+                android:text="@string/file_info_change_date"
                 android:textSize="16sp" />
 
             <TextView
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Разрешение : "
+                android:text="@string/file_info_resolution"
                 android:textSize="16sp" />
 
             <TextView
@@ -85,7 +85,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Размер : "
+                android:text="@string/file_info_weight"
                 android:textSize="16sp" />
 
             <TextView
@@ -95,11 +95,4 @@
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="Свединия"
-        android:textSize="20sp" />
 </LinearLayout>
