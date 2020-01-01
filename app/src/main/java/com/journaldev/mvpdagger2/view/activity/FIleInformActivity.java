@@ -1,7 +1,6 @@
 package com.journaldev.mvpdagger2.view.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -74,22 +73,22 @@ public class FIleInformActivity extends BaseThemeActivity {
                 + date.get(Calendar.YEAR));
 
         resolution.setText(bmp.getWidth() + "×" + bmp.getHeight());
-        size.setText(convertFileLengthToString(FileByUri.length()));
+        size.setText(convertFileWeightToString(FileByUri.length()));
     }
 
-    private String convertFileLengthToString(double length) {
+    private String convertFileWeightToString(double fileWeight) {
         int prefixLength = 1024;
         int prefixId = 0;
         String[] prefix = new String[]{"Б", "КБ", "МБ"};
 
-        while (length / prefixLength >= 1) {
+        while (fileWeight / prefixLength >= 1) {
             prefixId++;
-            length /= prefixLength;
+            fileWeight /= prefixLength;
         }
 
-        double roundValue = new BigDecimal(length).setScale(2, RoundingMode.UP).doubleValue();
-        String resultLength = roundValue + " " + prefix[prefixId];
-        return resultLength;
+        double roundFileWeight = new BigDecimal(fileWeight).setScale(2, RoundingMode.UP).doubleValue();
+        String resultWeight = roundFileWeight + " " + prefix[prefixId];
+        return resultWeight;
     }
 
     private Uri getUri() {
