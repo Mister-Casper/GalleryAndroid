@@ -79,7 +79,7 @@ public class GridAlbumsFragment extends BaseSelectableFragment implements Select
 
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
-        albums =   App.getAlbumRepository().getAllAlbum();
+        albums = App.getAlbumRepository().getAllAlbum();
         initRecyclerView();
         return view;
     }
@@ -102,7 +102,7 @@ public class GridAlbumsFragment extends BaseSelectableFragment implements Select
     }
 
     @Override
-    public void onItemSelected(Selectable item) {
+    public void onItemSelected() {
         selectedItems = albumsAdapter.getSelectedItems();
 
         if (!albumsAdapter.isSelectable())

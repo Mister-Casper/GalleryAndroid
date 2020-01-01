@@ -27,7 +27,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
         selectMultiPhoto = itemView.findViewById(R.id.checked_text_item);
         selectMultiPhoto.setOnClickListener(view -> {
             setChecked(!item.isSelected());
-            itemSelectedListener.onItemSelected(item);
+            itemSelectedListener.onItemSelected();
         });
     }
 
@@ -40,7 +40,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
     }
 
     public interface OnItemSelectedListener {
-        void onItemSelected(Selectable item);
+        void onItemSelected();
     }
 }
 

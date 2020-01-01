@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.application.App;
-import com.journaldev.mvpdagger2.model.Selectable.AlbumSelectable;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
 import java.util.ArrayList;
@@ -45,6 +44,7 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
     public void setImages(ArrayList<Selectable> items) {
         this.items = items;
         notifyDataSetChanged();
+        selectedItemClickListener.onItemSelected();
     }
 
     void settingSelectableMod(SelectableViewHolder holder, Selectable selectableItem) {
@@ -77,45 +77,45 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
     @Override
     public void onBindViewHolder(@NonNull SelectableViewHolder holder, int position) {
         Selectable selectableItem = items.get(position);
-        setImageClickListener(holder, position, selectableItem);
+        setImageClickListener(holder, position);
         holder.item = selectableItem;
         holder.setChecked(holder.item.isSelected());
         settingSelectableMod(holder, selectableItem);
     }
 
-    void setImageClickListener(final SelectableViewHolder holder, final int position, final Selectable selectableItem) {
-        setImageOnClickListener(holder, position, selectableItem);
-        setImageLongClickListener(holder, selectableItem);
+    private void setImageClickListener(final SelectableViewHolder holder, final int position) {
+        setImageOnClickListener(holder, position);
+        setImageLongClickListener(holder);
     }
 
-    private void setImageOnClickListener(final SelectableViewHolder holder, final int position, final Selectable selectableItem) {
+    private void setImageOnClickListener(final SelectableViewHolder holder, final int position) {
         holder.image.setOnClickListener(view -> {
             if (!isSelectable)
                 itemClickListener.onItemClick(view, position);
             else {
-                checkedCheckBox(holder, selectableItem);
+                checkedCheckBox(holder);
             }
         });
     }
 
-    private void setImageLongClickListener(final SelectableViewHolder holder, final Selectable selectableItem) {
+    private void setImageLongClickListener(final SelectableViewHolder holder) {
         holder.image.setOnLongClickListener(view -> {
             setSelectable(!isSelectable);
-            checkedCheckBox(holder, selectableItem);
+            checkedCheckBox(holder);
             return false;
         });
     }
 
-    private void checkedCheckBox(SelectableViewHolder holder, Selectable selectableItem) {
+    private void checkedCheckBox(SelectableViewHolder holder) {
         boolean checked = !holder.selectMultiPhoto.isChecked();
         holder.selectMultiPhoto.setChecked(checked);
         holder.setChecked(holder.selectMultiPhoto.isChecked());
-        onItemSelected(selectableItem);
-        selectedItemClickListener.onItemSelected(selectableItem);
+        onItemSelected();
+        selectedItemClickListener.onItemSelected();
     }
 
-    private void onItemSelected(Selectable item) {
-        selectedItemClickListener.onItemSelected(item);
+    private void onItemSelected() {
+        selectedItemClickListener.onItemSelected();
     }
 
     void setTransitionName(SelectableViewHolder holder, int position) {
@@ -137,7 +137,7 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
         for (int i = 0; i < items.size(); i++) {
             items.get(i).setSelected(selectable);
         }
-        selectedItemClickListener.onItemSelected(null);
+        selectedItemClickListener.onItemSelected();
         notifyDataSetChanged();
     }
 

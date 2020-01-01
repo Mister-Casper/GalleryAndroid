@@ -10,4 +10,5 @@ public interface SelectableAdapter {
     boolean isSelectable();
     void notifyDataSetChanged();
     ArrayList<Selectable> getSelectedItems();
+    void setImages(ArrayList<Selectable> items);
 }
