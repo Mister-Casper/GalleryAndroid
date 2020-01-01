@@ -10,13 +10,4 @@
 ## About GalleryAndroid
 GalleryAndroid is simple and standard gallery for viewing images and gifs on your device
 
-<img src="https://i.ibb.co/qxSgMjn/Screenshot-20200101-213907.jpg" alt="Screenshot-20200101-213907" border="0"></a> 
-<img src="https://i.ibb.co/qxSgMjn/Screenshot-20200101-213907.jpg" alt="Screenshot-20200101-213907" border="0"></a> 
-<img src="https://i.ibb.co/FKVTpzX/Screenshot-20200101-213955-1.jpg" alt="Screenshot-20200101-213955-1" border="0"></a> 
-<img src="https://i.ibb.co/FKVTpzX/Screenshot-20200101-213955-1.jpg" alt="Screenshot-20200101-213955-1" border="0"></a>
-<img src="https://i.ibb.co/NWyVvJS/Screenshot-20200101-213944-1.jpg" alt="Screenshot-20200101-213944-1" border="0"></a>
-<img src="https://i.ibb.co/NWyVvJS/Screenshot-20200101-213944-1.jpg" alt="Screenshot-20200101-213944-1" border="0"></a> 
-<img src="https://i.ibb.co/mbSWWkH/Screenshot-20200101-213937-1.jpg" alt="Screenshot-20200101-213937-1" border="0"></a> 
-<img src="https://i.ibb.co/mbSWWkH/Screenshot-20200101-213937-1.jpg" alt="Screenshot-20200101-213937-1" border="0"></a>
-<img src="https://i.ibb.co/dGK64xM/Screenshot-20200101-213927-1.jpg" alt="Screenshot-20200101-213927-1" border="0"></a> 
-<img src="https://i.ibb.co/dGK64xM/Screenshot-20200101-213927-1.jpg" alt="Screenshot-20200101-213927-1" border="0"></a>
+<a href="https://ibb.co/qxSgMjn"><img src="https://i.ibb.co/qxSgMjn/Screenshot-20200101-213907.jpg" alt="Screenshot-20200101-213907" border="0"></a> <a href="https://ibb.co/FKVTpzX"><img src="https://i.ibb.co/FKVTpzX/Screenshot-20200101-213955-1.jpg" alt="Screenshot-20200101-213955-1" border="0"></a> <a href="https://ibb.co/FKVTpzX"><img src="https://i.ibb.co/FKVTpzX/Screenshot-20200101-213955-1.jpg" alt="Screenshot-20200101-213955-1" border="0"></a> <a href="https://ibb.co/NWyVvJS"><img src="https://i.ibb.co/NWyVvJS/Screenshot-20200101-213944-1.jpg" alt="Screenshot-20200101-213944-1" border="0"></a> <a href="https://ibb.co/NWyVvJS"><img src="https://i.ibb.co/NWyVvJS/Screenshot-20200101-213944-1.jpg" alt="Screenshot-20200101-213944-1" border="0"></a> <a href="https://ibb.co/mbSWWkH"><img src="https://i.ibb.co/mbSWWkH/Screenshot-20200101-213937-1.jpg" alt="Screenshot-20200101-213937-1" border="0"></a> <a href="https://ibb.co/mbSWWkH"><img src="https://i.ibb.co/mbSWWkH/Screenshot-20200101-213937-1.jpg" alt="Screenshot-20200101-213937-1" border="0"></a> <a href="https://ibb.co/dGK64xM"><img src="https://i.ibb.co/dGK64xM/Screenshot-20200101-213927-1.jpg" alt="Screenshot-20200101-213927-1" border="0"></a> <a href="https://ibb.co/dGK64xM"><img src="https://i.ibb.co/dGK64xM/Screenshot-20200101-213927-1.jpg" alt="Screenshot-20200101-213927-1" border="0"></a>
