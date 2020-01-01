@@ -1,7 +1,6 @@
 package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -12,16 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.application.App;
-import com.journaldev.mvpdagger2.data.Album.AlbumRepository;
 import com.journaldev.mvpdagger2.data.Album.AlbumRepositoryObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
 import com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter;
 import com.journaldev.mvpdagger2.model.ImageModel;
-import com.journaldev.mvpdagger2.model.Selectable.AlbumSelectable;
-import com.journaldev.mvpdagger2.model.Selectable.AlbumSelectableModel;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesGridActivity;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.AlbumsAdapter;
@@ -96,28 +91,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements Selectable
     }
 
     private ArrayList<ImageModel> getImagesFromAlbum(int position) {
-        ArrayList<ImageModel> images = new ArrayList<>();
-
-        ArrayList<String> uri = convertArraysUrlToArraysString(position);
-        ArrayList<String> like = convertArraysLikeToArraysString(position);
-
-        for (int i = 0; i < uri.size(); i++) {
-            images.add(new ImageModel(Uri.parse(uri.get(i)), Boolean.parseBoolean(like.get(i))));
-        }
-
-        return images;
-    }
-
-    private ArrayList<String> convertArraysUrlToArraysString(int id) {
-        ArrayList<Uri> uri = albums.get(id).getUri();
-        ArrayList<String> strUri = new ArrayList<>();
-        for (int i = 0; i < uri.size(); i++)
-            strUri.add(uri.get(i).toString());
-        return strUri;
-    }
-
-    private ArrayList<String> convertArraysLikeToArraysString(int id) {
-        return albums.get(id).getLike();
+        return albums.get(position).getImages();
     }
 
     @Override

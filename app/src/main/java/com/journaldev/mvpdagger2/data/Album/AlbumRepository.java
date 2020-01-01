@@ -1,25 +1,17 @@
 package com.journaldev.mvpdagger2.data.Album;
 
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
-
 import androidx.exifinterface.media.ExifInterface;
-
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-
 import com.journaldev.mvpdagger2.data.BaseImageObserver;
 import com.journaldev.mvpdagger2.model.AlbumModel;
-import com.journaldev.mvpdagger2.model.Converter.AlbumModelConverter;
-
+import com.journaldev.mvpdagger2.model.ImageModel;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 public class AlbumRepository {
     private ArrayList<AlbumModel> imageAlbums;
@@ -80,9 +72,8 @@ public class AlbumRepository {
     private void loadAlbum(Uri uri, String albumName) {
         int albumID = getAlbumIdByName(albumName);
         AlbumModel album = imageAlbums.get(albumID);
-        String isLikeImage = isLikeImage(uri, ExifInterface.TAG_USER_COMMENT);
-        album.getUri().add(uri);
-        album.getLike().add(isLikeImage);
+        boolean isLikeImage = isLikeImage(uri, ExifInterface.TAG_USER_COMMENT);
+        album.getImages().add(new ImageModel(uri,isLikeImage));
     }
 
     private int createAlbum(String albumName) {
@@ -99,19 +90,19 @@ public class AlbumRepository {
         return createAlbum(albumName);
     }
 
-    private String isLikeImage(Uri uri, String tag) {
+    private boolean isLikeImage(Uri uri, String tag) {
         ExifInterface exif;
         try {
             exif = new ExifInterface(uri.toString());
             String attribute = exif.getAttribute(tag);
 
             if (attribute != null)
-                return attribute;
+                return Boolean.parseBoolean(attribute);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "false";
+        return false;
     }
 
     public class AlbumObserver extends BaseImageObserver {
