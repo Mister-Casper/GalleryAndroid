@@ -125,7 +125,7 @@ public class AlbumsFragment extends BaseSelectableFragment implements Selectable
     }
 
     @Override
-    ArrayList<ImageModel> getImages() {
+    protected ArrayList<ImageModel> getImages() {
         ArrayList<ImageModel> images = new ArrayList<>();
 
         for (int i = 0; i < albums.size(); i++) {
@@ -136,27 +136,27 @@ public class AlbumsFragment extends BaseSelectableFragment implements Selectable
     }
 
     @Override
-    ArrayList<Selectable> getSelectedItems() {
+    protected ArrayList<Selectable> getSelectedItems() {
         return selectedItems;
     }
 
     @Override
-    void setSelectedItems(ArrayList<Selectable> selectedItems) {
+    protected void setSelectedItems(ArrayList<Selectable> selectedItems) {
         this.selectedItems = selectedItems;
     }
 
     @Override
-    public void showStartInstrumentsMenu() {
+    protected void showStartInstrumentsMenu() {
         selectablemenu.setVisibility(View.GONE);
     }
 
     @Override
-    SelectableAdapter getAdapter() {
+    protected SelectableAdapter getAdapter() {
         return albumsAdapter;
     }
 
     @Override
-    int getMenu() {
+    protected int getMenu() {
         return R.menu.album_selectable_menu;
     }
 }

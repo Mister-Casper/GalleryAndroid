@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
@@ -21,6 +21,8 @@ import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.ImagesAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHolder;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseSelectableFragment;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -117,17 +119,17 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
     }
 
     @Override
-    ArrayList<ImageModel> getImages() {
+    protected ArrayList<ImageModel> getImages() {
         return images;
     }
 
     @Override
-    ArrayList<Selectable> getSelectedItems() {
+    protected ArrayList<Selectable> getSelectedItems() {
         return selectedItems;
     }
 
     @Override
-    void setSelectedItems(ArrayList<Selectable> selectedItems) {
+    protected void setSelectedItems(ArrayList<Selectable> selectedItems) {
         this.selectedItems = selectedItems;
     }
 
@@ -136,12 +138,12 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
     }
 
     @Override
-    SelectableAdapter getAdapter() {
+    protected SelectableAdapter getAdapter() {
         return adapter;
     }
 
     @Override
-    int getMenu() {
+    protected int getMenu() {
         return R.menu.image_selectable_menu;
     }
 }

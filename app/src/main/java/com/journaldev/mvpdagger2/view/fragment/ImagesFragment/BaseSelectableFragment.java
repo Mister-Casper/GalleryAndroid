@@ -135,16 +135,16 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
         getAdapter().setSelectable(false);
     }
 
-    abstract ArrayList<ImageModel> getImages();
+    abstract protected ArrayList<ImageModel> getImages();
 
-    abstract ArrayList<Selectable> getSelectedItems();
+    abstract protected ArrayList<Selectable> getSelectedItems();
 
-    abstract void setSelectedItems(ArrayList<Selectable> selectedItems);
+    abstract protected void setSelectedItems(ArrayList<Selectable> selectedItems);
 
-    abstract void showStartInstrumentsMenu();
+    abstract protected void showStartInstrumentsMenu();
 
-    abstract SelectableAdapter getAdapter();
+    abstract protected SelectableAdapter getAdapter();
 
-    abstract int getMenu();
+    abstract protected int getMenu();
 
 }
