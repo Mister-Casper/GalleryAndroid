@@ -11,9 +11,12 @@
 GalleryAndroid is simple and standard gallery for viewing images and gifs on your device
 
 <p align="center">
-<img src="https://i.imgur.com/WvHB376.jpg" width="160">
-<img src="https://i.imgur.com/zcWFojo.jpg" width="160">
-<img src="https://i.imgur.com/xQsdWZ1.jpg" width="160">
-<img src="https://i.imgur.com/evQTa8k.jpg" width="160">
-<img src="https://i.imgur.com/B5ibnzb.jpg" width="160">
+    <img src="https://i.imgur.com/7xojy4R.jpg" width="200">
+    <img src="https://i.imgur.com/AEeCToY.jpg" width="200">
+    <img src="https://i.imgur.com/QmqEIlN.jpg" width="200">
+    <img src="https://i.imgur.com/dn4FkkL.jpg" width="200">
+    <img src="https://i.imgur.com/7c78sGs.jpg" width="200">
+    <img src="https://i.imgur.com/PjoFjd5.jpg" width="200">
+    <img src="https://i.imgur.com/ShoIChb.jpg" width="200">
+    <img src="https://i.imgur.com/YwJRQAc.jpg" width="200">
   </p>
