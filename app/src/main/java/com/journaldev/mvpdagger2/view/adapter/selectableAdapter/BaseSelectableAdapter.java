@@ -5,12 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.utils.GlideUtils;
+
 import java.util.ArrayList;
 
 abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableViewHolder> implements SelectableAdapter {
@@ -36,7 +38,7 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
     }
 
     public void setSelectable(boolean value) {
-        if(isSelectableMode) {
+        if (isSelectableMode) {
             if (value)
                 setItemsSelectable(false);
             isSelectable = value;
@@ -65,7 +67,7 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
         }
     }
 
-    void showUri(SelectableViewHolder holder,Uri uri) {
+    void showUri(SelectableViewHolder holder, Uri uri) {
         RequestOptions options = new RequestOptions();
         options = options.sizeMultiplier(0.75f);
         options = options.centerCrop();
@@ -115,11 +117,13 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
     }
 
     private void checkedCheckBox(SelectableViewHolder holder) {
-        boolean checked = !holder.selectMultiPhoto.isChecked();
-        holder.selectMultiPhoto.setChecked(checked);
-        holder.setChecked(holder.selectMultiPhoto.isChecked());
-        onItemSelected();
-        selectedItemClickListener.onItemSelected();
+        if (isSelectableMode) {
+            boolean checked = !holder.selectMultiPhoto.isChecked();
+            holder.selectMultiPhoto.setChecked(checked);
+            holder.setChecked(holder.selectMultiPhoto.isChecked());
+            onItemSelected();
+            selectedItemClickListener.onItemSelected();
+        }
     }
 
     private void onItemSelected() {

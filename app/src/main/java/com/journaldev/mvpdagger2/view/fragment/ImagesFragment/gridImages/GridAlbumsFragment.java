@@ -65,7 +65,7 @@ public class GridAlbumsFragment extends BaseSelectableFragment implements Select
         App.getAlbumRepository().getAlbumObserver().removeImageUrlsRepositoryObserver(this);
     }
 
-    private void initRecyclerView() {
+    protected void initRecyclerView(ArrayList<AlbumModel> albums) {
         field.setLayoutManager(new GridLayoutManager(getContext(), 2));
         albumsAdapter = new AlbumsAdapter(getContext(), albums);
         albumsAdapter.setSelectedItemClickListener(this);
@@ -80,10 +80,9 @@ public class GridAlbumsFragment extends BaseSelectableFragment implements Select
         View view = inflater.inflate(R.layout.fragment_albums, container, false);
         unbinder = ButterKnife.bind(this, view);
         albums = App.getAlbumRepository().getAllAlbum();
-        initRecyclerView();
+        initRecyclerView(albums);
         return view;
     }
-
 
     @Override
     public void onDestroyView() {
