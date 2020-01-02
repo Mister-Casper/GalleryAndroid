@@ -43,6 +43,12 @@ public class ImageModel implements Parcelable {
         this.isLike = isLike;
     }
 
+    public ImageModel(Uri photo) {
+        this.photo = photo;
+        this.isLike = false;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;

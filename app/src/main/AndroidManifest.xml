@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.journaldev.mvpdagger2">
 
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".application.App"
         android:allowBackup="true"
@@ -14,7 +18,6 @@
         <activity
             android:name=".view.activity.ViewImagesGridActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait">
@@ -24,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.ViewImagesActivity"
             android:screenOrientation="portrait">
@@ -37,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.FIleInformActivity" />
+        <activity android:name=".view.activity.GetAlbumActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -48,9 +51,5 @@
                 android:resource="@xml/filepaths" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

@@ -15,6 +15,7 @@
     <string name="menu_selectLove">Select favorite</string>
     <string name="menu_info">Information</string>
     <string name="menu_wallpaper">Use as wallpaper</string>
+    <string name="menu_move">Move</string>
 
     <string name="tab_images">images</string>
     <string name="tab_albums">albums</string>
@@ -50,4 +51,7 @@
     <string name="enter_album_name">Enter album name.</string>
 
     <string name="delete">delete</string>
+
+    <string name="create_album">Create album</string>
+
 </resources>

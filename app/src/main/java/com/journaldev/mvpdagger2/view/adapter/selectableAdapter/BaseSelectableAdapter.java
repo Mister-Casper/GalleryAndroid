@@ -19,6 +19,7 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
     SelectableViewHolder.OnItemSelectedListener selectedItemClickListener;
 
     boolean isSelectable = false;
+    boolean isSelectableMode = true;
     LayoutInflater mInflater;
     ArrayList<Selectable> items = new ArrayList<>();
 
@@ -35,10 +36,17 @@ abstract class BaseSelectableAdapter extends RecyclerView.Adapter<SelectableView
     }
 
     public void setSelectable(boolean value) {
-        if (value)
-            setItemsSelectable(false);
-        isSelectable = value;
-        notifyDataSetChanged();
+        if(isSelectableMode) {
+            if (value)
+                setItemsSelectable(false);
+            isSelectable = value;
+            notifyDataSetChanged();
+        }
+    }
+
+    public void setSelectableMode(boolean selectableMode) {
+        setSelectable(false);
+        isSelectableMode = selectableMode;
     }
 
     public void setImages(ArrayList<Selectable> items) {

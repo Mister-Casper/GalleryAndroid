@@ -14,4 +14,7 @@
     <item
         android:id="@+id/createAlbum"
         android:title="@string/menu_createAlbum" />
+    <item
+        android:id="@+id/move"
+        android:title="@string/menu_move" />
     </menu>

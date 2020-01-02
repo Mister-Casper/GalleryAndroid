@@ -20,11 +20,13 @@ import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable.ImageSelectableModel;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
 import com.journaldev.mvpdagger2.application.App;
+import com.journaldev.mvpdagger2.view.activity.GetAlbumActivity;
 import com.journaldev.mvpdagger2.view.activity.ViewImagesActivity;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.ImagesAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableAdapter;
 import com.journaldev.mvpdagger2.view.adapter.selectableAdapter.SelectableViewHolder;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.BaseSelectableFragment;
+import com.journaldev.mvpdagger2.view.utils.DialogsUtils;
 
 import java.util.ArrayList;
 
@@ -127,7 +129,27 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
         if (item.getItemId() == R.id.selectLove) {
             selectOnlyLove();
         }
+        if (item.getItemId() == R.id.move) {
+            Intent intent = new Intent(getActivity(), GetAlbumActivity.class);
+            startActivityForResult(intent, 1);
+        }
         return super.onMenuItemClick(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            String albumName = data.getStringExtra("albumName");
+            boolean isCreate = data.getBooleanExtra("isCreateAlbum",false);
+
+            if (isCreate) {
+                DialogsUtils.showAlbumNameDialog(getContext(), getString(R.string.album_name), this);
+            } else {
+                createAlbum(albumName);
+            }
+
+        }
     }
 
     private void selectOnlyLove() {
