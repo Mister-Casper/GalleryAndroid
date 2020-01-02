@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Галерея</string>
+    <string name="transition_name">name%1$d</string>
+
+    <string name="preference_animation">Анимации</string>
+    <string name="preference_animation_description">Вы можете отключить анимации для оптимизации.</string>
+    <string name="preference_theme">Темная тема</string>
+    <string name="preference_theme_description">Вы можете выбрать тему.</string>
+    <string name="preference_caching">Кэширование</string>
+    <string name="preference_caching_description">Сохранение изображений в памяти. Отключение уменьшит занимаемое приложением место , но увеличит время загрузки.</string>
+
+    <string name="menu_selectAll">Выделить все</string>
+    <string name="menu_offSelectAll">Очистить выделение</string>
+    <string name="menu_createAlbum">Объединить в один альбом</string>
+    <string name="menu_selectLove">Выделить любимое</string>
+    <string name="menu_info">Справка</string>
+    <string name="menu_wallpaper">Использовать как обои</string>
+
+    <string name="tab_images">изображения</string>
+    <string name="tab_albums">альбомы</string>
+    <string name="tab_preference">настройки</string>
+
+    <string name="file_info_path">Путь : </string>
+    <string name="file_info_change_date">Изменен : </string>
+    <string name="file_info_resolution">Разрешение : </string>
+    <string name="file_info_weight">Размер : </string>
+
+    <string name="create_album_dialog_album">Альбом</string>
+    <string name="create_album_dialog_cancel">отмена</string>
+    <string name="create_album_dialog_ok">ок</string>
+
+    <string name="create_folder_dialog_createNewFolder">Создание нового альбома</string>
+
+    <string name="create_folder_status_move_image">Перемещено изображений : </string>
+    <string name="create_folder_status_sync_image">Синхранизировано изображений :  </string>
+
+    <string name="setting_wallpaper_successful">Обои установленны</string>
+    <string name="setting_wallpaper_fail">Не удалось установить обои</string>
+
+    <string name="bytes">Б</string>
+    <string name="kilobytes">КБ</string>
+    <string name="megabytes">МБ</string>
+
+    <string name="delete_image_confirmation">Вы действительно хотите удалить изображение?</string>
+    <string name="delete_images_confirmation">Вы действительно хотите удалить изображения?</string>
+
+    <string name="album_name">Название альбома</string>
+
+    <string name="select_image_for_delete">"Выберите изображения , которые хотите удалить"</string>
+    <string name="enter_album_name">Введите название альбома</string>
+
+    <string name="delete">удалить</string>
+</resources>

@@ -47,8 +47,8 @@ public class ImageHelper {
     public static AlertDialog createDeleteImageAlertDialog(Activity activity, String message, final alertDialogListener listener) {
         AlertDialog.Builder ad = new AlertDialog.Builder(activity);
         ad.setMessage(message);
-        ad.setPositiveButton("Удалить", (dialog, arg1) -> listener.deleteClick());
-        ad.setNegativeButton("Отмена",null);
+        ad.setPositiveButton(context.getString(R.string.delete), (dialog, arg1) -> listener.deleteClick());
+        ad.setNegativeButton(context.getString(R.string.create_album_dialog_cancel),null);
         return ad.show();
     }
 
