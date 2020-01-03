@@ -12,7 +12,7 @@
     <string name="menu_selectAll">Выделить все</string>
     <string name="menu_offSelectAll">Очистить выделение</string>
     <string name="menu_createAlbum">Объединить в один альбом</string>
-    <string name="menu_selectLove">Выделить любимое</string>
+    <string name="menu_selectLove">Выделить избранное</string>
     <string name="menu_info">Справка</string>
     <string name="menu_wallpaper">Использовать как обои</string>
     <string name="menu_move">Переместить</string>
