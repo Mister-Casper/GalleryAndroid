@@ -12,8 +12,8 @@ import android.support.v4.view.ViewPager;
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
-import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.GridAlbumsFragment;
-import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.GridImagesFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album.GridAlbumsFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.image.GridImagesFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

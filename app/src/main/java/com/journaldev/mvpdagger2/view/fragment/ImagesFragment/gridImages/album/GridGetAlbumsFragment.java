@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album;
 
 import android.content.Context;
 import android.net.Uri;

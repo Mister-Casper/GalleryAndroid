@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.model.AlbumModel;
-import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.GridGetAlbumsFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album.GridGetAlbumsFragment;
 
 public class GetAlbumActivity extends BaseThemeActivity implements GridGetAlbumsFragment.GetAlbumListener {
 

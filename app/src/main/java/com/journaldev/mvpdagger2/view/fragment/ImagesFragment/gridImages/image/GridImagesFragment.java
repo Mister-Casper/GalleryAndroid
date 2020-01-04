@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.image;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.model.Converter.ImageModelConverter;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.data.Image.ImageRepositoryObserver;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.BaseGridImagesFragment;
 
 import java.util.ArrayList;
 

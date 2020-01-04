@@ -1,4 +1,4 @@
-package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages;
+package com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.Button;
 import android.widget.TextView;
 import com.journaldev.mvpdagger2.R;
-import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.GridAlbumImagesFragment;
+import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album.GridAlbumImagesFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
