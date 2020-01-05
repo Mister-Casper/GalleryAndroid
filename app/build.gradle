@@ -52,8 +52,5 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:preference-v7:27.1.1'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
-
-    implementation "androidx.navigation:navigation-fragment:2.1.0"
-    implementation "androidx.navigation:navigation-ui:2.1.0"
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0
 }
