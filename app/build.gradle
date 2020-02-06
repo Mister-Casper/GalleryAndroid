@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
     testOptions {
         unitTests.returnDefaultValues = true
     }
     defaultConfig {
         applicationId "com.journaldev.mvpdagger2"
-        minSdkVersion 23
-        targetSdkVersion 27
+        minSdkVersion 17
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -51,6 +51,4 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:preference-v7:27.1.1'
-
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 }
