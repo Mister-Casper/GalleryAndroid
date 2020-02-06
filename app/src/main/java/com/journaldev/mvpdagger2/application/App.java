@@ -16,8 +16,11 @@ public class App extends Application {
         super.onCreate();
         app = this;
         appPreference = new AppPreference(app);
-        imageRepository = new ImageRepository(app);
-        albumRepository = new AlbumRepository(app);
+    }
+
+    public void initRepositories(){
+        imageRepository = new ImageRepository(this);
+        albumRepository = new AlbumRepository(this);
     }
 
     public static App getApp() {

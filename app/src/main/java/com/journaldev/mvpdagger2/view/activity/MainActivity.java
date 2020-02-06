@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.view.adapter.FragmentPagerAdapter;
 import com.journaldev.mvpdagger2.view.fragment.*;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album.GridAlbumsFragment;
@@ -31,6 +32,7 @@ public class MainActivity extends BaseThemeActivity {
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        App.getApp().initRepositories();
         getWindow().setBackgroundDrawable(null);
     }
 
