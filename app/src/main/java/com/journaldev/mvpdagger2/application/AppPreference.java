@@ -58,7 +58,7 @@ public class AppPreference {
     }
 
     private void loadIsDarkTheme(SharedPreferences prefs) {
-        isDarkTheme = prefs.getBoolean("isDarkTheme", false);
+        isDarkTheme = prefs.getBoolean("isDarkTheme", true);
     }
 
     private void loadIsCache(SharedPreferences prefs) {
