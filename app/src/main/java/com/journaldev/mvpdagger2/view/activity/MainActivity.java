@@ -32,8 +32,6 @@ public class MainActivity extends BaseThemeActivity {
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        App.getApp().initRepositories();
-        getWindow().setBackgroundDrawable(null);
     }
 
     private void isToSettings() {
@@ -45,11 +43,11 @@ public class MainActivity extends BaseThemeActivity {
         viewpager.setCurrentItem(3);
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == 1 && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                App.getApp().initRepositories();
                 loadActivity();
                 isToSettings();
             } else {
