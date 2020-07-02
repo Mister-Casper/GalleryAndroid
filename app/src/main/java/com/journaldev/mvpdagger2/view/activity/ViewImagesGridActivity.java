@@ -4,21 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.MenuItem;
+
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.view.fragment.ImagesFragment.gridImages.album.GridAlbumImagesFragment;
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 
 public class ViewImagesGridActivity extends BaseThemeActivity {
-
-    @BindView(R.id.back)
-    Button back;
-    @BindView(R.id.title)
-    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +30,26 @@ public class ViewImagesGridActivity extends BaseThemeActivity {
     }
 
     private void setTitle(String albumName) {
-        title.setText(albumName);
+        getSupportActionBar().setTitle(albumName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @OnClick(R.id.back)
-    public void back() {
-        finish();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     int getDarkTheme() {
-        return R.style.DarkTheme2;
+        return R.style.DarkTheme3;
     }
 
     @Override
     int getLightTheme() {
-        return R.style.LightTheme2;
+        return R.style.LightTheme3;
     }
 }

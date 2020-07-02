@@ -39,7 +39,7 @@ public class DialogsUtils {
     }
 
 
-    private static View setViewToDialog(Context context, AlertDialog alertDialog, int layoutId) {
+    public static View setViewToDialog(Context context, AlertDialog alertDialog, int layoutId) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(layoutId, null);
         alertDialog.setView(dialogView);

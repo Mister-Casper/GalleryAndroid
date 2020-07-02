@@ -9,12 +9,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
+import android.view.View;
 import android.widget.Toast;
 
 import com.journaldev.mvpdagger2.R;
 import com.journaldev.mvpdagger2.application.App;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
+import com.journaldev.mvpdagger2.view.utils.DialogsUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,12 +47,20 @@ public class ImageHelper {
         }
     }
 
-    public static AlertDialog createDeleteImageAlertDialog(Activity activity, String message, final alertDialogListener listener) {
-        AlertDialog.Builder ad = new AlertDialog.Builder(activity);
-        ad.setMessage(message);
-        ad.setPositiveButton(context.getString(R.string.delete), (dialog, arg1) -> listener.deleteClick());
-        ad.setNegativeButton(context.getString(R.string.create_album_dialog_cancel),null);
-        return ad.show();
+    public static void createDeleteImageAlertDialog(Activity activity, String message, final alertDialogListener listener) {
+        AlertDialog createAlbumDialog = new AlertDialog.Builder(activity)
+                .setTitle(message).create();
+        View createAlbumView = DialogsUtils.setViewToDialog(activity, createAlbumDialog, R.layout.delete_images_dialog);
+
+        createAlbumView.findViewById(R.id.ok).setOnClickListener(view -> {
+            listener.deleteClick();
+            createAlbumDialog.cancel();
+        });
+
+        createAlbumView.findViewById(R.id.cancel).setOnClickListener(view ->
+                createAlbumDialog.cancel());
+
+        createAlbumDialog.show();
     }
 
     public static void shareImages(ArrayList<Uri> urls) {
@@ -74,15 +85,14 @@ public class ImageHelper {
                 = WallpaperManager.getInstance(context);
         try {
             myWallpaperManager.setBitmap(Wallpaper);
-            Toast.makeText(context,context.getString(R.string.setting_wallpaper_successful),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.setting_wallpaper_successful), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Toast.makeText(context,context.getString(R.string.setting_wallpaper_fail),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.setting_wallpaper_fail), Toast.LENGTH_LONG).show();
         }
     }
 
-    public static Bitmap convertUriToBitmap(Uri uri)
-    {
-        Bitmap bitmap=null;
+    public static Bitmap convertUriToBitmap(Uri uri) {
+        Bitmap bitmap = null;
         try {
             Uri imageUri = Uri.fromFile(new File(Objects.requireNonNull(uri.getPath())));
             bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri);

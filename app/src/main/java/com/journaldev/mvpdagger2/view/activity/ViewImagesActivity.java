@@ -287,7 +287,6 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
         deleteImage();
     }
 
-    @TargetApi(21)
     @Override
     public void setStartPostTransition(final View view) {
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

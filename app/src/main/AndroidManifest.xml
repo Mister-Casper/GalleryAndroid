@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@android:style/Theme.Holo.Light"
             android:name=".view.activity.ViewImagesActivity"
             android:screenOrientation="portrait">
             <intent-filter tools:ignore="AppLinkUrlError">

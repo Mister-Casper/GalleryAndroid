@@ -27,7 +27,7 @@
         <item name="android:windowBackground">@color/gray</item>
         <item name="android:itemBackground">@color/gray2</item>
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogDark</item>>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
@@ -44,10 +44,26 @@
         <item name="android:windowBackground">@color/gray</item>
         <item name="android:itemBackground">@color/gray2</item>
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogDark</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
         <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
+    </style>
+
+    <style name="DarkTheme3" parent="Theme.Design">
+        <item name="colorPrimary">@color/gray</item>
+        <item name="colorPrimaryDark">@color/gray</item>
+        <item name="colorAccent">#22a7e0</item>
+
+        <item name="android:textColor">@color/whitegray</item>
+        <item name="android:windowBackground">@color/gray</item>
+        <item name="android:itemBackground">@color/gray2</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
+        <item name="alertDialogTheme">@style/AlertDialogDark</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
+
     </style>
 
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
@@ -55,7 +71,6 @@
         <item name="android:textColor">@color/white</item>
         <item name="textAllCaps">true</item>
     </style>
-
 
     <style name="LightTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/gray</item>
@@ -82,8 +97,31 @@
         <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
-        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform
+        </item>
+    </style>
+
+    <style name="LightTheme3" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/whitegray2</item>
+        <item name="colorAccent">#22a7e0</item>
+
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform
+        </item>
+    </style>
+
+    <style name="AlertDialogDark" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@color/whitegray2</item>
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
