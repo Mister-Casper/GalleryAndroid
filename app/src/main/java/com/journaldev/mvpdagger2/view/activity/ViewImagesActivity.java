@@ -246,7 +246,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
     }
 
     private void deleteImage() {
-        ImageHelper.deleteImage(imageModels.get(pager.getCurrentItem()).getImage());
+        ImageHelper.deleteImage(this,imageModels.get(pager.getCurrentItem()).getImage());
         int currentPosition = pager.getCurrentItem();
         imageModels.remove(currentPosition);
         viewPagerUpdate(currentPosition);

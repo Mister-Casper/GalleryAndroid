@@ -67,7 +67,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
     @Override
     public void deleteClick() {
         setSelectedItems(getAdapter().getSelectedItems());
-        ImageHelper.deleteImage(getSelectedItems());
+        ImageHelper.deleteImage(getActivity(),getSelectedItems());
         showStartInstrumentsMenu();
         removeSelectedItems();
         getAdapter().setSelectable(false);

@@ -6,7 +6,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.app.AlertDialog;
@@ -21,7 +23,9 @@ import com.journaldev.mvpdagger2.view.utils.DialogsUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Singleton;
 
@@ -33,21 +37,21 @@ public class ImageHelper {
     static Context context = App.getApp();
     static ContentResolver contentResolver = App.getApp().getContentResolver();
 
-    public static void deleteImage(Uri uri) {
-        contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uri.toString()});
+    private static CreateAlbumHelper createAlbumHelper = new CreateAlbumHelper();
+
+    public static void deleteImage(Context context,Uri uri) {
+        ArrayList<Uri> uris= new ArrayList<>();
+        uris.add(uri);
+        createAlbumHelper.deleteImages(context,uris);
     }
 
-    public static void deleteImage(ArrayList<Selectable> uri) {
+    public static void deleteImage(Context context,ArrayList<Selectable> uri) {
         String[] uriStr = convertImagesToStringArray(uri);
-
-        for (int i = 0; i < uriStr.length; i++) {
-            contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    MediaStore.Images.ImageColumns.DATA + "=?", new String[]{uriStr[i]});
-        }
+        createAlbumHelper.deleteImages(context, Arrays.stream(uriStr).map(Uri::parse).collect(Collectors.toList()));
     }
 
-    public static void createDeleteImageAlertDialog(Activity activity, String message, final alertDialogListener listener) {
+    public static void createDeleteImageAlertDialog(Activity activity, String message,
+                                                    final alertDialogListener listener) {
         AlertDialog createAlbumDialog = new AlertDialog.Builder(activity)
                 .setTitle(message).create();
         View createAlbumView = DialogsUtils.setViewToDialog(activity, createAlbumDialog, R.layout.delete_images_dialog);

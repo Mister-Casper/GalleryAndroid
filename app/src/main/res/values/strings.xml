@@ -33,6 +33,7 @@
     <string name="create_folder_dialog_createNewFolder">Creating a new album</string>
 
     <string name="create_folder_status_move_image">Images moved : </string>
+    <string name="status_deleted_image">Images deletes : </string>
     <string name="create_folder_status_sync_image">Images synchronized :  </string>
 
     <string name="setting_wallpaper_successful">Wallpaper set</string>
@@ -53,5 +54,6 @@
     <string name="delete">delete</string>
 
     <string name="create_album">Create album</string>
+    <string name="deleting_image">"Images deleting "</string>
 
 </resources>

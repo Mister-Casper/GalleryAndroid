@@ -6,6 +6,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,9 +16,9 @@ import com.journaldev.mvpdagger2.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.inject.Inject;
-
+import static com.journaldev.mvpdagger2.utils.ImageHelper.contentResolver;
 
 public class CreateAlbumHelper {
 
@@ -43,6 +44,15 @@ public class CreateAlbumHelper {
         return alertDialog.show();
     }
 
+    public void deleteImages(Context context, List<Uri> images) {
+        alertDialog = onCreateDialog(context);
+        statusCreateFolder = alertDialog.findViewById(R.id.statusCreateFolder);
+        ((TextView) alertDialog.findViewById(R.id.createNewFolder)).setText(context.getString(R.string.deleting_image));
+        textStatus = alertDialog.findViewById(R.id.countMove);
+        DeleteImages transferImages = new DeleteImages();
+        transferImages.execute(new TransferImagesParameters(images, context, ""));
+    }
+
     private File createFolder(String folderName) {
         File dataDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + folderName);
 
@@ -64,10 +74,10 @@ public class CreateAlbumHelper {
 
         Context context;
 
-        ArrayList<String> pathArray = new ArrayList<>();
+        List<String> pathArray = new ArrayList<>();
 
         String folderPath;
-        ArrayList<Uri> images;
+        List<Uri> images;
 
         double stepMoveProgress;
         double stepSyncProgress;
@@ -145,12 +155,73 @@ public class CreateAlbumHelper {
         }
     }
 
+    private class DeleteImages extends AsyncTask<TransferImagesParameters, String, Void> {
+        Double progress = 0.;
+
+        int countImageDelete = 0;
+
+        int countAllImage;
+
+        List<Uri> images;
+
+        Context context;
+
+        double stepMoveProgress;
+
+        @Override
+        protected Void doInBackground(TransferImagesParameters... transferImagesParameters) {
+            loadParameters(transferImagesParameters);
+            deleteImages();
+            return null;
+        }
+
+        private void loadParameters(TransferImagesParameters... transferImagesParameters) {
+            TransferImagesParameters parameters = transferImagesParameters[0];
+            images = parameters.images;
+            context = parameters.context;
+            countAllImage = images.size();
+            stepMoveProgress = 100. / countAllImage;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        private void deleteImages() {
+            for (int i = 0; i < images.size(); i++) {
+                progress += stepMoveProgress;
+                countImageDelete++;
+                publishProgress(progress.toString(),
+                        context.getString(R.string.status_deleted_image)
+                                + countImageDelete + " / " + countAllImage);
+                contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        MediaStore.Images.ImageColumns.DATA + "=?", new String[]{images.get(i).toString()});
+                if (i == images.size() - 1) {
+                    alertDialog.cancel();
+                }
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            statusCreateFolder.setProgress(Double.valueOf(values[0]).intValue());
+            textStatus.setText(values[1]);
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
     private static class TransferImagesParameters {
-        ArrayList<Uri> images;
+        List<Uri> images;
         Context context;
         String folderPath;
 
-        public TransferImagesParameters(ArrayList<Uri> images, Context context, String folderPath) {
+        public TransferImagesParameters(List<Uri> images, Context context, String folderPath) {
             this.images = images;
             this.context = context;
             this.folderPath = folderPath;
