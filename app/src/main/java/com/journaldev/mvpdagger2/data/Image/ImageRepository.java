@@ -1,10 +1,12 @@
 package com.journaldev.mvpdagger2.data.Image;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static butterknife.internal.Utils.arrayOf;
 
 public class ImageRepository {
     private ArrayList<ImageModel> imageModelUrls;
@@ -38,10 +42,17 @@ public class ImageRepository {
     }
 
     private Cursor getCursor(Context context) {
+        //  if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         return context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, null,
+                arrayOf(MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.BUCKET_DISPLAY_NAME), null,
                 null, null);
+       /* } else {
+            return context.getContentResolver().query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    arrayOf(MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME), null,
+                    null, null);*/
+        //}
     }
 
     private void registerContentObserver(Context context) {
@@ -55,13 +66,14 @@ public class ImageRepository {
     private void loadData(Cursor imageCursor) {
         if (imageCursor != null) {
             imageModelUrls = new ArrayList<>();
-            for (int i = imageCursor.getCount() - 1; i >= 0; i--) {
-                imageCursor.moveToPosition(i);
-                Uri temp = Uri.parse(imageCursor.getString(1));
-                File file = new File(temp.toString());
+            int column_index_data = imageCursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            while (imageCursor.moveToNext()) {
+                File file = new File(imageCursor.getString(column_index_data));
+                Uri temp = Uri.parse(imageCursor.getString(column_index_data));
                 if (file.exists())
                     imageModelUrls.add(new ImageModel(temp, Boolean.parseBoolean(isLikeImage(temp, ExifInterface.TAG_USER_COMMENT))));
             }
+            imageCursor.close();
         }
     }
 
