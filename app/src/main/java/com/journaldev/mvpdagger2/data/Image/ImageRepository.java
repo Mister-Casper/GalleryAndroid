@@ -42,17 +42,10 @@ public class ImageRepository {
     }
 
     private Cursor getCursor(Context context) {
-        //  if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         return context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 arrayOf(MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.BUCKET_DISPLAY_NAME), null,
                 null, null);
-       /* } else {
-            return context.getContentResolver().query(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    arrayOf(MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME), null,
-                    null, null);*/
-        //}
     }
 
     private void registerContentObserver(Context context) {
@@ -67,7 +60,8 @@ public class ImageRepository {
         if (imageCursor != null) {
             imageModelUrls = new ArrayList<>();
             int column_index_data = imageCursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            while (imageCursor.moveToNext()) {
+            for (int i = imageCursor.getCount()-1; i >= 0; i--) {
+                imageCursor.moveToPosition(i);
                 File file = new File(imageCursor.getString(column_index_data));
                 Uri temp = Uri.parse(imageCursor.getString(column_index_data));
                 if (file.exists())
