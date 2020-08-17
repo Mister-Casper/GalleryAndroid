@@ -49,6 +49,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        App.getApp().initRepositories();
         allScreen();
         super.onCreate(savedInstanceState);
         prepareTheLook();

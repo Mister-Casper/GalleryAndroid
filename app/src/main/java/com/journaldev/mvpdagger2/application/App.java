@@ -18,9 +18,11 @@ public class App extends Application {
         appPreference = new AppPreference(app);
     }
 
-    public void initRepositories(){
-        imageRepository = new ImageRepository(this);
-        albumRepository = new AlbumRepository(this);
+    public void initRepositories() {
+        if (imageRepository == null)
+            imageRepository = new ImageRepository(this);
+        if (albumRepository == null)
+            albumRepository = new AlbumRepository(this);
     }
 
     public static App getApp() {
