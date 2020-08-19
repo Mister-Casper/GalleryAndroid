@@ -89,7 +89,7 @@ abstract public class BaseSelectableFragment extends Fragment implements MainAct
 
     @OnClick(R.id.shareButton)
     public void shareButtonClick() {
-        ImageHelper.shareImages(getAllFilePath(getSelectedItems()));
+        ImageHelper.shareImages(getAllFilePath(getSelectedItems()),getActivity());
     }
 
     private ArrayList<Uri> getAllFilePath(ArrayList<Selectable> selectedItems) {

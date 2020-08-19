@@ -305,7 +305,7 @@ public class ViewImagesActivity extends BaseThemeActivity implements ImageHelper
         ArrayList<Uri> urls = new ArrayList<>();
         Uri localUri = imageModels.get(pager.getCurrentItem()).getImage();
         urls.add(ImageHelper.getGlobalPath(localUri.toString()));
-        ImageHelper.shareImages(urls);
+        ImageHelper.shareImages(urls,this);
     }
 
     @Override

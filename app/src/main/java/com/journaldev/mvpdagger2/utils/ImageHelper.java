@@ -67,12 +67,12 @@ public class ImageHelper {
         createAlbumDialog.show();
     }
 
-    public static void shareImages(ArrayList<Uri> urls) {
+    public static void shareImages(ArrayList<Uri> urls,Activity activity) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         sendIntent.setType("image/*");
         sendIntent.putExtra(Intent.EXTRA_STREAM, urls);
-        context.startActivity(sendIntent);
+        activity.startActivity(sendIntent);
     }
 
     public static Uri getGlobalPath(String path) {
