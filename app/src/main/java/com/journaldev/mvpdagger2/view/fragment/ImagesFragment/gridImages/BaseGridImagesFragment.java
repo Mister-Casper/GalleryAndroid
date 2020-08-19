@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.journaldev.mvpdagger2.R;
+import com.journaldev.mvpdagger2.data.Image.ImageRepository;
 import com.journaldev.mvpdagger2.model.ImageModel;
 import com.journaldev.mvpdagger2.model.Selectable.ImageSelectableModel;
 import com.journaldev.mvpdagger2.model.Selectable.Selectable;
@@ -65,6 +66,7 @@ public class BaseGridImagesFragment extends BaseSelectableFragment implements Se
             images = getArguments().getParcelableArrayList("image");
 
         if (images == null) {
+            App.getApp().initRepositories();
             images = App.getImageRepository().getUrls();
         }
     }
