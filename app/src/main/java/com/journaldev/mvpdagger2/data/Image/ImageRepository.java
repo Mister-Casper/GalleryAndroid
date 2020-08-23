@@ -1,25 +1,19 @@
 package com.journaldev.mvpdagger2.data.Image;
 
-import android.content.ContentUris;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 
 import com.journaldev.mvpdagger2.data.BaseImageObserver;
-import com.journaldev.mvpdagger2.model.Converter.ImageModelConverter;
 import com.journaldev.mvpdagger2.model.ImageModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static butterknife.internal.Utils.arrayOf;
 

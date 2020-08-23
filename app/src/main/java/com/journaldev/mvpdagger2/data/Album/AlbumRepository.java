@@ -13,12 +13,12 @@ import com.journaldev.mvpdagger2.model.ImageModel;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class AlbumRepository {
     private ArrayList<AlbumModel> imageAlbums;
     private AlbumObserver albumObserver;
 
     private static final String[] PROJECTION_BUCKET = {
-            MediaStore.Images.Media._ID,
             MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
             MediaStore.Images.Media.DATA,
     };
@@ -56,8 +56,8 @@ public class AlbumRepository {
         if (cursor != null) {
             imageAlbums = new ArrayList<>();
 
-            int bucketColumn = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-            int dateColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+            int bucketColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+            int dateColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
             for (int i = cursor.getCount()-1; i >= 0; i--) {
                 cursor.moveToPosition(i);
